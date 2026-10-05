@@ -4,21 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<title>NEKKO 備品購入申請 v1.1.0</title>
+<title>NEKKO 備品購入申請 v1.2.0</title>
 <style>
-:root{--blue:#0b63ce;--blue2:#eaf3ff;--navy:#10233f;--line:#bfd3ea;--bg:#f5f8fc;--green:#18794e;--red:#b42318;--amber:#a15c00;--white:#fff;--shadow:0 8px 28px rgba(20,47,84,.12)}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{font-size:16px}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;background:var(--bg);color:var(--navy);line-height:1.55}button,input,select,textarea{font:inherit}button{touch-action:manipulation;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}.hidden{display:none!important}.app{max-width:1100px;margin:0 auto;padding:16px 16px 96px}.top{position:sticky;top:0;z-index:20;background:rgba(245,248,252,.96);backdrop-filter:blur(8px);padding:10px 0 12px;border-bottom:1px solid #d8e4f1}.headrow{display:flex;gap:12px;align-items:center;justify-content:space-between}.brand{font-size:20px;font-weight:900;letter-spacing:.01em}.brand small{display:block;font-size:12px;color:#57708d;font-weight:700}.mode{display:flex;gap:6px;background:#e8eef5;padding:4px;border-radius:12px}.mode button{border:0;background:transparent;color:#3c5571;padding:10px 14px;border-radius:9px;font-weight:800;min-height:44px}.mode button.active{background:#fff;color:var(--blue);box-shadow:0 2px 10px rgba(18,49,84,.12)}.hero{margin:16px 0;background:linear-gradient(135deg,#eaf3ff,#fff);border:2px solid #91bced;border-radius:18px;padding:16px}.hero h1{font-size:20px;margin:0 0 4px}.hero p{margin:0;color:#48637f;font-weight:650}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.btn{border:0;border-radius:12px;min-height:46px;padding:10px 16px;font-weight:850;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn.primary{background:var(--blue);color:#fff}.btn.secondary{background:#fff;color:var(--navy);border:2px solid var(--line)}.btn.green{background:var(--green);color:#fff}.btn.red{background:var(--red);color:#fff}.btn.ghost{background:#eaf0f7;color:#233d5b}.btn.full{width:100%}.card{background:#fff;border:2px solid #c7d9ed;border-radius:18px;padding:16px;box-shadow:0 3px 14px rgba(23,52,86,.06);margin:12px 0}.card h2,.card h3{margin-top:0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1.3fr 1fr .8fr;gap:10px}.field{margin:0 0 14px}.field label{display:block;font-weight:850;margin-bottom:6px}.req{color:var(--red)}input,select,textarea{width:100%;min-height:48px;border:2px solid #afc7e1;border-radius:12px;padding:10px 12px;background:#fff;color:#10233f;outline:none}textarea{min-height:110px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(11,99,206,.12)}.item{border:2px solid #d3e0ee;background:#f9fbfe;border-radius:14px;padding:12px;margin-bottom:10px}.itemtop{display:flex;justify-content:space-between;gap:10px;align-items:center}.itemtotal{font-weight:900;color:var(--blue)}.remove{border:0;background:#fee4e2;color:#8b1e16;border-radius:9px;padding:8px 11px;font-weight:800}.total{display:flex;justify-content:space-between;align-items:center;background:#eef6ff;border:2px solid #a7c9ef;border-radius:14px;padding:14px;margin:12px 0;font-weight:900}.total strong{font-size:24px;color:#064ea7}.notice{padding:12px 14px;border-radius:12px;background:#fff8e8;border:2px solid #f0ca73;color:#6e4700;font-weight:700}.empty{text-align:center;padding:28px 12px;color:#627a93;font-weight:700}.list{display:grid;gap:10px}.appcard{background:#fff;border:2px solid #c9d9e9;border-radius:16px;padding:14px}.appcard .row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.meta{color:#607891;font-size:13px;font-weight:650}.money{font-size:18px;font-weight:900}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:900}.badge.pending{background:#fff2cc;color:#7a4a00}.badge.approved{background:#dcfce7;color:#14532d}.badge.rejected{background:#fee2e2;color:#7f1d1d}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters>*{width:auto;min-width:130px}.overlay{position:fixed;inset:0;z-index:60;background:rgba(10,25,44,.52);display:flex;align-items:flex-end;justify-content:center;padding:16px}.modal{width:min(680px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modalActions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}.detailbox{background:#f7faff;border:1px solid #d2e1f0;border-radius:12px;padding:12px;margin:8px 0;white-space:pre-wrap}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:100;background:#10233f;color:#fff;border-radius:12px;padding:12px 16px;font-weight:800;box-shadow:var(--shadow);max-width:calc(100vw - 32px)}.statusline{font-size:13px;color:#566f8b;font-weight:700}.settingsLink{border:0;background:transparent;color:#4e6c8b;text-decoration:underline;padding:8px}.desktopTable{width:100%;border-collapse:collapse}.desktopTable th,.desktopTable td{border-bottom:1px solid #d7e3ef;padding:10px;text-align:left;vertical-align:top}.desktopTable th{background:#eef5fc;font-size:13px}.mobileOnly{display:none}
-@media(max-width:720px){html{font-size:17px}.app{padding:10px 10px 92px}.top{padding-top:6px}.headrow{align-items:flex-start;flex-direction:column}.brand{font-size:19px}.mode{width:100%}.mode button{flex:1;padding:10px 8px}.hero{margin:10px 0;padding:14px}.hero h1{font-size:19px}.grid2,.grid3{grid-template-columns:1fr}.btn{min-height:50px}.toolbar>.btn{flex:1 1 140px}.card{padding:13px;border-radius:16px}.item{padding:11px}.desktopOnly{display:none!important}.mobileOnly{display:block}.overlay{padding:0;align-items:flex-end}.modal{border-radius:20px 20px 0 0;max-height:92vh;padding:16px}.modalActions{position:sticky;bottom:-16px;background:#fff;padding:12px 0 16px}.modalActions .btn{flex:1}.filters>*{width:100%;min-width:0}.appcard .row{flex-direction:column}.money{font-size:20px}input,select,textarea{font-size:16px}}
+:root{--green:#0d4f3c;--green2:#14684f;--greenSoft:#e9f2ee;--ink:#17231f;--muted:#61716b;--line:#b9ccc4;--bg:#f3f6f4;--red:#a52a22;--amber:#8a5a00;--white:#fff;--shadow:0 8px 28px rgba(18,53,42,.12)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{font-size:16px}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}button,input,select,textarea{font:inherit}button{touch-action:manipulation;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}.hidden{display:none!important}.app{max-width:1100px;margin:0 auto;padding:16px 16px 96px}
+.top{position:sticky;top:0;z-index:20;background:var(--green);padding:10px 12px;border-bottom:3px solid #083c2d;box-shadow:0 4px 16px rgba(13,79,60,.18)}.headrow{display:flex;gap:14px;align-items:center;justify-content:space-between}.brandbox{background:#f5f6f5;border:1px solid rgba(255,255,255,.75);border-radius:12px;padding:9px 14px;box-shadow:inset 0 0 0 1px #d8dfdc}.brand{font-size:21px;font-weight:950;letter-spacing:.01em;color:#16211d}.brand small{display:block;font-size:12px;color:#5a6a64;font-weight:750}.modewrap{display:flex;flex-direction:column;align-items:flex-end;gap:4px}.mode{display:flex;gap:6px;background:rgba(255,255,255,.16);padding:4px;border-radius:12px}.mode button{border:0;background:transparent;color:#f4fbf7;padding:10px 14px;border-radius:9px;font-weight:850;min-height:44px}.mode button.active{background:#fff;color:var(--green);box-shadow:0 2px 10px rgba(0,0,0,.14)}.modeNote{font-size:11px;color:#e5f0eb;font-weight:700;text-align:right}
+.hero{margin:16px 0;background:linear-gradient(135deg,var(--greenSoft),#fff);border:2px solid #88ad9e;border-radius:18px;padding:16px}.hero h1{font-size:20px;margin:0 0 4px}.hero p{margin:0;color:#4d635a;font-weight:650}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.btn{border:0;border-radius:12px;min-height:46px;padding:10px 16px;font-weight:850;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn.primary{background:var(--green);color:#fff}.btn.secondary{background:#fff;color:var(--ink);border:2px solid var(--line)}.btn.green{background:#18794e;color:#fff}.btn.red{background:var(--red);color:#fff}.btn.ghost{background:#e7ece9;color:#294238}.btn.full{width:100%}.card{background:#fff;border:2px solid #c7d5cf;border-radius:18px;padding:16px;box-shadow:0 3px 14px rgba(23,52,42,.06);margin:12px 0}.card h2,.card h3{margin-top:0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1.3fr 1fr .8fr;gap:10px}.field{margin:0 0 14px}.field label{display:block;font-weight:850;margin-bottom:6px}.req{color:var(--red)}input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border-radius:12px;padding:10px 12px;background:#fff;color:#14231d;outline:none}textarea{min-height:110px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(20,104,79,.13)}.item{border:2px solid #d4e0db;background:#f9fbfa;border-radius:14px;padding:12px;margin-bottom:10px}.itemtop{display:flex;justify-content:space-between;gap:10px;align-items:center}.itemtotal{font-weight:900;color:var(--green)}.remove{border:0;background:#fee4e2;color:#8b1e16;border-radius:9px;padding:8px 11px;font-weight:800}.total{display:flex;justify-content:space-between;align-items:center;background:#edf6f2;border:2px solid #9fc5b5;border-radius:14px;padding:14px;margin:12px 0;font-weight:900}.total strong{font-size:24px;color:var(--green)}.notice{padding:12px 14px;border-radius:12px;background:#fff8e8;border:2px solid #f0ca73;color:#6e4700;font-weight:700}.empty{text-align:center;padding:28px 12px;color:#62736c;font-weight:700}.list{display:grid;gap:10px}.appcard{background:#fff;border:2px solid #c9d7d1;border-radius:16px;padding:14px}.appcard.deleted{background:#f0f2f1;border-color:#b6bfbb}.appcard .row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.meta{color:#62736c;font-size:13px;font-weight:650}.money{font-size:18px;font-weight:900}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:900}.badge.pending{background:#fff2cc;color:#7a4a00}.badge.approved{background:#dcfce7;color:#14532d}.badge.rejected{background:#fee2e2;color:#7f1d1d}.badge.deleted{background:#dfe3e1;color:#3e4944}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters>*{width:auto;min-width:130px}.overlay{position:fixed;inset:0;z-index:60;background:rgba(10,25,19,.52);display:flex;align-items:flex-end;justify-content:center;padding:16px}.modal{width:min(720px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modalActions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}.detailbox{background:#f7faf8;border:1px solid #d2ded9;border-radius:12px;padding:12px;margin:8px 0;white-space:pre-wrap}.deletedNotice{background:#f0f2f1;border:2px solid #aab4b0;border-radius:12px;padding:12px;margin:10px 0;color:#35413c;font-weight:750}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:100;background:#102b21;color:#fff;border-radius:12px;padding:12px 16px;font-weight:800;box-shadow:var(--shadow);max-width:calc(100vw - 32px)}.statusline{font-size:13px;color:#596c64;font-weight:700}.desktopOnly{display:block}.mobileOnly{display:none}
+@media(max-width:720px){html{font-size:17px}.app{padding:10px 10px 92px}.top{padding:8px}.headrow{align-items:stretch;flex-direction:column}.brand{font-size:19px}.modewrap{align-items:stretch}.mode{width:100%}.mode button{flex:1;padding:10px 8px}.modeNote{text-align:center;font-size:10px}.hero{margin:10px 0;padding:14px}.hero h1{font-size:19px}.grid2,.grid3{grid-template-columns:1fr}.btn{min-height:50px}.toolbar>.btn{flex:1 1 140px}.card{padding:13px;border-radius:16px}.item{padding:11px}.desktopOnly{display:none!important}.mobileOnly{display:block}.overlay{padding:0;align-items:flex-end}.modal{border-radius:20px 20px 0 0;max-height:92vh;padding:16px}.modalActions{position:sticky;bottom:-16px;background:#fff;padding:12px 0 16px}.modalActions .btn{flex:1}.filters>*{width:100%;min-width:0}.appcard .row{flex-direction:column}.money{font-size:20px}input,select,textarea{font-size:16px}}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="top">
     <div class="headrow">
-      <div class="brand">NEKKO 備品購入申請<small>必要な備品を申請し、管理者がスマホで確認・承認できます</small></div>
-      <div class="mode" role="tablist" aria-label="表示モード">
-        <button id="modeApplicant" class="active" type="button">申請モード</button>
-        <button id="modeManager" type="button">管理者モード</button>
+      <div class="brandbox"><div class="brand">NEKKO 備品購入申請<small>必要な備品を申請し、管理者がスマホで確認・承認できます</small></div></div>
+      <div class="modewrap">
+        <div class="mode" role="tablist" aria-label="表示モード">
+          <button id="modeApplicant" class="active" type="button">申請モード</button>
+          <button id="modeManager" type="button">管理者モード</button>
+        </div>
+        <div class="modeNote">申請する方は「申請モード」のみご利用ください</div>
       </div>
     </div>
   </div>
@@ -27,10 +32,13 @@
     <div class="hero"><h1>備品購入の申請</h1><p>必要事項を入力すると申請が保存され、管理者へメールで通知されます。</p></div>
     <div class="toolbar">
       <button id="newRequestBtn" class="btn primary" type="button">＋ 申請する</button>
-      <button id="refreshMineBtn" class="btn secondary" type="button">↻ 自分の申請を更新</button>
+      <button id="printBlankBtn" class="btn secondary" type="button">🖨 手書き用申請書を印刷</button>
     </div>
     <div id="apiNotice" class="notice hidden"></div>
-    <div class="card"><h2>この端末からの申請</h2><div id="mineList" class="list"></div></div>
+    <div class="card">
+      <h2>申請について</h2>
+      <p style="margin:0;color:#48637f;font-weight:700">この画面はパソコン・スマホ共通です。提出した申請はすべて同じGoogleスプレッドシートに保存され、管理者へメール通知されます。</p>
+    </div>
   </section>
 
   <section id="managerView" class="hidden">
@@ -42,13 +50,13 @@
       <button id="logoutAdminBtn" class="btn ghost" type="button">管理者ログアウト</button>
     </div>
     <div class="filters card">
-      <select id="statusFilter"><option value="">すべての状態</option><option>申請中</option><option>承認</option><option>却下</option></select>
-      <input id="searchFilter" placeholder="申請者・部署・申請IDで検索">
+      <select id="statusFilter"><option value="">すべての状態</option><option>申請中</option><option>承認</option><option>却下</option><option>削除済</option></select>
+      <input id="searchFilter" placeholder="申請者・部署・申請No.で検索">
     </div>
     <div id="adminList" class="list"></div>
   </section>
 
-  <div style="text-align:center;margin-top:24px"><button id="settingsBtn" class="settingsLink" type="button">接続設定（管理用）</button><div class="statusline">v1.1.0 / Slack API未連携</div></div>
+  <div style="text-align:center;margin-top:24px"><div class="statusline">v1.2.0 / 綴り番号・削除履歴・印刷対応 / Slack API未連携</div></div>
 </div>
 
 <!-- 申請フォーム -->
@@ -67,8 +75,9 @@
       <div class="field"><label>購入品目 <span class="req">必須</span></label><div id="items"></div><button id="addItemBtn" class="btn secondary full" type="button">＋ 品目を追加</button></div>
       <div class="total"><span>合計金額（税込）</span><strong id="grandTotal">¥0</strong></div>
       <div class="field"><label>購入理由・用途 <span class="req">必須</span></label><textarea id="reason" required placeholder="なぜ必要なのかを入力してください"></textarea></div>
+      <div class="field"><label>備考（任意）</label><textarea id="notes" placeholder="補足事項があれば入力してください"></textarea></div>
       <div class="field"><label>参考画像・見積・商品写真（任意）</label><input id="attachment" type="file" accept="image/*"><div class="statusline">スマホ写真は送信前に自動縮小します。</div></div>
-      <div class="modalActions"><button id="cancelRequestBtn" class="btn secondary" type="button">キャンセル</button><button id="submitRequestBtn" class="btn primary" type="submit">申請を提出</button></div>
+      <div class="modalActions"><button id="printCurrentBtn" class="btn secondary" type="button">🖨 入力内容を印刷</button><button id="cancelRequestBtn" class="btn secondary" type="button">キャンセル</button><button id="submitRequestBtn" class="btn primary" type="submit">申請を提出</button></div>
     </form>
   </div>
 </div>
@@ -93,26 +102,25 @@
   <div class="modalActions"><button id="testNotificationBtn" class="btn secondary" type="button">テストメール送信</button><button id="cancelNotificationBtn" class="btn ghost" type="button">閉じる</button><button id="saveNotificationBtn" class="btn primary" type="button">保存</button></div>
 </div></div>
 
-<!-- 接続設定 -->
-<div id="settingsModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal"><h2>接続設定</h2><p class="statusline">GASをウェブアプリとしてデプロイしたURLを入力します。この端末にのみ保存されます。</p><div class="field"><label>Google Apps Script WebアプリURL</label><input id="gasUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec"></div><div id="connectionResult" class="statusline"></div><div class="modalActions"><button id="testConnectionBtn" class="btn secondary" type="button">接続テスト</button><button id="cancelSettingsBtn" class="btn ghost" type="button">閉じる</button><button id="saveSettingsBtn" class="btn primary" type="button">保存</button></div></div></div>
 <div id="toast" class="toast hidden"></div>
 
 <script>
 'use strict';
 const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
-// GASをデプロイ後、/exec URLをここへ1回貼れば全スマホで共通利用できます。
-const DEFAULT_GAS_URL='';
-const state={mode:'applicant', adminPassword:'', adminApps:[], myApps:[], current:null, initialPasswordMode:false};
-const STORAGE={url:'nekko_equipment_gas_url', refs:'nekko_equipment_my_refs_v2', name:'nekko_equipment_name', dept:'nekko_equipment_dept'};
+// ★GASをデプロイしたら、この1か所だけ /exec URLへ変更してください。
+// ここに設定した接続先を、PC・スマホ・Slackから開いた全員が共通で使用します。
+const GAS_WEB_APP_URL='PASTE_GAS_WEB_APP_URL_HERE';
+const state={mode:'applicant', adminPassword:'', adminApps:[], current:null, initialPasswordMode:false};
+const STORAGE={name:'nekko_equipment_name', dept:'nekko_equipment_dept'};
 
-function gasUrl(){return (localStorage.getItem(STORAGE.url)||DEFAULT_GAS_URL||'').trim()}
+function gasUrl(){return String(GAS_WEB_APP_URL||'').trim()}
 function toast(msg,error=false){const el=$('#toast');el.textContent=msg;el.style.background=error?'#8b1e16':'#10233f';el.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.add('hidden'),2800)}
 function money(v){return '¥'+Number(v||0).toLocaleString('ja-JP')}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-function badge(status){const cls=status==='承認'?'approved':status==='却下'?'rejected':'pending';return `<span class="badge ${cls}">${esc(status||'申請中')}</span>`}
+function badge(status){const cls=status==='承認'?'approved':status==='却下'?'rejected':status==='削除済'?'deleted':'pending';return `<span class="badge ${cls}">${esc(status||'申請中')}</span>`}
 function openModal(id){$(id).classList.remove('hidden');document.body.style.overflow='hidden'}
 function closeModal(id){$(id).classList.add('hidden');document.body.style.overflow=''}
-function needUrl(){if(gasUrl())return true;$('#apiNotice').textContent='GAS WebアプリURLが未設定です。管理者は「接続設定（管理用）」から登録するか、index.html の DEFAULT_GAS_URL に設定してください。';$('#apiNotice').classList.remove('hidden');openModal('#settingsModal');return false}
+function needUrl(){const u=gasUrl();if(/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec(?:[?#].*)?$/.test(u)){$('#apiNotice').classList.add('hidden');return true;}$('#apiNotice').textContent='管理者設定が未完了です。index.html の GAS_WEB_APP_URL にGASの /exec URLを1回だけ設定してください。スマホ側での入力は不要です。';$('#apiNotice').classList.remove('hidden');return false}
 
 async function api(action,payload={}){
   if(!needUrl())throw new Error('GAS URLが未設定です。');
@@ -165,44 +173,51 @@ async function loadAdmin(){
 function renderAdmin(){
   const status=$('#statusFilter').value,q=$('#searchFilter').value.trim().toLowerCase();
   const rows=state.adminApps.filter(a=>(!status||a.status===status)&&(!q||`${a.id} ${a.applicantName} ${a.department}`.toLowerCase().includes(q)));
-  $('#adminList').innerHTML=rows.length?rows.map(a=>appCard(a,true)).join(''):'<div class="card empty">該当する申請はありません。</div>';
+  $('#adminList').innerHTML=rows.length?rows.map(a=>appCard(a)).join(''):'<div class="card empty">該当する申請はありません。</div>';
   $$('#adminList [data-open]').forEach(b=>b.addEventListener('click',()=>openDetail(b.dataset.open,true)));
 }
 
-function getMyRefs(){try{const v=JSON.parse(localStorage.getItem(STORAGE.refs)||'[]');return Array.isArray(v)?v:[]}catch{return []}}
-function addMyRef(id,token){if(!id||!token)return;const refs=getMyRefs().filter(x=>x&&x.id!==id);refs.unshift({id,token});localStorage.setItem(STORAGE.refs,JSON.stringify(refs.slice(0,100)))}
-async function loadMine(){
-  const refs=getMyRefs();if(!refs.length){state.myApps=[];renderMine();return}if(!gasUrl()){renderMine();return}
-  $('#mineList').innerHTML='<div class="empty">読み込み中...</div>';
-  try{const d=await api('getMine',{refs});state.myApps=d.applications||[];renderMine()}catch(e){$('#mineList').innerHTML=`<div class="notice">${esc(e.message)}</div>`}
-}
-function renderMine(){
-  $('#mineList').innerHTML=state.myApps.length?state.myApps.map(a=>appCard(a,false)).join(''):'<div class="empty">この端末からの申請はまだありません。</div>';
-  $$('#mineList [data-open]').forEach(b=>b.addEventListener('click',()=>openDetail(b.dataset.open,false)));
-}
-$('#refreshMineBtn').addEventListener('click',loadMine);
+function appCard(a){const del=a.deleted||a.status==='削除済';const delMeta=del?`<div class="meta" style="margin-top:5px">削除日時：${esc(a.deletedAt||'-')} / 削除理由：${esc(a.deleteReason||'-')}</div>`:'';return `<div class="appcard ${del?'deleted':''}"><div class="row"><div><div class="meta">綴り番号 ${esc(a.id)} ・ ${esc(a.createdAt)}</div><div style="font-weight:900;font-size:18px">${esc(a.applicantName)} / ${esc(a.department)}</div><div class="meta">${esc(a.reason).slice(0,80)}</div>${delMeta}</div><div style="text-align:right">${badge(a.status)}<div class="money">${money(a.total)}</div></div></div><div style="margin-top:10px"><button class="btn secondary full" type="button" data-open="${esc(a.id)}">${del?'削除記録を確認':'内容を確認・承認'}</button></div></div>`}
 
-function appCard(a,admin){return `<div class="appcard"><div class="row"><div><div class="meta">${esc(a.id)} ・ ${esc(a.createdAt)}</div><div style="font-weight:900;font-size:18px">${esc(a.applicantName)} / ${esc(a.department)}</div><div class="meta">${esc(a.reason).slice(0,80)}</div></div><div style="text-align:right">${badge(a.status)}<div class="money">${money(a.total)}</div></div></div><div style="margin-top:10px"><button class="btn secondary full" type="button" data-open="${esc(a.id)}">${admin?'内容を確認・承認':'申請内容を見る'}</button></div></div>`}
-
-function findApp(id,admin){return (admin?state.adminApps:state.myApps).find(a=>a.id===id)}
-function openDetail(id,admin){
-  const a=findApp(id,admin);if(!a)return;state.current={app:a,admin};
+function findApp(id){return state.adminApps.find(a=>a.id===id)}
+function openDetail(id,admin=true){
+  const a=findApp(id);if(!a)return;state.current={app:a,admin:true};
+  const deleted=a.deleted||a.status==='削除済';
   const items=Array.isArray(a.items)&&a.items.length?a.items.map(i=>`<div>・${esc(i.name)}${i.store?' / '+esc(i.store):''}　${esc(i.quantity)}個 × ${money(i.price)}</div>`).join(''):`<div>${esc(a.itemsText||'-').replace(/\n/g,'<br>')}</div>`;
-  $('#detailContent').innerHTML=`<h2>申請詳細</h2><div class="detailbox"><b>${esc(a.id)}</b>　${badge(a.status)}<br>${esc(a.createdAt)}</div><div class="grid2"><div class="detailbox"><b>申請者</b><br>${esc(a.applicantName)}</div><div class="detailbox"><b>店舗・部署</b><br>${esc(a.department)}</div><div class="detailbox"><b>希望納期</b><br>${esc(a.desiredDate||'-')}</div><div class="detailbox"><b>緊急度</b><br>${esc(a.urgency||'通常')}</div></div><div class="detailbox"><b>購入品目</b><br>${items}<hr><b>合計 ${money(a.total)}</b></div><div class="detailbox"><b>購入理由</b><br>${esc(a.reason).replace(/\n/g,'<br>')}</div>${a.attachmentUrl?`<div class="detailbox"><a href="${esc(a.attachmentUrl)}" target="_blank" rel="noopener">添付画像を開く</a></div>`:''}<div class="detailbox"><b>管理者コメント</b><br>${esc(a.managerComment||'-')}<br><span class="meta">${esc(a.managerName||'')} ${esc(a.decisionDate||'')}</span></div>`;
+  const deletedInfo=deleted?`<div class="deletedNotice"><b>この申請は削除済みです。</b><br>削除日時：${esc(a.deletedAt||'-')}<br>削除者：${esc(a.deletedBy||'-')}<br>削除理由：${esc(a.deleteReason||'-')}<br>削除前ステータス：${esc(a.previousStatus||'-')}</div>`:'';
+  $('#detailContent').innerHTML=`<h2>備品購入申請書</h2>${deletedInfo}<div class="detailbox"><b>綴り番号（申請No.） ${esc(a.id)}</b>　${badge(a.status)}<br>申請日時：${esc(a.createdAt)}</div><div class="grid2"><div class="detailbox"><b>申請者</b><br>${esc(a.applicantName)}</div><div class="detailbox"><b>店舗・部署</b><br>${esc(a.department)}</div><div class="detailbox"><b>希望納期</b><br>${esc(a.desiredDate||'-')}</div><div class="detailbox"><b>緊急度</b><br>${esc(a.urgency||'通常')}</div></div><div class="detailbox"><b>購入品目</b><br>${items}<hr><b>合計 ${money(a.total)}</b></div><div class="detailbox"><b>購入理由・用途</b><br>${esc(a.reason).replace(/\n/g,'<br>')}</div><div class="detailbox"><b>備考</b><br>${esc(a.notes||'-').replace(/\n/g,'<br>')}</div>${a.attachmentUrl?`<div class="detailbox"><a href="${esc(a.attachmentUrl)}" target="_blank" rel="noopener">添付画像を開く</a></div>`:''}<div class="detailbox"><b>管理者確認</b><br>決裁者：${esc(a.managerName||'-')}<br>決裁日時：${esc(a.decisionDate||'-')}<br>コメント：${esc(a.managerComment||'-')}</div>`;
   const actions=$('#detailActions');actions.innerHTML='';
   const close=document.createElement('button');close.className='btn secondary';close.type='button';close.textContent='閉じる';close.onclick=()=>closeModal('#detailModal');actions.appendChild(close);
-  if(admin){['承認','却下'].forEach(st=>{const b=document.createElement('button');b.className='btn '+(st==='承認'?'green':'red');b.type='button';b.textContent=st;b.onclick=()=>decide(st);actions.appendChild(b)});const del=document.createElement('button');del.className='btn ghost';del.type='button';del.textContent='削除';del.onclick=removeCurrent;actions.appendChild(del)}
+  const print=document.createElement('button');print.className='btn secondary';print.type='button';print.textContent='🖨 申請書を印刷';print.onclick=()=>printApplication(a);actions.appendChild(print);
+  if(admin&&!deleted){['承認','却下'].forEach(st=>{const b=document.createElement('button');b.className='btn '+(st==='承認'?'green':'red');b.type='button';b.textContent=st;b.onclick=()=>decide(st);actions.appendChild(b)});const del=document.createElement('button');del.className='btn ghost';del.type='button';del.textContent='削除済みにする';del.onclick=removeCurrent;actions.appendChild(del)}
   openModal('#detailModal');
 }
 async function decide(status){
-  const a=state.current.app;const managerName=prompt('管理者名を入力してください',localStorage.getItem('nekko_manager_name')||'')??'';if(!managerName)return;localStorage.setItem('nekko_manager_name',managerName);const comment=prompt(`${status}コメント（任意）`,'')??'';
-  try{await api('updateStatus',{password:state.adminPassword,id:a.id,status,managerName,managerComment:comment});closeModal('#detailModal');toast(`${status}しました`);await loadAdmin();await loadMine()}catch(e){toast(e.message,true)}
+  const a=state.current.app;if(a.deleted||a.status==='削除済'){toast('削除済みの申請は変更できません',true);return}const managerName=prompt('管理者名を入力してください',localStorage.getItem('nekko_manager_name')||'')??'';if(!managerName)return;localStorage.setItem('nekko_manager_name',managerName);const comment=prompt(`${status}コメント（任意）`,'')??'';
+  try{await api('updateStatus',{password:state.adminPassword,id:a.id,status,managerName,managerComment:comment});closeModal('#detailModal');toast(`${status}しました`);await loadAdmin()}catch(e){toast(e.message,true)}
 }
-async function removeCurrent(){if(!confirm('この申請を削除済みにしますか？データ行は履歴として残ります。'))return;const reason=prompt('削除理由（任意）','')??'';try{await api('delete',{password:state.adminPassword,id:state.current.app.id,deleteReason:reason});closeModal('#detailModal');toast('削除しました');await loadAdmin()}catch(e){toast(e.message,true)}}
+async function removeCurrent(){
+  const a=state.current.app;if(a.deleted||a.status==='削除済'){toast('すでに削除済みです',true);return}
+  if(!confirm('この申請を「削除済み」として履歴に残します。完全削除はしません。よろしいですか？'))return;
+  const deletedBy=prompt('削除する管理者名を入力してください',localStorage.getItem('nekko_manager_name')||'管理者')??'';if(!deletedBy)return;localStorage.setItem('nekko_manager_name',deletedBy);
+  const reason=prompt('削除理由を入力してください','')??'';if(!reason.trim()){toast('削除理由を入力してください',true);return}
+  try{await api('delete',{password:state.adminPassword,id:a.id,deleteReason:reason,deletedBy});closeModal('#detailModal');toast('削除済みとして履歴に残しました');await loadAdmin()}catch(e){toast(e.message,true)}
+}
+
+function printApplication(app=null){
+  const blank=!app;
+  const rows=blank?Array.from({length:5},()=>({name:'',store:'',quantity:'',price:''})):(Array.isArray(app.items)&&app.items.length?app.items:[]);
+  const itemRows=[...rows];while(itemRows.length<5)itemRows.push({name:'',store:'',quantity:'',price:''});
+  const subtotal=x=>blank?'':(Number(x.price||0)*Number(x.quantity||0)).toLocaleString('ja-JP');
+  const h=`<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>NEKKO 備品購入申請書</title><style>@page{size:A4;margin:10mm}*{box-sizing:border-box}body{font-family:"Noto Sans JP","Yu Gothic",sans-serif;color:#111;margin:0;font-size:12px}.sheet{width:100%}.head{background:#0d4f3c;padding:9px;border-radius:4px 4px 0 0}.title{background:#f4f5f4;border:1px solid #d3dad6;padding:10px 14px;font-size:22px;font-weight:900;letter-spacing:.06em}.sub{font-size:10px;color:#4d5b55;margin-top:2px}table{width:100%;border-collapse:collapse;margin-top:8px}th,td{border:1px solid #444;padding:6px;vertical-align:top}th{background:#eef2f0;text-align:left;font-weight:800}.line{height:42px}.reason{height:78px}.approval{height:56px}.right{text-align:right}.center{text-align:center}.small{font-size:10px;color:#444}.deleted{margin-top:8px;border:2px solid #777;background:#eee;padding:7px;font-weight:800}.foot{margin-top:8px;font-size:10px;color:#555}@media print{button{display:none}}</style></head><body><div class="sheet"><div class="head"><div class="title">NEKKO 備品購入申請書<div class="sub">Equipment Purchase Request</div></div></div>${app&&(app.deleted||app.status==='削除済')?`<div class="deleted">削除済み記録　削除日時：${esc(app.deletedAt||'-')}　削除理由：${esc(app.deleteReason||'-')}</div>`:''}<table><tr><th style="width:18%">綴り番号<br><span class="small">（申請No.）</span></th><td style="width:32%">${blank?'（管理者記入）':esc(app.id||'')}</td><th style="width:18%">申請日</th><td>${blank?'　年　月　日':esc((app.createdAt||'').slice(0,10))}</td></tr><tr><th>申請者</th><td>${blank?'':esc(app.applicantName||'')}</td><th>店舗・部署</th><td>${blank?'':esc(app.department||'')}</td></tr><tr><th>希望納期</th><td>${blank?'':esc(app.desiredDate||'')}</td><th>緊急度</th><td>${blank?'□ 通常　□ 急ぎ　□ 至急':esc(app.urgency||'通常')}</td></tr></table><table><tr><th style="width:31%">品名・型番</th><th style="width:25%">購入先</th><th style="width:10%">数量</th><th style="width:16%">単価(税込)</th><th style="width:18%">金額</th></tr>${itemRows.map(i=>`<tr class="line"><td>${esc(i.name||'')}</td><td>${esc(i.store||'')}</td><td class="center">${esc(i.quantity||'')}</td><td class="right">${i.price!==''&&i.price!=null?money(i.price):''}</td><td class="right">${subtotal(i)?'¥'+subtotal(i):''}</td></tr>`).join('')}<tr><th colspan="4" class="right">合計金額（税込）</th><td class="right"><b>${blank?'':money(app.total)}</b></td></tr></table><table><tr><th style="width:18%">購入理由・用途</th><td class="reason">${blank?'':esc(app.reason||'').replace(/\n/g,'<br>')}</td></tr><tr><th>備考</th><td class="line">${blank?'':esc(app.notes||'').replace(/\n/g,'<br>')}</td></tr></table><table><tr><th style="width:18%">管理者確認</th><td class="approval">□ 承認　□ 却下　　決裁者：${blank?'':esc(app.managerName||'')}　　日付：${blank?'':esc(app.decisionDate||'')}<br>コメント：${blank?'':esc(app.managerComment||'')}</td></tr></table><div class="foot">※手書き用は綴り番号（申請No.）を管理者が記入してください。電子申請ではシステムが綴り番号を自動採番します。削除した電子申請も番号を再利用せず、削除済みとして履歴に残ります。<br>NEKKO 備品購入申請 v1.2.0</div></div><script>window.onload=()=>{setTimeout(()=>window.print(),150)}<\/script></body></html>`;
+  const w=window.open('','_blank');if(!w){toast('印刷画面を開けません。ポップアップを許可してください。',true);return}w.document.open();w.document.write(h);w.document.close();
+}
 
 // request form
 $('#newRequestBtn').addEventListener('click',()=>{if(!needUrl())return;resetRequest();openModal('#requestModal')});
+$('#printBlankBtn').addEventListener('click',()=>printApplication(null));
 $('#cancelRequestBtn').addEventListener('click',()=>closeModal('#requestModal'));$('#addItemBtn').addEventListener('click',()=>addItem());
+$('#printCurrentBtn').addEventListener('click',()=>{const items=collectItems();printApplication({id:'未採番',createdAt:new Date().toISOString().slice(0,10),applicantName:$('#applicantName').value.trim(),department:$('#department').value,desiredDate:$('#desiredDate').value,urgency:$('#urgency').value,reason:$('#reason').value.trim(),notes:$('#notes').value.trim(),items,total:items.reduce((sum,x)=>sum+x.price*x.quantity,0),status:'申請前'});});
 function resetRequest(){
   $('#requestForm').reset();$('#applicantName').value=localStorage.getItem(STORAGE.name)||'';$('#department').value=localStorage.getItem(STORAGE.dept)||'';$('#items').innerHTML='';addItem();calcTotal();
 }
@@ -218,7 +233,7 @@ $('#requestForm').addEventListener('submit',async e=>{
   try{
     const items=collectItems();if(!items.length)throw new Error('購入品目を入力してください。');
     const applicantName=$('#applicantName').value.trim(),department=$('#department').value;localStorage.setItem(STORAGE.name,applicantName);localStorage.setItem(STORAGE.dept,department);
-    const attachment=await imageData($('#attachment').files[0]);const d=await api('create',{applicantName,department,desiredDate:$('#desiredDate').value,urgency:$('#urgency').value,reason:$('#reason').value.trim(),items,attachment});addMyRef(d.id,d.viewToken);closeModal('#requestModal');const mail=d.notification&&d.notification.email;if(mail&&mail.sent)toast(`申請しました：${d.id}／管理者へメール通知済み`);else if(mail&&mail.configured)toast(`申請しました：${d.id}／メール通知のみ失敗`,true);else toast(`申請しました：${d.id}／管理者メールは未設定`);await loadMine();
+    const attachment=await imageData($('#attachment').files[0]);const d=await api('create',{applicantName,department,desiredDate:$('#desiredDate').value,urgency:$('#urgency').value,reason:$('#reason').value.trim(),notes:$('#notes').value.trim(),items,attachment});closeModal('#requestModal');const mail=d.notification&&d.notification.email;if(mail&&mail.sent)toast(`申請しました：${d.id}／管理者へメール通知済み`);else if(mail&&mail.configured)toast(`申請しました：${d.id}／申請は保存済み・メール通知のみ失敗`,true);else toast(`申請しました：${d.id}／管理者メールは未設定`);
   }catch(err){toast(err.message,true)}finally{btn.disabled=false;btn.textContent='申請を提出'}
 });
 
@@ -253,15 +268,10 @@ $('#testNotificationBtn').addEventListener('click',async()=>{
 $('#changePasswordBtn').addEventListener('click',()=>{$('#passwordForm').reset();openModal('#passwordModal')});$('#cancelPasswordBtn').addEventListener('click',()=>closeModal('#passwordModal'));
 $('#passwordForm').addEventListener('submit',async e=>{e.preventDefault();const cur=$('#currentPassword').value,np=$('#newPassword').value;if(np!==$('#newPassword2').value){toast('新しいパスワードが一致しません',true);return}try{await api('changePassword',{currentPassword:cur,newPassword:np});state.adminPassword=np;closeModal('#passwordModal');toast('パスワードを変更しました')}catch(err){toast(err.message,true)}});
 
-// settings
-$('#settingsBtn').addEventListener('click',()=>{$('#gasUrl').value=gasUrl();$('#connectionResult').textContent='';openModal('#settingsModal')});$('#cancelSettingsBtn').addEventListener('click',()=>closeModal('#settingsModal'));
-$('#saveSettingsBtn').addEventListener('click',()=>{const u=$('#gasUrl').value.trim();if(!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec/.test(u)){toast('GASの /exec URLを入力してください',true);return}localStorage.setItem(STORAGE.url,u);$('#apiNotice').classList.add('hidden');closeModal('#settingsModal');toast('接続先を保存しました');loadMine()});
-$('#testConnectionBtn').addEventListener('click',async()=>{const old=localStorage.getItem(STORAGE.url),u=$('#gasUrl').value.trim();if(!u){toast('URLを入力してください',true);return}localStorage.setItem(STORAGE.url,u);$('#connectionResult').textContent='接続確認中...';try{await api('health');$('#connectionResult').textContent='✓ 接続できました';}catch(e){$('#connectionResult').textContent='× '+e.message}if(old===null)localStorage.removeItem(STORAGE.url);else localStorage.setItem(STORAGE.url,old)});
-
 // outside modal tap intentionally disabled on mobile to prevent accidental loss.
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.overlay:not(.hidden)').forEach(x=>closeModal('#'+x.id))});
 window.addEventListener('unhandledrejection',e=>{console.error(e.reason)});
-loadMine();
+if(!needUrl()){}
 </script>
 </body>
 </html>
