@@ -1,1006 +1,267 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEKKO株式会社 備品購入申請・決裁ワークフロー</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#f0fdf4',
-              100: '#dcfce7',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    /* 印刷時のスタイル設定 */
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #print-area, #print-area * {
-        visibility: visible;
-      }
-      #print-area {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        margin: 0;
-        padding: 20px;
-        background: white;
-        color: black;
-      }
-      .no-print {
-        display: none !important;
-      }
-    }
-
-    /* スマホでの横スクロールを滑らかにする設定 */
-    .table-container {
-      -webkit-overflow-scrolling: touch;
-    }
-    
-    /* モバイル環境での横幅強制確保（文字の縦並び防止） */
-    @media (max-width: 640px) {
-      .min-w-mobile-table {
-        min-width: 800px;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>NEKKO 備品購入申請 v1.1.0</title>
+<style>
+:root{--blue:#0b63ce;--blue2:#eaf3ff;--navy:#10233f;--line:#bfd3ea;--bg:#f5f8fc;--green:#18794e;--red:#b42318;--amber:#a15c00;--white:#fff;--shadow:0 8px 28px rgba(20,47,84,.12)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{font-size:16px}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;background:var(--bg);color:var(--navy);line-height:1.55}button,input,select,textarea{font:inherit}button{touch-action:manipulation;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}.hidden{display:none!important}.app{max-width:1100px;margin:0 auto;padding:16px 16px 96px}.top{position:sticky;top:0;z-index:20;background:rgba(245,248,252,.96);backdrop-filter:blur(8px);padding:10px 0 12px;border-bottom:1px solid #d8e4f1}.headrow{display:flex;gap:12px;align-items:center;justify-content:space-between}.brand{font-size:20px;font-weight:900;letter-spacing:.01em}.brand small{display:block;font-size:12px;color:#57708d;font-weight:700}.mode{display:flex;gap:6px;background:#e8eef5;padding:4px;border-radius:12px}.mode button{border:0;background:transparent;color:#3c5571;padding:10px 14px;border-radius:9px;font-weight:800;min-height:44px}.mode button.active{background:#fff;color:var(--blue);box-shadow:0 2px 10px rgba(18,49,84,.12)}.hero{margin:16px 0;background:linear-gradient(135deg,#eaf3ff,#fff);border:2px solid #91bced;border-radius:18px;padding:16px}.hero h1{font-size:20px;margin:0 0 4px}.hero p{margin:0;color:#48637f;font-weight:650}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.btn{border:0;border-radius:12px;min-height:46px;padding:10px 16px;font-weight:850;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn.primary{background:var(--blue);color:#fff}.btn.secondary{background:#fff;color:var(--navy);border:2px solid var(--line)}.btn.green{background:var(--green);color:#fff}.btn.red{background:var(--red);color:#fff}.btn.ghost{background:#eaf0f7;color:#233d5b}.btn.full{width:100%}.card{background:#fff;border:2px solid #c7d9ed;border-radius:18px;padding:16px;box-shadow:0 3px 14px rgba(23,52,86,.06);margin:12px 0}.card h2,.card h3{margin-top:0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1.3fr 1fr .8fr;gap:10px}.field{margin:0 0 14px}.field label{display:block;font-weight:850;margin-bottom:6px}.req{color:var(--red)}input,select,textarea{width:100%;min-height:48px;border:2px solid #afc7e1;border-radius:12px;padding:10px 12px;background:#fff;color:#10233f;outline:none}textarea{min-height:110px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(11,99,206,.12)}.item{border:2px solid #d3e0ee;background:#f9fbfe;border-radius:14px;padding:12px;margin-bottom:10px}.itemtop{display:flex;justify-content:space-between;gap:10px;align-items:center}.itemtotal{font-weight:900;color:var(--blue)}.remove{border:0;background:#fee4e2;color:#8b1e16;border-radius:9px;padding:8px 11px;font-weight:800}.total{display:flex;justify-content:space-between;align-items:center;background:#eef6ff;border:2px solid #a7c9ef;border-radius:14px;padding:14px;margin:12px 0;font-weight:900}.total strong{font-size:24px;color:#064ea7}.notice{padding:12px 14px;border-radius:12px;background:#fff8e8;border:2px solid #f0ca73;color:#6e4700;font-weight:700}.empty{text-align:center;padding:28px 12px;color:#627a93;font-weight:700}.list{display:grid;gap:10px}.appcard{background:#fff;border:2px solid #c9d9e9;border-radius:16px;padding:14px}.appcard .row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.meta{color:#607891;font-size:13px;font-weight:650}.money{font-size:18px;font-weight:900}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:900}.badge.pending{background:#fff2cc;color:#7a4a00}.badge.approved{background:#dcfce7;color:#14532d}.badge.rejected{background:#fee2e2;color:#7f1d1d}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters>*{width:auto;min-width:130px}.overlay{position:fixed;inset:0;z-index:60;background:rgba(10,25,44,.52);display:flex;align-items:flex-end;justify-content:center;padding:16px}.modal{width:min(680px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modalActions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}.detailbox{background:#f7faff;border:1px solid #d2e1f0;border-radius:12px;padding:12px;margin:8px 0;white-space:pre-wrap}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:100;background:#10233f;color:#fff;border-radius:12px;padding:12px 16px;font-weight:800;box-shadow:var(--shadow);max-width:calc(100vw - 32px)}.statusline{font-size:13px;color:#566f8b;font-weight:700}.settingsLink{border:0;background:transparent;color:#4e6c8b;text-decoration:underline;padding:8px}.desktopTable{width:100%;border-collapse:collapse}.desktopTable th,.desktopTable td{border-bottom:1px solid #d7e3ef;padding:10px;text-align:left;vertical-align:top}.desktopTable th{background:#eef5fc;font-size:13px}.mobileOnly{display:none}
+@media(max-width:720px){html{font-size:17px}.app{padding:10px 10px 92px}.top{padding-top:6px}.headrow{align-items:flex-start;flex-direction:column}.brand{font-size:19px}.mode{width:100%}.mode button{flex:1;padding:10px 8px}.hero{margin:10px 0;padding:14px}.hero h1{font-size:19px}.grid2,.grid3{grid-template-columns:1fr}.btn{min-height:50px}.toolbar>.btn{flex:1 1 140px}.card{padding:13px;border-radius:16px}.item{padding:11px}.desktopOnly{display:none!important}.mobileOnly{display:block}.overlay{padding:0;align-items:flex-end}.modal{border-radius:20px 20px 0 0;max-height:92vh;padding:16px}.modalActions{position:sticky;bottom:-16px;background:#fff;padding:12px 0 16px}.modalActions .btn{flex:1}.filters>*{width:100%;min-width:0}.appcard .row{flex-direction:column}.money{font-size:20px}input,select,textarea{font-size:16px}}
+</style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans antialiased">
-
-  <!-- ★ヘッダー：モバイルでは縦積みに対応して崩れを防止 -->
-  <header class="bg-white border-b-2 border-slate-300 sticky top-0 z-30 shadow-xs no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:h-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-      
-      <!-- ロゴとタイトル -->
-      <div class="flex items-center space-x-3 w-full sm:w-auto">
-        <!-- NEKKOロゴアイコン（濃いグリーン） -->
-        <div class="w-10 h-10 rounded-xl bg-emerald-700 flex items-center justify-center text-white shadow-md shadow-emerald-700/20 shrink-0">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-          </svg>
-        </div>
-        <div>
-          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">NEKKO株式会社 備品購入申請</h1>
-          <p class="text-[11px] text-slate-500">店舗・部門向け 決裁ワークフロー</p>
-        </div>
-      </div>
-
-      <!-- モード切替と新規作成ボタン（スマホでは横並びで画面幅に収める） -->
-      <div class="flex items-center justify-between w-full sm:w-auto space-x-2 sm:space-x-3">
-        <!-- Role Switcher（グレーの枠線） -->
-        <div class="bg-slate-100 p-1 rounded-xl flex items-center border-2 border-slate-300 text-[10px] sm:text-xs font-medium w-full sm:w-auto">
-          <button id="role-applicant-btn" onclick="switchRole('applicant')" class="flex-1 sm:flex-none px-2 sm:px-3 py-1.5 rounded-lg transition-all flex items-center justify-center space-x-1 sm:space-x-1.5 bg-emerald-600 text-white shadow-sm font-bold whitespace-nowrap">
-            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            <span id="role-applicant-text">申請モード中</span>
-          </button>
-          <button id="role-manager-btn" onclick="attemptSwitchToManager()" class="flex-1 sm:flex-none px-2 sm:px-3 py-1.5 rounded-lg transition-all flex items-center justify-center space-x-1 sm:space-x-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-200 font-medium whitespace-nowrap">
-            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-            </svg>
-            <span id="role-manager-text">決裁モード</span>
-            <span id="pending-badge-header" class="hidden ml-1 px-1.5 py-0.2 bg-amber-500 text-white text-[9px] font-bold rounded-full">0</span>
-          </button>
-        </div>
-
-        <!-- New Application Button（濃いグリーン） -->
-        <button onclick="openNewModal()" class="shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-[11px] sm:text-sm font-bold rounded-xl shadow-md shadow-emerald-700/20 transition flex items-center space-x-1 sm:space-x-1.5 whitespace-nowrap">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-          </svg>
-          <span class="hidden sm:inline">新規申請を作成</span>
-          <span class="sm:hidden">新規</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6">
-
-    <!-- Role Context, User Filter & Manager Limit Banner -->
-    <div id="role-banner" class="bg-sky-50 border-2 border-sky-400 rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
-      <div class="flex items-center space-x-3">
-        <div id="role-icon" class="p-2 bg-sky-500 text-white rounded-xl shadow-xs shrink-0">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-        </div>
-        <div>
-          <h2 id="role-title" class="text-sm font-bold text-sky-950">現在は【申請者ビュー】を表示しています</h2>
-          <p id="role-desc" class="text-xs text-sky-800 font-medium mt-0.5">必要な備品の明細を入力し、管理者に伺いを提出できます。</p>
-        </div>
-      </div>
-      
-      <!-- あなたのお名前（申請者フィルタ）設定エリア -->
-      <div id="current-user-container" class="flex flex-col w-full sm:w-auto sm:flex-row sm:items-center gap-2 text-xs bg-white/90 p-2 rounded-xl border-2 border-sky-300 shadow-2xs">
-        <div class="flex items-center space-x-1.5 font-bold text-sky-950 whitespace-nowrap">
-          <span>👤 あなたのお名前:</span>
-        </div>
-        <div class="flex items-center space-x-1.5 w-full sm:w-auto">
-          <div class="relative w-full sm:w-auto">
-            <input type="text" id="current-user-input" placeholder="例: 山田 太郎" onchange="updateCurrentUser(this.value)" class="w-full sm:w-44 px-2.5 py-1.5 pr-7 rounded-lg border-2 border-sky-300 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white text-sky-950 font-bold shadow-2xs placeholder:text-slate-400 placeholder:font-normal text-xs">
-            <button id="clear-user-btn" type="button" onclick="clearCurrentUser()" title="解除して全員の申請を表示" class="hidden absolute right-1.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-rose-600 p-0.5 rounded-full hover:bg-slate-100">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-          </div>
-          <span id="user-filter-status" class="text-[10px] text-slate-500 whitespace-nowrap hidden sm:inline">(入力で自分の申請のみ表示)</span>
-        </div>
-      </div>
-
-      <!-- 管理者専用: 立替払い上限設定 & サンプル消去エリア -->
-      <div id="manager-limit-container" class="hidden flex flex-col sm:flex-row sm:items-center gap-3 text-xs bg-white/95 p-2 px-3 rounded-xl border-2 border-emerald-400 shadow-2xs w-full sm:w-auto">
-        <div class="flex items-center justify-between w-full sm:w-auto">
-          <div class="flex items-center space-x-1 font-bold text-emerald-950">
-            <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <span>立替上限額:</span>
-          </div>
-          <div class="flex items-center space-x-1.5 ml-2">
-            <div class="relative">
-              <span class="absolute left-2 top-1.5 text-xs font-bold text-slate-500">¥</span>
-              <input type="number" id="manager-limit-input" min="0" step="1000" class="pl-5 pr-2 py-1 rounded-lg border-2 border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-emerald-950 font-bold w-24 text-xs shadow-2xs" onchange="saveReimburseLimit(this.value)">
-            </div>
-            <button type="button" onclick="saveReimburseLimit(document.getElementById('manager-limit-input').value)" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg text-[11px] transition shadow-2xs">
-              保存
-            </button>
-          </div>
-        </div>
-        <!-- サンプルデータ一括削除ボタン -->
-        <button id="clear-sample-btn" type="button" onclick="clearAllSampleData()" class="w-full sm:w-auto px-2.5 py-1.5 bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 border border-slate-300 hover:border-rose-300 font-bold rounded-lg text-[11px] transition flex items-center justify-center space-x-1">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-          <span>🧪 サンプルデータ全消去</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Statistics Overview Cards (スマホでも2列レイアウトを維持) -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-      <div class="bg-white rounded-2xl p-3 sm:p-4 border-2 border-slate-300 shadow-xs flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-2 sm:space-y-0 sm:space-x-3">
-        <div class="p-2 sm:p-3 bg-amber-50 text-amber-600 rounded-xl shrink-0">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        </div>
-        <div>
-          <p class="text-[10px] sm:text-xs text-slate-700 font-bold">審査中（申請中）</p>
-          <p id="stat-pending" class="text-lg sm:text-xl font-black text-slate-900 mt-0.5">0 件</p>
-        </div>
-      </div>
-      <div class="bg-white rounded-2xl p-3 sm:p-4 border-2 border-slate-300 shadow-xs flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-2 sm:space-y-0 sm:space-x-3">
-        <div class="p-2 sm:p-3 bg-emerald-50 text-emerald-600 rounded-xl shrink-0">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-        </div>
-        <div>
-          <p class="text-[10px] sm:text-xs text-slate-700 font-bold">承認済み</p>
-          <p id="stat-approved" class="text-lg sm:text-xl font-black text-emerald-700 mt-0.5">0 件</p>
-        </div>
-      </div>
-      <div class="bg-white rounded-2xl p-3 sm:p-4 border-2 border-slate-300 shadow-xs flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-2 sm:space-y-0 sm:space-x-3">
-        <div class="p-2 sm:p-3 bg-rose-50 text-rose-600 rounded-xl shrink-0">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </div>
-        <div>
-          <p class="text-[10px] sm:text-xs text-slate-700 font-bold">却下・差戻し</p>
-          <p id="stat-rejected" class="text-lg sm:text-xl font-black text-rose-700 mt-0.5">0 件</p>
-        </div>
-      </div>
-      <div class="bg-white rounded-2xl p-3 sm:p-4 border-2 border-slate-300 shadow-xs flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left space-y-2 sm:space-y-0 sm:space-x-3">
-        <div class="p-2 sm:p-3 bg-sky-50 text-sky-600 rounded-xl shrink-0">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        </div>
-        <div>
-          <p class="text-[10px] sm:text-xs text-slate-700 font-bold">承認済 合計金額</p>
-          <p id="stat-total-amount" class="text-base sm:text-xl font-black text-slate-900 mt-0.5">¥0</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Main List Card -->
-    <div class="bg-white rounded-2xl border-2 border-slate-300 shadow-xs overflow-hidden flex flex-col">
-      <!-- 管理者向けアラートエリア -->
-      <div id="manager-alert" class="hidden bg-amber-50 border-b-2 border-amber-300 p-3 px-4 flex items-center space-x-2">
-        <svg class="w-5 h-5 text-amber-600 animate-pulse shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-        <span class="text-[11px] sm:text-sm font-bold text-amber-900">未決裁が <span id="alert-pending-count" class="text-sm sm:text-base text-rose-600 font-black">0</span> 件あります。確認・決裁してください。</span>
-      </div>
-
-      <!-- Table Header & Controls -->
-      <div class="p-3 sm:p-5 border-b-2 border-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h3 class="text-base font-bold text-slate-900">申請案件一覧</h3>
-          <p class="text-[11px] sm:text-xs text-slate-500">案件タップで詳細確認・決裁が行えます</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-2">
-          <!-- フィルタータブ (進行中 / 履歴) -->
-          <div class="inline-flex rounded-xl bg-slate-100 p-1 text-xs border border-slate-300">
-            <button onclick="setFilter('active')" id="filter-active" class="flex-1 sm:flex-none px-3 py-1.5 rounded-lg bg-white shadow-xs font-bold text-slate-900">進行中・要対応</button>
-            <button onclick="setFilter('history')" id="filter-history" class="flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium">履歴 (済・取消)</button>
-          </div>
-          <!-- 店舗・部署フィルター -->
-          <select id="dept-filter" onchange="applyFilters()" class="text-xs bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-sky-500 w-full sm:w-auto">
-            <option value="">すべての店舗・部署</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- ★Application Table (モバイル横スクロール対応) -->
-      <div class="overflow-x-auto table-container w-full">
-        <!-- min-w-mobile-table クラスでスマホ時も最低横幅を確保し、文字の縦並びを防ぐ -->
-        <table class="w-full text-left text-sm text-slate-800 min-w-mobile-table whitespace-nowrap">
-          <thead class="bg-slate-200/70 text-[11px] sm:text-xs font-bold text-slate-900 uppercase border-b-2 border-slate-300">
-            <tr>
-              <th scope="col" class="py-3 px-4">綴りNo / 申請日</th>
-              <th scope="col" class="py-3 px-4">申請区分 / 部署</th>
-              <th scope="col" class="py-3 px-4">申請者</th>
-              <th scope="col" class="py-3 px-4">代表品目・件数</th>
-              <th scope="col" class="py-3 px-4">申請金額 (税込)</th>
-              <th scope="col" class="py-3 px-4">希望納期 / 購入日</th>
-              <th scope="col" class="py-3 px-4">ステータス</th>
-              <th scope="col" class="py-3 px-4 text-right">操作</th>
-            </tr>
-          </thead>
-          <tbody id="application-tbody" class="divide-y divide-slate-200 font-normal text-xs sm:text-sm">
-            <!-- Dynamically populated rows -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Empty State -->
-      <div id="empty-state" class="hidden p-8 sm:p-12 text-center">
-        <svg class="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-        <h4 class="mt-3 text-sm font-semibold text-slate-700">対象の申請データがありません</h4>
-        <p class="mt-1 text-[11px] sm:text-xs text-slate-400">「新規申請を作成」から購入申請を登録してください。</p>
-      </div>
-    </div>
-  </main>
-
-  <!-- New Application Modal -->
-  <div id="new-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/60 backdrop-blur-sm hidden overflow-y-auto">
-    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-3xl w-full max-h-[96vh] sm:max-h-[92vh] flex flex-col my-auto border-2 border-slate-400 overflow-hidden">
-      <!-- Modal Header -->
-      <div class="px-4 sm:px-6 py-3 sm:py-4 bg-slate-100 border-b-2 border-slate-300 flex items-center justify-between shrink-0">
-        <div class="flex items-center space-x-2">
-          <span class="hidden sm:flex w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 items-center justify-center font-bold">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          </span>
-          <div>
-            <h3 class="text-sm sm:text-base font-bold text-slate-900">備品購入申請書の作成</h3>
-            <p class="text-[10px] sm:text-xs text-slate-500">必要な品目と購入理由を入力して申請します</p>
-          </div>
-        </div>
-        <button onclick="closeNewModal()" type="button" class="text-slate-400 hover:text-slate-600 p-1.5 sm:p-2 rounded-xl hover:bg-slate-200/60 transition bg-white sm:bg-transparent border border-slate-300 sm:border-transparent">
-          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-      </div>
-
-      <!-- Modal Body (Form) -->
-      <form id="purchase-form" onsubmit="handleFormSubmit(event)" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
-        
-        <!-- 申請区分（通常事前申請 or 急ぎ立替払い） -->
-        <div class="bg-amber-50/80 border-2 border-amber-300 p-3 sm:p-4 rounded-2xl">
-          <label class="block text-[11px] sm:text-xs font-bold text-amber-950 mb-2">申請区分（購入のタイミング） <span class="text-rose-500">*</span></label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-xs">
-            <label class="flex items-center space-x-2.5 p-2.5 sm:p-3 rounded-xl border-2 border-slate-300 bg-white cursor-pointer hover:border-emerald-500 transition has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/60 has-[:checked]:text-emerald-950">
-              <input type="radio" name="request-type" value="事前申請" checked onchange="toggleReimbursementFields(false)" class="text-emerald-700 focus:ring-emerald-600 w-4 h-4">
-              <div>
-                <span class="font-bold block text-xs sm:text-sm">事前申請（通常・おすすめ）</span>
-                <span class="text-[10px] sm:text-[11px] text-slate-500">管理者の決裁後に発注します</span>
-              </div>
-            </label>
-            <label class="flex items-center space-x-2.5 p-2.5 sm:p-3 rounded-xl border-2 border-slate-300 bg-white cursor-pointer hover:border-amber-500 transition has-[:checked]:border-amber-600 has-[:checked]:bg-amber-100/60 has-[:checked]:text-amber-950">
-              <input type="radio" name="request-type" value="立替精算" onchange="toggleReimbursementFields(true)" class="text-amber-700 focus:ring-amber-600 w-4 h-4">
-              <div>
-                <span class="font-bold block text-amber-900 flex items-center space-x-1 text-xs sm:text-sm">
-                  <span>急ぎ立替払い（事後精算）</span>
-                  <span class="px-1.5 py-0.2 bg-rose-600 text-white rounded text-[9px] sm:text-[10px]">要領収書</span>
-                </span>
-                <span class="text-[10px] sm:text-[11px] text-amber-800">購入を急ぐため自腹立替済の精算</span>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <!-- 立替払い専用の入力フィールド（初期非表示） -->
-        <div id="reimbursement-box" class="hidden p-3 sm:p-4 bg-amber-100/50 border-2 border-amber-400 rounded-2xl space-y-3">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between text-xs font-bold text-amber-900 gap-2">
-            <div class="flex items-center space-x-1.5">
-              <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-              <span>立替精算情報（急ぎで購入した日付と精算希望）</span>
-            </div>
-            <!-- 管理者設定の上限額案内バッジ -->
-            <span id="reimburse-limit-badge" class="self-start sm:self-auto px-2 py-0.5 rounded-lg bg-amber-200 text-amber-950 border border-amber-400 text-[10px] sm:text-[11px] font-bold">
-              上限: ¥10,000まで
-            </span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div>
-              <label class="block font-bold text-slate-800 mb-1">立替購入日（領収書日付） <span class="text-rose-500">*</span></label>
-              <input type="date" id="reimburse-paid-date" class="w-full text-xs sm:text-sm font-medium bg-white border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500 focus:outline-none">
-            </div>
-            <div>
-              <label class="block font-bold text-slate-800 mb-1">精算希望方法 <span class="text-rose-500">*</span></label>
-              <select id="reimburse-method" class="w-full text-xs sm:text-sm font-bold bg-white border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500 focus:outline-none">
-                <option value="現金手渡し精算">現金手渡し精算（店舗レジ等）</option>
-                <option value="次回給与合算振込">次回給与支払い時に合算振込</option>
-                <option value="経費口座振込">個人指定口座へ別振込</option>
-              </select>
-            </div>
-          </div>
-          <!-- 上限オーバー時の警告枠（自動表示） -->
-          <div id="reimburse-limit-warning" class="hidden p-2.5 rounded-xl bg-rose-100 border-2 border-rose-400 text-rose-900 text-[11px] sm:text-xs font-bold flex items-start sm:items-center space-x-1.5 sm:space-x-2">
-            <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5 sm:mt-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            <span id="reimburse-limit-warning-text">立替払いの上限金額を超えています。</span>
-          </div>
-          <p class="text-[10px] sm:text-[11px] text-amber-800 font-bold bg-white/70 p-2 rounded-lg border border-amber-300">
-            ⚠️ 必ず下の「画像・見積書の添付」枠に【レシート・領収書の写真】を添付してください。
-          </p>
-        </div>
-
-        <!-- Applicant Information Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-          <div>
-            <label class="block text-[11px] sm:text-xs font-bold text-slate-800 mb-1">申請者氏名 <span class="text-rose-500">*</span></label>
-            <input type="text" id="applicant-name" required placeholder="山田 太郎" class="w-full text-xs sm:text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-[11px] sm:text-xs font-bold text-slate-800 mb-1">店舗・部署名 <span class="text-rose-500">*</span></label>
-            <input type="text" id="applicant-dept" list="dept-list" required placeholder="例: KOTOKA" class="w-full text-xs sm:text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-            <datalist id="dept-list">
-              <!-- Dynamically populated via JS -->
-            </datalist>
-          </div>
-          <div>
-            <label id="date-label" class="block text-[11px] sm:text-xs font-bold text-slate-800 mb-1">購入希望日・納期 <span class="text-rose-500">*</span></label>
-            <input type="date" id="desired-date" required class="w-full text-xs sm:text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-          </div>
-        </div>
-
-        <!-- Items Section -->
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <h4 class="text-[11px] sm:text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center space-x-1.5">
-              <span>購入明細リスト</span>
-              <span class="text-[10px] font-normal text-slate-500 hidden sm:inline">（複数品目を一括申請できます）</span>
-            </h4>
-            <button type="button" onclick="addItemRow()" class="text-[11px] sm:text-xs text-emerald-800 hover:text-emerald-900 font-bold flex items-center space-x-1 px-2.5 py-1.5 rounded-lg bg-emerald-100 hover:bg-emerald-200 transition">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-              <span>品目を追加</span>
-            </button>
-          </div>
-
-          <div class="border-2 border-slate-300 rounded-xl sm:rounded-2xl overflow-hidden bg-slate-50/50">
-            <div id="items-container" class="divide-y divide-slate-200 p-2 space-y-2">
-              <!-- Item Row Template generated via JS -->
-            </div>
-          </div>
-
-          <!-- Total Calculation Display -->
-          <div class="mt-3 flex justify-end">
-            <div class="bg-emerald-50 border-2 border-emerald-300 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl flex items-center space-x-3 sm:space-x-4 w-full sm:w-auto justify-between sm:justify-start">
-              <span class="text-xs font-bold text-emerald-900">申請合計金額(税込):</span>
-              <span id="form-total-amount" class="text-lg sm:text-xl font-black text-emerald-700">¥0</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Reasons and Delivery Destination -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          <div>
-            <label class="block text-[11px] sm:text-xs font-bold text-slate-800 mb-1">購入理由・利用目的 <span class="text-rose-500">*</span></label>
-            <textarea id="purchase-reason" rows="3" required placeholder="例: 営業チーム増員に伴う備品の補充。" class="w-full text-xs sm:text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
-          </div>
-          <div class="space-y-3">
-            <div>
-              <label class="block text-[11px] sm:text-xs font-bold text-slate-800 mb-1">納品場所・設置場所</label>
-              <input type="text" id="delivery-location" placeholder="例: KOTOKA バックヤード 備品棚" class="w-full text-xs sm:text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-            </div>
-            <div>
-              <label class="block text-[11px] sm:text-xs font-bold text-slate-800 mb-1">緊急度</label>
-              <div class="flex flex-wrap items-center gap-2 sm:space-x-3 text-xs pt-1">
-                <label class="flex items-center space-x-1 cursor-pointer bg-white px-2 py-1 rounded-lg border border-slate-200">
-                  <input type="radio" name="urgency" value="通常" checked class="text-emerald-600 focus:ring-emerald-500">
-                  <span class="text-slate-800 font-medium">通常</span>
-                </label>
-                <label class="flex items-center space-x-1 cursor-pointer bg-amber-50 px-2 py-1 rounded-lg border border-amber-200">
-                  <input type="radio" name="urgency" value="至急" class="text-amber-600 focus:ring-amber-500">
-                  <span class="text-amber-700 font-bold">至急</span>
-                </label>
-                <label class="flex items-center space-x-1 cursor-pointer bg-rose-50 px-2 py-1 rounded-lg border border-rose-200">
-                  <input type="radio" name="urgency" value="特急" class="text-rose-600 focus:ring-rose-500">
-                  <span class="text-rose-700 font-bold">特急</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 添付画像エリア -->
-        <div class="border-2 border-dashed border-slate-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 bg-slate-50/70">
-          <label class="block text-[11px] sm:text-xs font-bold text-slate-800 mb-1">画像・見積書の添付（任意 / 立替精算時は必須）</label>
-          <p class="text-[10px] sm:text-[11px] text-slate-500 mb-3">破損写真や見積書・領収書を添付できます（スマホカメラ対応）</p>
-          
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-            <label class="cursor-pointer w-full sm:w-auto px-4 py-2.5 sm:py-2 bg-white hover:bg-slate-100 text-slate-800 border-2 border-slate-300 rounded-xl text-xs font-bold transition flex items-center justify-center sm:justify-start space-x-2 shadow-xs">
-              <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-              <span>画像を選択 / カメラ撮影</span>
-              <input type="file" id="attachment-input" accept="image/*" class="hidden" onchange="handleImageSelection(event)">
-            </label>
-
-            <!-- 選択された画像のプレビュー -->
-            <div id="image-preview-container" class="hidden w-full sm:w-auto items-center justify-between sm:justify-start space-x-3 bg-white px-3 py-2 rounded-xl border-2 border-slate-300">
-              <div class="flex items-center space-x-3">
-                <img id="image-preview-thumb" src="" alt="添付プレビュー" class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-lg border border-slate-200">
-                <div class="text-xs">
-                  <p id="image-preview-name" class="font-bold text-slate-800 max-w-[140px] sm:max-w-[180px] truncate">-</p>
-                  <p id="image-preview-size" class="text-slate-400 text-[10px]">-</p>
-                </div>
-              </div>
-              <button type="button" onclick="clearSelectedImage()" title="画像を削除" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Form Submit Footer -->
-        <div class="pt-4 border-t-2 border-slate-200 flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-3 sm:gap-3 shrink-0">
-          <button type="button" onclick="closeNewModal()" class="w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-xl border-2 border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition text-center">
-            キャンセル
-          </button>
-          <button type="submit" class="w-full sm:w-auto px-5 py-3 sm:py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-xs font-bold text-white shadow-md shadow-emerald-700/20 transition flex items-center justify-center space-x-1.5">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span>申請を提出する</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Detail & Decision Modal -->
-  <div id="detail-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/60 backdrop-blur-sm hidden overflow-y-auto">
-    <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-3xl w-full max-h-[96vh] sm:max-h-[94vh] flex flex-col my-auto border-2 border-slate-400 overflow-hidden">
-      <!-- Detail Header -->
-      <div class="px-4 sm:px-6 py-3 sm:py-4 bg-slate-100 border-b-2 border-slate-300 flex items-center justify-between shrink-0">
-        <div class="flex items-center space-x-2 sm:space-x-3">
-          <span id="detail-badge" class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">ステータス</span>
-          <div>
-            <h3 id="detail-title" class="text-xs sm:text-base font-bold text-slate-900 line-clamp-1">申請詳細</h3>
-            <p id="detail-id-date" class="text-[9px] sm:text-xs text-slate-500">綴りNo: - | 申請日: -</p>
-          </div>
-        </div>
-        <div class="flex items-center space-x-1 sm:space-x-2">
-          <!-- Print button -->
-          <button onclick="printCurrentApplication()" title="A4印刷プレビュー" class="hidden sm:flex px-3 py-1.5 border-2 border-slate-300 text-slate-800 hover:bg-slate-200 rounded-xl text-xs font-bold items-center space-x-1.5 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-            <span>印刷 / PDF</span>
-          </button>
-          <button onclick="closeDetailModal()" type="button" class="text-slate-400 hover:text-slate-600 p-1.5 sm:p-2 rounded-xl hover:bg-slate-200 transition bg-white sm:bg-transparent border border-slate-300 sm:border-transparent">
-            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Detail Body -->
-      <div class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-6">
-        <!-- Applicant Meta Box -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 p-3 sm:p-4 bg-slate-50 rounded-xl sm:rounded-2xl border-2 border-slate-300 text-xs">
-          <div>
-            <span class="text-slate-500 block font-bold text-[10px] sm:text-xs">申請区分</span>
-            <span id="detail-request-type" class="font-bold text-slate-900 text-xs sm:text-sm mt-0.5 block">-</span>
-          </div>
-          <div>
-            <span class="text-slate-500 block font-bold text-[10px] sm:text-xs">申請者 / 所属部署</span>
-            <span id="detail-applicant" class="font-bold text-slate-900 text-xs sm:text-sm mt-0.5 block">-</span>
-          </div>
-          <div>
-            <span id="detail-date-label" class="text-slate-500 block font-bold text-[10px] sm:text-xs">希望納期</span>
-            <span id="detail-desired-date" class="font-bold text-slate-900 text-xs sm:text-sm mt-0.5 block">-</span>
-          </div>
-          <div>
-            <span class="text-slate-500 block font-bold text-[10px] sm:text-xs">緊急度</span>
-            <span id="detail-urgency" class="font-bold text-slate-900 text-xs sm:text-sm mt-0.5 block">-</span>
-          </div>
-        </div>
-
-        <!-- 立替精算詳細情報（立替申請時のみ表示） -->
-        <div id="detail-reimburse-info-box" class="hidden p-3 sm:p-4 bg-amber-50 rounded-xl sm:rounded-2xl border-2 border-amber-300 text-xs">
-          <div class="flex items-center space-x-1.5 font-bold text-amber-950 mb-2">
-            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-            <span class="text-[11px] sm:text-xs">立替払いの精算情報（急ぎ購入済）</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-slate-800">
-            <div>
-              <span class="text-slate-500 font-bold block text-[10px] sm:text-xs">立替購入日（領収書日）:</span>
-              <span id="detail-reimburse-paid-date" class="font-bold text-xs sm:text-sm text-slate-900">-</span>
-            </div>
-            <div>
-              <span class="text-slate-500 font-bold block text-[10px] sm:text-xs">精算方法:</span>
-              <span id="detail-reimburse-method" class="font-bold text-xs sm:text-sm text-slate-900">-</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Items Table (詳細画面もモバイル対応) -->
-        <div>
-          <h4 class="text-[11px] sm:text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">購入品目明細</h4>
-          <div class="border-2 border-slate-300 rounded-xl sm:rounded-2xl overflow-hidden overflow-x-auto table-container">
-            <table class="w-full text-xs text-left min-w-[500px]">
-              <thead class="bg-slate-100 border-b-2 border-slate-300 text-slate-700 font-bold">
-                <tr>
-                  <th class="py-2 px-2 sm:py-2.5 sm:px-3">#</th>
-                  <th class="py-2 px-2 sm:py-2.5 sm:px-3">品名・規格・型番</th>
-                  <th class="py-2 px-2 sm:py-2.5 sm:px-3">購入先/店名</th>
-                  <th class="py-2 px-2 sm:py-2.5 sm:px-3 text-right">単価(税込)</th>
-                  <th class="py-2 px-2 sm:py-2.5 sm:px-3 text-center">数量</th>
-                  <th class="py-2 px-2 sm:py-2.5 sm:px-3 text-right">金額(税込)</th>
-                </tr>
-              </thead>
-              <tbody id="detail-items-tbody" class="divide-y divide-slate-200">
-                <!-- Dynamically populated -->
-              </tbody>
-              <tfoot class="bg-slate-100 border-t-2 border-slate-300 font-bold text-slate-900">
-                <tr>
-                  <td colspan="5" class="py-2.5 px-3 text-right text-[11px] sm:text-xs">合計金額 (税込):</td>
-                  <td id="detail-total-amount" class="py-2.5 px-3 text-right text-sm sm:text-base text-emerald-800">¥0</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-
-        <!-- Reason and Location Box -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-[11px] sm:text-xs">
-          <div class="p-3 sm:p-4 bg-slate-50 rounded-xl sm:rounded-2xl border-2 border-slate-300">
-            <span class="text-slate-500 block font-bold mb-1">購入理由・利用目的</span>
-            <p id="detail-reason" class="text-slate-900 font-medium whitespace-pre-wrap leading-relaxed">-</p>
-          </div>
-          <div class="p-3 sm:p-4 bg-slate-50 rounded-xl sm:rounded-2xl border-2 border-slate-300">
-            <span class="text-slate-500 block font-bold mb-1">納品場所・設置場所</span>
-            <p id="detail-location" class="text-slate-900 font-medium">-</p>
-          </div>
-        </div>
-
-        <!-- 詳細画面での添付画像表示エリア -->
-        <div id="detail-attachment-box" class="hidden p-3 sm:p-4 bg-slate-50 rounded-xl sm:rounded-2xl border-2 border-slate-300 text-xs">
-          <span class="text-slate-600 block font-bold mb-2 flex items-center space-x-1.5">
-            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-            <span>添付画像・見積書・領収書</span>
-          </span>
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-            <a id="detail-attachment-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-block w-full sm:w-auto">
-              <img id="detail-attachment-img" src="" alt="添付画像" class="h-32 sm:h-28 w-full sm:max-w-xs object-cover rounded-xl border-2 border-slate-300 shadow-xs hover:opacity-90 transition">
-            </a>
-            <div class="w-full sm:w-auto">
-              <a id="detail-attachment-btn" href="#" target="_blank" rel="noopener noreferrer" class="flex justify-center sm:inline-flex items-center space-x-1.5 px-3 py-2.5 sm:py-2 bg-white border-2 border-slate-300 rounded-xl text-xs font-bold text-slate-800 hover:bg-slate-100 transition shadow-2xs w-full">
-                <span>新しいタブで画像を開く</span>
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 申請取り消し・削除ボタン -->
-        <div id="delete-action-row" class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between border-t border-slate-200 gap-2">
-          <span class="text-[10px] sm:text-[11px] text-slate-500 font-medium">※誤申請の場合は取り消し・削除を行えます（綴り番号は履歴に残ります）</span>
-          <button type="button" onclick="openDeleteConfirmModal()" class="w-full sm:w-auto px-3 py-2 sm:py-1.5 text-xs font-bold text-rose-700 hover:text-rose-800 hover:bg-rose-50 rounded-xl border border-rose-300 transition flex items-center justify-center space-x-1">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-            <span>この申請を取り消す / 削除</span>
-          </button>
-        </div>
-
-        <!-- Manager Decision Section -->
-        <div id="manager-section-container" class="border-t-2 border-slate-300 pt-4 sm:pt-5">
-          <div class="flex items-center space-x-2 mb-2 sm:mb-3">
-            <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            <h4 class="text-xs sm:text-sm font-bold text-slate-900">管理者 決裁エリア</h4>
-          </div>
-
-          <!-- 決裁済みの場合の記録表示 -->
-          <div id="detail-decision-record" class="hidden p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-slate-300 bg-slate-50 mb-3">
-            <div class="flex justify-between items-center text-[11px] sm:text-xs mb-2">
-              <span id="detail-approver" class="font-bold text-slate-900">決裁者: -</span>
-              <span id="detail-decision-date" class="text-slate-600 font-bold">決裁日: -</span>
-            </div>
-            <p class="text-[10px] sm:text-xs font-bold text-slate-600 mb-1">管理者コメント:</p>
-            <p id="detail-manager-comment" class="text-[11px] sm:text-xs text-slate-900 font-medium bg-white p-2.5 rounded-xl border border-slate-300 whitespace-pre-wrap">-</p>
-          </div>
-
-          <!-- 管理者アクション入力フォーム -->
-          <div id="manager-actions-box" class="space-y-3 bg-amber-50/70 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 border-amber-300">
-            <div>
-              <label class="block text-[11px] sm:text-xs font-bold text-slate-800 mb-1">決裁者氏名 / 役職</label>
-              <!-- 登録された管理者名から選ぶプルダウン -->
-              <select id="manager-name-input" class="w-full text-xs sm:text-sm font-bold bg-white border-2 border-slate-300 rounded-xl px-3 py-2.5 sm:py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                <option value="総務部長 佐藤">総務部長 佐藤</option>
-                <option value="鈴木 エリアマネージャー">鈴木 エリアマネージャー</option>
-                <option value="店長 / 拠点長">店長 / 拠点長</option>
-                <option value="システム管理者">システム管理者</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] sm:text-xs font-bold text-slate-800 mb-1">管理者コメント（指示事項や却下・保留の理由）</label>
-              <textarea id="manager-comment-input" rows="2" placeholder="例: 承認します。法人アカウントで発注してください。" class="w-full text-xs sm:text-sm font-medium bg-white border-2 border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
-            </div>
-            <!-- モバイル時は縦並び、PC時は横並びにボタンを配置 -->
-            <div class="flex flex-col sm:flex-row items-center justify-end gap-2 sm:gap-2 pt-1">
-              <div class="flex w-full sm:w-auto gap-2">
-                <button onclick="updateDecision('rejected')" class="flex-1 sm:flex-none justify-center px-4 py-3 sm:py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-xs">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  <span>却下</span>
-                </button>
-                <button onclick="updateDecision('on_hold')" class="flex-1 sm:flex-none justify-center px-4 py-3 sm:py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-xs">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  <span>差戻し/保留</span>
-                </button>
-              </div>
-              <button onclick="updateDecision('approved')" class="w-full sm:w-auto justify-center px-5 py-3 sm:py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-md shadow-emerald-700/20">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                <span>承認する</span>
-              </button>
-            </div>
-          </div>
-        </div>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="headrow">
+      <div class="brand">NEKKO 備品購入申請<small>必要な備品を申請し、管理者がスマホで確認・承認できます</small></div>
+      <div class="mode" role="tablist" aria-label="表示モード">
+        <button id="modeApplicant" class="active" type="button">申請モード</button>
+        <button id="modeManager" type="button">管理者モード</button>
       </div>
     </div>
   </div>
 
-  <!-- Admin Authentication Modal (管理者パスワード認証画面) -->
-  <div id="admin-auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-md hidden">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border-2 border-slate-400 text-center mx-4">
-      <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-700">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-      </div>
-      <h3 class="text-base font-bold text-slate-900 mb-1">管理者認証</h3>
-      <p class="text-xs text-slate-600 mb-4">決裁を行うには管理者パスワードを入力してください。<br><span class="text-[10px] text-slate-400">（一度認証するとブラウザに記憶・省略されます）</span></p>
-      <form onsubmit="verifyAdminPassword(event)">
-        <input type="password" id="admin-password-input" class="w-full text-center text-lg font-bold bg-slate-50 border-2 border-slate-300 rounded-xl px-4 py-3 sm:py-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none mb-4 font-mono tracking-widest placeholder:text-xs placeholder:tracking-normal placeholder:font-sans" placeholder="パスワード (初期値: admin)">
-        <div class="flex items-center justify-center space-x-2">
-          <button type="button" onclick="closeAdminAuthModal()" class="px-4 py-2.5 sm:py-2 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition w-full">キャンセル</button>
-          <button type="submit" class="px-4 py-2.5 sm:py-2 text-xs font-bold text-white bg-slate-900 hover:bg-black rounded-xl transition w-full shadow-xs">
-            認証する
-          </button>
-        </div>
-      </form>
+  <section id="applicantView">
+    <div class="hero"><h1>備品購入の申請</h1><p>必要事項を入力すると申請が保存され、管理者へメールで通知されます。</p></div>
+    <div class="toolbar">
+      <button id="newRequestBtn" class="btn primary" type="button">＋ 申請する</button>
+      <button id="refreshMineBtn" class="btn secondary" type="button">↻ 自分の申請を更新</button>
     </div>
-  </div>
+    <div id="apiNotice" class="notice hidden"></div>
+    <div class="card"><h2>この端末からの申請</h2><div id="mineList" class="list"></div></div>
+  </section>
 
-  <!-- Delete Confirmation Modal (削除・取り消し確認モーダル) -->
-  <div id="delete-confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm hidden">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border-2 border-rose-300 text-left mx-4">
-      <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mb-4">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-      </div>
-      <h3 class="text-base font-bold text-slate-900 mb-1">申請の取り消し・削除</h3>
-      <p class="text-[11px] sm:text-xs text-slate-600 mb-3">この申請を削除します。綴りナンバーは欠番追跡のため「決裁履歴」およびスプレッドシートに記録されます。</p>
-      
-      <div class="mb-4">
-        <label class="block text-[11px] sm:text-xs font-bold text-slate-700 mb-1">取り消し・削除の理由 <span class="text-rose-500">*</span></label>
-        <input type="text" id="delete-reason-input" placeholder="例: 重複申請のため / 予算見直しのため" class="w-full text-xs sm:text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2.5 sm:py-2 focus:ring-2 focus:ring-rose-500 focus:outline-none">
-      </div>
-
-      <div class="flex items-center justify-end space-x-2">
-        <button type="button" onclick="closeDeleteConfirmModal()" class="px-4 py-2.5 sm:py-2 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition">キャンセル</button>
-        <button type="button" onclick="confirmDeleteApplication()" class="px-4 py-2.5 sm:py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition shadow-xs flex items-center space-x-1">
-          <span>削除を実行する</span>
-        </button>
-      </div>
+  <section id="managerView" class="hidden">
+    <div class="hero"><h1>管理者モード</h1><p>申請内容を確認し、承認・却下を行います。</p></div>
+    <div class="toolbar">
+      <button id="refreshAdminBtn" class="btn primary" type="button">↻ 一覧を更新</button>
+      <button id="notificationSettingsBtn" class="btn secondary" type="button">✉ 通知設定</button>
+      <button id="changePasswordBtn" class="btn secondary" type="button">🔐 パスワード変更</button>
+      <button id="logoutAdminBtn" class="btn ghost" type="button">管理者ログアウト</button>
     </div>
-  </div>
-
-  <!-- A4 Print Layout Container -->
-  <div id="print-area" class="hidden">
-    <div style="font-family: 'Hiragino Sans', 'Meiryo', sans-serif; max-width: 750px; margin: 0 auto; color: #000; font-size: 13px; line-height: 1.5;">
-      <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 18px;">
-        <h1 style="font-size: 20px; font-weight: bold; margin: 0;">NEKKO株式会社 備品購入申請書</h1>
-      </div>
-
-      <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px;">
-        <tr>
-          <td style="border: 1px solid #333; padding: 6px; width: 15%; background: #f3f4f6; font-weight: bold;">綴りNo</td>
-          <td id="p-id" style="border: 1px solid #333; padding: 6px; width: 35%; font-family: monospace;">-</td>
-          <td style="border: 1px solid #333; padding: 6px; width: 15%; background: #f3f4f6; font-weight: bold;">申請日</td>
-          <td id="p-date" style="border: 1px solid #333; padding: 6px; width: 35%;">-</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">申請区分</td>
-          <td id="p-request-type" style="border: 1px solid #333; padding: 6px; font-weight: bold; color: #b45309;">-</td>
-          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">所属店舗・部署</td>
-          <td id="p-dept" style="border: 1px solid #333; padding: 6px;">-</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">申請者氏名</td>
-          <td id="p-name" style="border: 1px solid #333; padding: 6px; font-weight: bold;">-</td>
-          <td id="p-date-label" style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">希望納期 / 購入日</td>
-          <td id="p-desired-date" style="border: 1px solid #333; padding: 6px;">-</td>
-        </tr>
-        <tr id="p-reimburse-row">
-          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">精算方法</td>
-          <td id="p-reimburse-method" colspan="3" style="border: 1px solid #333; padding: 6px;">-</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">納品・保管場所</td>
-          <td id="p-location" colspan="3" style="border: 1px solid #333; padding: 6px;">-</td>
-        </tr>
-      </table>
-
-      <div style="margin-bottom: 14px;">
-        <div style="font-weight: bold; margin-bottom: 4px;">■ 購入品目明細</div>
-        <table style="width: 100%; border-collapse: collapse;">
-          <thead>
-            <tr style="background: #f3f4f6;">
-              <th style="border: 1px solid #333; padding: 6px; width: 8%;">No.</th>
-              <th style="border: 1px solid #333; padding: 6px; width: 44%;">品名・型番・規格</th>
-              <th style="border: 1px solid #333; padding: 6px; width: 20%;">購入先/店名</th>
-              <th style="border: 1px solid #333; padding: 6px; width: 8%;">数量</th>
-              <th style="border: 1px solid #333; padding: 6px; width: 10%; text-align: right;">単価(税込)</th>
-              <th style="border: 1px solid #333; padding: 6px; width: 10%; text-align: right;">金額(税込)</th>
-            </tr>
-          </thead>
-          <tbody id="p-items-tbody"></tbody>
-          <tfoot>
-            <tr>
-              <td colspan="5" style="border: 1px solid #333; padding: 6px; text-align: right; font-weight: bold;">合計金額 (税込):</td>
-              <td id="p-total-amount" style="border: 1px solid #333; padding: 6px; text-align: right; font-weight: bold; font-size: 14px;">¥0</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <div style="margin-bottom: 14px;">
-        <div style="font-weight: bold; margin-bottom: 4px;">■ 購入理由・利用目的</div>
-        <div id="p-reason" style="border: 1px solid #333; padding: 8px; min-height: 50px; white-space: pre-wrap;">-</div>
-      </div>
-
-      <div style="display: flex; gap: 12px; margin-top: 20px;">
-        <div style="flex: 2; border: 1px solid #333; padding: 8px;">
-          <div style="font-weight: bold; margin-bottom: 4px;">■ 管理者 決裁欄</div>
-          <div>ステータス: <span id="p-status-box" style="font-weight: bold;">-</span></div>
-          <div style="margin-top: 4px;">コメント: <span id="p-manager-comment">-</span></div>
-        </div>
-        <div style="flex: 1; border: 1px solid #333; padding: 8px; text-align: center;">
-          <div style="font-weight: bold; font-size: 11px; margin-bottom: 4px;">承認印</div>
-          <div id="p-stamp-box" style="height: 55px; display: flex; align-items: center; justify-content: center; font-size: 12px;">未決裁</div>
-        </div>
-      </div>
+    <div class="filters card">
+      <select id="statusFilter"><option value="">すべての状態</option><option>申請中</option><option>承認</option><option>却下</option></select>
+      <input id="searchFilter" placeholder="申請者・部署・申請IDで検索">
     </div>
+    <div id="adminList" class="list"></div>
+  </section>
+
+  <div style="text-align:center;margin-top:24px"><button id="settingsBtn" class="settingsLink" type="button">接続設定（管理用）</button><div class="statusline">v1.1.0 / Slack API未連携</div></div>
+</div>
+
+<!-- 申請フォーム -->
+<div id="requestModal" class="overlay hidden" aria-modal="true" role="dialog">
+  <div class="modal">
+    <h2>備品購入申請</h2>
+    <form id="requestForm">
+      <div class="grid2">
+        <div class="field"><label>申請者名 <span class="req">必須</span></label><input id="applicantName" autocomplete="name" required></div>
+        <div class="field"><label>店舗・部署 <span class="req">必須</span></label><select id="department" required><option value="">選択してください</option><option>KOTKA</option><option>BAKERU</option><option>本社</option><option>その他</option></select></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>希望納期</label><input id="desiredDate" type="date"></div>
+        <div class="field"><label>緊急度</label><select id="urgency"><option>通常</option><option>急ぎ</option><option>至急</option></select></div>
+      </div>
+      <div class="field"><label>購入品目 <span class="req">必須</span></label><div id="items"></div><button id="addItemBtn" class="btn secondary full" type="button">＋ 品目を追加</button></div>
+      <div class="total"><span>合計金額（税込）</span><strong id="grandTotal">¥0</strong></div>
+      <div class="field"><label>購入理由・用途 <span class="req">必須</span></label><textarea id="reason" required placeholder="なぜ必要なのかを入力してください"></textarea></div>
+      <div class="field"><label>参考画像・見積・商品写真（任意）</label><input id="attachment" type="file" accept="image/*"><div class="statusline">スマホ写真は送信前に自動縮小します。</div></div>
+      <div class="modalActions"><button id="cancelRequestBtn" class="btn secondary" type="button">キャンセル</button><button id="submitRequestBtn" class="btn primary" type="submit">申請を提出</button></div>
+    </form>
   </div>
+</div>
 
-  <!-- Toast Notification Box -->
-  <div id="toast" class="fixed bottom-5 right-5 sm:right-5 left-5 sm:left-auto z-[60] transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex justify-center sm:block">
-    <div id="toast-content" class="bg-slate-900 text-white text-xs sm:text-sm px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-2 border border-slate-700 w-max max-w-full">
-      <span id="toast-icon">✓</span>
-      <span id="toast-msg">処理が完了しました</span>
-    </div>
-  </div>
+<!-- 申請詳細 -->
+<div id="detailModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal"><div id="detailContent"></div><div class="modalActions" id="detailActions"></div></div></div>
 
-  <script>
-    // --- Application State ---
-    let currentRole = 'applicant'; // 'applicant' | 'manager'
-    let currentFilter = 'active'; // 'active' | 'history'
-    let currentDetailId = null;
-    let currentUser = localStorage.getItem('currentUser') || '';
-    let currentAttachedImage = null; // { name, type, dataUrl }
+<!-- 管理者認証 -->
+<div id="adminModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal"><h2 id="adminModalTitle">管理者ログイン</h2><div id="adminSetupNote" class="notice hidden">初回のみ、管理者パスワードを設定してください。8文字以上を推奨します。</div><form id="adminForm"><div class="field"><label id="adminPasswordLabel">管理者パスワード</label><input id="adminPassword" type="password" autocomplete="current-password" required minlength="8"></div><div class="field hidden" id="adminPasswordConfirmWrap"><label>確認用パスワード</label><input id="adminPasswordConfirm" type="password" minlength="8"></div><div class="modalActions"><button id="cancelAdminBtn" type="button" class="btn secondary">キャンセル</button><button type="submit" class="btn primary">確認</button></div></form></div></div>
 
-    // 管理者パスワード設定 (初期値: admin)
-    let isAdminAuthenticated = localStorage.getItem('isAdminAuthenticated') === 'true';
-    const ADMIN_PASSWORD = "admin";
+<!-- パスワード変更 -->
+<div id="passwordModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal"><h2>管理者パスワード変更</h2><form id="passwordForm"><div class="field"><label>現在のパスワード</label><input id="currentPassword" type="password" required></div><div class="field"><label>新しいパスワード（8文字以上）</label><input id="newPassword" type="password" minlength="8" required></div><div class="field"><label>新しいパスワード（確認）</label><input id="newPassword2" type="password" minlength="8" required></div><div class="modalActions"><button id="cancelPasswordBtn" class="btn secondary" type="button">キャンセル</button><button class="btn primary" type="submit">変更する</button></div></form></div></div>
 
-    // 立替払いの上限金額（初期値: 10,000円）
-    let reimburseLimitAmount = Number(localStorage.getItem('reimburseLimitAmount')) || 10000;
+<!-- 管理者通知設定 -->
+<div id="notificationModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal">
+  <h2>管理者への通知設定</h2>
+  <p class="statusline">申請が提出されたときに管理者へメール通知します。Slack APIはまだ使用しません。</p>
+  <div class="field"><label>通知先メールアドレス</label><textarea id="managerEmails" placeholder="例: owner@example.com
+複数の場合はカンマ区切り"></textarea><div class="statusline">複数指定できます。カンマ・改行区切りに対応します。</div></div>
+  <div class="field"><label>この申請アプリのURL</label><input id="managerAppUrl" type="url" placeholder="https://...github.io/.../"><div class="statusline">通知メールの「申請を確認」リンクに使います。</div></div>
+  <div id="notificationResult" class="statusline"></div>
+  <div class="modalActions"><button id="testNotificationBtn" class="btn secondary" type="button">テストメール送信</button><button id="cancelNotificationBtn" class="btn ghost" type="button">閉じる</button><button id="saveNotificationBtn" class="btn primary" type="button">保存</button></div>
+</div></div>
 
-    // Google Apps Script Web App URL
-    const GAS_WEBAPP_URL = ""; // ここにデプロイしたGASのURLを入力
+<!-- 接続設定 -->
+<div id="settingsModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal"><h2>接続設定</h2><p class="statusline">GASをウェブアプリとしてデプロイしたURLを入力します。この端末にのみ保存されます。</p><div class="field"><label>Google Apps Script WebアプリURL</label><input id="gasUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec"></div><div id="connectionResult" class="statusline"></div><div class="modalActions"><button id="testConnectionBtn" class="btn secondary" type="button">接続テスト</button><button id="cancelSettingsBtn" class="btn ghost" type="button">閉じる</button><button id="saveSettingsBtn" class="btn primary" type="button">保存</button></div></div></div>
+<div id="toast" class="toast hidden"></div>
 
-    // サンプル初期データ（isSample: true を付与して本番データと明確に区別）
-    const initialSamples = [
-      {
-        id: 'REQ-202610-001',
-        isSample: true,
-        createdAt: '2026-10-01',
-        requestType: '事前申請',
-        applicantName: '佐藤 健太',
-        department: 'KOTOKA',
-        urgency: '通常',
-        desiredDate: '2026-10-15',
-        deliveryLocation: 'KOTOKA バックヤード',
-        reimbursePaidDate: '',
-        reimburseMethod: '',
-        reason: '【動作確認サンプル】新規スタッフ増員に伴うタブレット端末の追加および充電ケーブルの配備のため。',
-        items: [
-          { name: 'iPad 第10世代 64GB', store: 'Apple Store', price: 68800, quantity: 1 },
-          { name: 'USB-C 充電ケーブル 2m', store: 'Amazon', price: 1280, quantity: 2 }
-        ],
-        imageUrl: '',
-        status: 'approved',
-        managerName: '鈴木 エリアマネージャー',
-        managerComment: '承認します。初期設定はシステム担当に依頼してください。',
-        decisionDate: '2026-10-02'
-      },
-      {
-        id: 'REQ-202610-002',
-        isSample: true,
-        createdAt: '2026-10-03',
-        requestType: '立替精算',
-        applicantName: '高橋 涼子',
-        department: 'BAKERU',
-        urgency: '特急',
-        desiredDate: '2026-10-03',
-        deliveryLocation: 'BAKERU レジ横',
-        reimbursePaidDate: '2026-10-03',
-        reimburseMethod: '現金手渡し精算',
-        reason: '【動作確認サンプル】レジ用紙が営業時間中に完全に切れてしまい、緊急で立替購入しました。',
-        items: [
-          { name: 'サーマルロール紙 緊急購入 5巻', store: '近隣文具店', price: 1800, quantity: 1 }
-        ],
-        imageUrl: '',
-        status: 'pending',
-        managerName: '',
-        managerComment: '',
-        decisionDate: ''
-      },
-      {
-        id: 'REQ-202610-003',
-        isSample: true,
-        createdAt: '2026-10-04',
-        requestType: '事前申請',
-        applicantName: '中村 翔',
-        department: '本社 管理部',
-        urgency: '通常',
-        desiredDate: '2026-10-20',
-        deliveryLocation: '本社 2F',
-        reimbursePaidDate: '',
-        reimburseMethod: '',
-        reason: '【動作確認サンプル】経理担当用の疲労軽減エルゴノミクスキーボード。',
-        items: [
-          { name: 'Logicool ERGO K860 ワイヤレスキーボード', store: 'ビックカメラ', price: 17800, quantity: 1 }
-        ],
-        imageUrl: '',
-        status: 'pending',
-        managerName: '',
-        managerComment: '',
-        decisionDate: ''
-      }
-    ];
+<script>
+'use strict';
+const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
+// GASをデプロイ後、/exec URLをここへ1回貼れば全スマホで共通利用できます。
+const DEFAULT_GAS_URL='';
+const state={mode:'applicant', adminPassword:'', adminApps:[], myApps:[], current:null, initialPasswordMode:false};
+const STORAGE={url:'nekko_equipment_gas_url', refs:'nekko_equipment_my_refs_v2', name:'nekko_equipment_name', dept:'nekko_equipment_dept'};
 
-    // ローカルストレージに既存データがあればそれを読み込み、なければ初期サンプルを読み込む
-    const savedApps = localStorage.getItem('applications_data');
-    let applications = savedApps ? JSON.parse(savedApps) : initialSamples;
+function gasUrl(){return (localStorage.getItem(STORAGE.url)||DEFAULT_GAS_URL||'').trim()}
+function toast(msg,error=false){const el=$('#toast');el.textContent=msg;el.style.background=error?'#8b1e16':'#10233f';el.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.add('hidden'),2800)}
+function money(v){return '¥'+Number(v||0).toLocaleString('ja-JP')}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function badge(status){const cls=status==='承認'?'approved':status==='却下'?'rejected':'pending';return `<span class="badge ${cls}">${esc(status||'申請中')}</span>`}
+function openModal(id){$(id).classList.remove('hidden');document.body.style.overflow='hidden'}
+function closeModal(id){$(id).classList.add('hidden');document.body.style.overflow=''}
+function needUrl(){if(gasUrl())return true;$('#apiNotice').textContent='GAS WebアプリURLが未設定です。管理者は「接続設定（管理用）」から登録するか、index.html の DEFAULT_GAS_URL に設定してください。';$('#apiNotice').classList.remove('hidden');openModal('#settingsModal');return false}
 
-    // データの永続化ヘルパー
-    function saveApplications() {
-      localStorage.setItem('applications_data', JSON.stringify(applications));
-    }
+async function api(action,payload={}){
+  if(!needUrl())throw new Error('GAS URLが未設定です。');
+  const body=new URLSearchParams({data:JSON.stringify({action,payload})});
+  let res;
+  try{res=await fetch(gasUrl(),{method:'POST',body});}catch(e){throw new Error('GASへ接続できません。URLとデプロイ設定を確認してください。')}
+  const text=await res.text();
+  let data;try{data=JSON.parse(text)}catch(e){throw new Error('GASから正しいJSONが返りません。デプロイURLを確認してください。')}
+  if(!data.success)throw new Error(data.error||data.message||'処理に失敗しました。');
+  return data;
+}
 
-    // 月別完全シーケンシャルID（連番・綴りNo）生成関数
-    function generateSequentialId() {
-      const now = new Date();
-      const yyyymm = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}`;
-      const prefix = `REQ-${yyyymm}-`;
+function setMode(mode){
+  state.mode=mode;$('#modeApplicant').classList.toggle('active',mode==='applicant');$('#modeManager').classList.toggle('active',mode==='manager');
+  $('#applicantView').classList.toggle('hidden',mode!=='applicant');$('#managerView').classList.toggle('hidden',mode!=='manager');
+}
 
-      let maxSeq = 0;
-      applications.forEach(app => {
-        if (app.id && app.id.startsWith(prefix)) {
-          const seqPart = parseInt(app.id.replace(prefix, ''), 10);
-          if (!isNaN(seqPart) && seqPart > maxSeq) {
-            maxSeq = seqPart;
-          }
-        }
-      });
+$('#modeApplicant').addEventListener('click',()=>setMode('applicant'));
+$('#modeManager').addEventListener('click',async()=>{
+  if(state.adminPassword){setMode('manager');await loadAdmin();return}
+  if(!needUrl())return;
+  try{const st=await api('adminStatus');state.initialPasswordMode=!st.passwordConfigured;prepareAdminModal();openModal('#adminModal')}catch(e){toast(e.message,true)}
+});
 
-      const nextSeq = String(maxSeq + 1).padStart(3, '0');
-      return `${prefix}${nextSeq}`;
-    }
+function prepareAdminModal(){
+  $('#adminModalTitle').textContent=state.initialPasswordMode?'管理者パスワード初期設定':'管理者ログイン';
+  $('#adminSetupNote').classList.toggle('hidden',!state.initialPasswordMode);
+  $('#adminPasswordLabel').textContent=state.initialPasswordMode?'新しい管理者パスワード':'管理者パスワード';
+  $('#adminPasswordConfirmWrap').classList.toggle('hidden',!state.initialPasswordMode);
+  $('#adminPassword').value='';$('#adminPasswordConfirm').value='';
+}
+$('#cancelAdminBtn').addEventListener('click',()=>closeModal('#adminModal'));
+$('#adminForm').addEventListener('submit',async e=>{
+  e.preventDefault();const pw=$('#adminPassword').value;
+  try{
+    if(state.initialPasswordMode){if(pw!==$('#adminPasswordConfirm').value)throw new Error('確認用パスワードが一致しません。');await api('setInitialPassword',{newPassword:pw});toast('管理者パスワードを設定しました')}
+    else await api('verifyAdmin',{password:pw});
+    state.adminPassword=pw;closeModal('#adminModal');setMode('manager');await loadAdmin();
+  }catch(err){toast(err.message,true)}
+});
 
-    // 店舗・部署名リストの動的更新（KOTOKA, BAKERU, 本社等）
-    function updateDeptDropdowns() {
-      const filter = document.getElementById('dept-filter');
-      if (!filter) return;
-      const currentFilterVal = filter.value;
-      const datalist = document.getElementById('dept-list');
-      
-      const baseDepts = ['KOTOKA', 'BAKERU', '本社'];
-      const usedDepts = applications.map(a => a.department);
-      const uniqueDepts = [...new Set([...baseDepts, ...usedDepts])].filter(Boolean);
-      
-      let filterHtml = '<option value="">すべての店舗・部署</option>';
-      uniqueDepts.forEach(dept => {
-        filterHtml += `<option value="${escapeHtml(dept)}">${escapeHtml(dept)}</option>`;
-      });
-      filter.innerHTML = filterHtml;
-      if (uniqueDepts.includes(currentFilterVal)) {
-        filter.value = currentFilterVal;
-      }
-      
-      if (datalist) {
-        let datalistHtml = '';
-        uniqueDepts.forEach(dept => {
-          datalistHtml += `<option value="${escapeHtml(dept)}"></option>`;
-        });
-        datalist.innerHTML = datalistHtml;
-      }
-    }
+$('#logoutAdminBtn').addEventListener('click',()=>{state.adminPassword='';setMode('applicant');toast('管理者モードを終了しました')});
+$('#refreshAdminBtn').addEventListener('click',loadAdmin);$('#statusFilter').addEventListener('change',renderAdmin);$('#searchFilter').addEventListener('input',renderAdmin);
 
-    // 管理者モード切替時の認証確認
-    function attemptSwitchToManager() {
-      if (isAdminAuthenticated) {
-        switchRole('manager');
-      } else {
-        document.getElementById('admin-auth-modal').classList.remove('hidden');
-        setTimeout(() => document.getElementById('admin-password-input').focus(), 100);
-      }
-    }
+async function loadAdmin(){
+  if(!state.adminPassword){setMode('applicant');return}
+  $('#adminList').innerHTML='<div class="card">読み込み中...</div>';
+  try{const d=await api('listAdmin',{password:state.adminPassword});state.adminApps=d.applications||[];renderAdmin()}catch(e){toast(e.message,true);if(/認証/.test(e.message)){$('#logoutAdminBtn').click()}}
+}
+function renderAdmin(){
+  const status=$('#statusFilter').value,q=$('#searchFilter').value.trim().toLowerCase();
+  const rows=state.adminApps.filter(a=>(!status||a.status===status)&&(!q||`${a.id} ${a.applicantName} ${a.department}`.toLowerCase().includes(q)));
+  $('#adminList').innerHTML=rows.length?rows.map(a=>appCard(a,true)).join(''):'<div class="card empty">該当する申請はありません。</div>';
+  $$('#adminList [data-open]').forEach(b=>b.addEventListener('click',()=>openDetail(b.dataset.open,true)));
+}
 
-    // 管理者パスワード検証
-    function verifyAdminPassword(e) {
-      if (e) e.preventDefault();
-      const inputEl = document.getElementById('admin-password-input');
-      if (inputEl.value === ADMIN_PASSWORD) {
-        isAdminAuthenticated = true;
-        localStorage.setItem('isAdminAuthenticated', 'true');
-        closeAdminAuthModal();
-        switchRole('manager');
-        showToast('管理者として認証されました');
-      } else {
-        showToast('パスワードが違います', 'error');
-        inputEl.value = '';
-        inputEl.focus();
-      }
-    }
+function getMyRefs(){try{const v=JSON.parse(localStorage.getItem(STORAGE.refs)||'[]');return Array.isArray(v)?v:[]}catch{return []}}
+function addMyRef(id,token){if(!id||!token)return;const refs=getMyRefs().filter(x=>x&&x.id!==id);refs.unshift({id,token});localStorage.setItem(STORAGE.refs,JSON.stringify(refs.slice(0,100)))}
+async function loadMine(){
+  const refs=getMyRefs();if(!refs.length){state.myApps=[];renderMine();return}if(!gasUrl()){renderMine();return}
+  $('#mineList').innerHTML='<div class="empty">読み込み中...</div>';
+  try{const d=await api('getMine',{refs});state.myApps=d.applications||[];renderMine()}catch(e){$('#mineList').innerHTML=`<div class="notice">${esc(e.message)}</div>`}
+}
+function renderMine(){
+  $('#mineList').innerHTML=state.myApps.length?state.myApps.map(a=>appCard(a,false)).join(''):'<div class="empty">この端末からの申請はまだありません。</div>';
+  $$('#mineList [data-open]').forEach(b=>b.addEventListener('click',()=>openDetail(b.dataset.open,false)));
+}
+$('#refreshMineBtn').addEventListener('click',loadMine);
 
-    function closeAdminAuthModal() {
-      document.getElementById('admin-auth-modal').classList.add('hidden');
-      document.getElementById('admin-password-input').value = '';
-    }
+function appCard(a,admin){return `<div class="appcard"><div class="row"><div><div class="meta">${esc(a.id)} ・ ${esc(a.createdAt)}</div><div style="font-weight:900;font-size:18px">${esc(a.applicantName)} / ${esc(a.department)}</div><div class="meta">${esc(a.reason).slice(0,80)}</div></div><div style="text-align:right">${badge(a.status)}<div class="money">${money(a.total)}</div></div></div><div style="margin-top:10px"><button class="btn secondary full" type="button" data-open="${esc(a.id)}">${admin?'内容を確認・承認':'申請内容を見る'}</button></div></div>`}
 
-    // ロール切替処理（デザインハイライト対応）
-    function switchRole(role) {
-      currentRole = role;
-      const appBtn = document.getElementById('role-applicant-btn');
-      const mgrBtn = document.getElementById('role-manager-btn');
-      const appText = document.getElementById('role-applicant-text');
-      const mgrText = document.getElementById('role-manager-text');
-      const banner = document.getElementById('role-banner');
-      const bannerTitle = document.getElementById('role-title');
-      const bannerDesc = document.getElementById('role-desc');
-      const bannerIcon = document.getElementById('role-icon');
-      const userContainer = document.getElementById('current-user-container');
-      const limitContainer = document.getElementById('manager-limit-container');
+function findApp(id,admin){return (admin?state.adminApps:state.myApps).find(a=>a.id===id)}
+function openDetail(id,admin){
+  const a=findApp(id,admin);if(!a)return;state.current={app:a,admin};
+  const items=Array.isArray(a.items)&&a.items.length?a.items.map(i=>`<div>・${esc(i.name)}${i.store?' / '+esc(i.store):''}　${esc(i.quantity)}個 × ${money(i.price)}</div>`).join(''):`<div>${esc(a.itemsText||'-').replace(/\n/g,'<br>')}</div>`;
+  $('#detailContent').innerHTML=`<h2>申請詳細</h2><div class="detailbox"><b>${esc(a.id)}</b>　${badge(a.status)}<br>${esc(a.createdAt)}</div><div class="grid2"><div class="detailbox"><b>申請者</b><br>${esc(a.applicantName)}</div><div class="detailbox"><b>店舗・部署</b><br>${esc(a.department)}</div><div class="detailbox"><b>希望納期</b><br>${esc(a.desiredDate||'-')}</div><div class="detailbox"><b>緊急度</b><br>${esc(a.urgency||'通常')}</div></div><div class="detailbox"><b>購入品目</b><br>${items}<hr><b>合計 ${money(a.total)}</b></div><div class="detailbox"><b>購入理由</b><br>${esc(a.reason).replace(/\n/g,'<br>')}</div>${a.attachmentUrl?`<div class="detailbox"><a href="${esc(a.attachmentUrl)}" target="_blank" rel="noopener">添付画像を開く</a></div>`:''}<div class="detailbox"><b>管理者コメント</b><br>${esc(a.managerComment||'-')}<br><span class="meta">${esc(a.managerName||'')} ${esc(a.decisionDate||'')}</span></div>`;
+  const actions=$('#detailActions');actions.innerHTML='';
+  const close=document.createElement('button');close.className='btn secondary';close.type='button';close.textContent='閉じる';close.onclick=()=>closeModal('#detailModal');actions.appendChild(close);
+  if(admin){['承認','却下'].forEach(st=>{const b=document.createElement('button');b.className='btn '+(st==='承認'?'green':'red');b.type='button';b.textContent=st;b.onclick=()=>decide(st);actions.appendChild(b)});const del=document.createElement('button');del.className='btn ghost';del.type='button';del.textContent='削除';del.onclick=removeCurrent;actions.appendChild(del)}
+  openModal('#detailModal');
+}
+async function decide(status){
+  const a=state.current.app;const managerName=prompt('管理者名を入力してください',localStorage.getItem('nekko_manager_name')||'')??'';if(!managerName)return;localStorage.setItem('nekko_manager_name',managerName);const comment=prompt(`${status}コメント（任意）`,'')??'';
+  try{await api('updateStatus',{password:state.adminPassword,id:a.id,status,managerName,managerComment:comment});closeModal('#detailModal');toast(`${status}しました`);await loadAdmin();await loadMine()}catch(e){toast(e.message,true)}
+}
+async function removeCurrent(){if(!confirm('この申請を削除済みにしますか？データ行は履歴として残ります。'))return;const reason=prompt('削除理由（任意）','')??'';try{await api('delete',{password:state.adminPassword,id:state.current.app.id,deleteReason:reason});closeModal('#detailModal');toast('削除しました');await loadAdmin()}catch(e){toast(e.message,true)}}
 
-      // 共通のベースクラス（モバイル対応調整済み）
-      const baseBtnClass = "flex-1 sm:flex-none px-2 sm:px-3 py-1.5 rounded-lg transition-all flex items-center justify-center space-x-1 sm:space-x-1.5 whitespace-nowrap ";
+// request form
+$('#newRequestBtn').addEventListener('click',()=>{if(!needUrl())return;resetRequest();openModal('#requestModal')});
+$('#cancelRequestBtn').addEventListener('click',()=>closeModal('#requestModal'));$('#addItemBtn').addEventListener('click',()=>addItem());
+function resetRequest(){
+  $('#requestForm').reset();$('#applicantName').value=localStorage.getItem(STORAGE.name)||'';$('#department').value=localStorage.getItem(STORAGE.dept)||'';$('#items').innerHTML='';addItem();calcTotal();
+}
+function addItem(v={}){
+  const box=document.createElement('div');box.className='item';box.innerHTML=`<div class="itemtop"><b>購入品目</b><button type="button" class="remove">削除</button></div><div class="field"><label>品名・型番 <span class="req">必須</span></label><input class="iname" value="${esc(v.name||'')}" required></div><div class="grid3"><div class="field"><label>購入先</label><input class="istore" value="${esc(v.store||'')}"></div><div class="field"><label>単価（税込）</label><input class="iprice" inputmode="numeric" type="number" min="0" step="1" value="${v.price||''}"></div><div class="field"><label>数量</label><input class="iqty" inputmode="numeric" type="number" min="1" step="1" value="${v.quantity||1}"></div></div><div class="itemtotal">小計 ¥0</div>`;
+  box.querySelector('.remove').onclick=()=>{if($$('#items .item').length===1){toast('品目は1件以上必要です',true);return}box.remove();calcTotal()};box.querySelectorAll('input').forEach(i=>i.addEventListener('input',calcTotal));$('#items').appendChild(box);calcTotal();
+}
+function collectItems(){return $$('#items .item').map(box=>({name:box.querySelector('.iname').value.trim(),store:box.querySelector('.istore').value.trim(),price:Number(box.querySelector('.iprice').value||0),quantity:Number(box.querySelector('.iqty').value||1)})).filter(x=>x.name)}
+function calcTotal(){$$('#items .item').forEach(box=>{const p=Number(box.querySelector('.iprice').value||0),q=Number(box.querySelector('.iqty').value||1);box.querySelector('.itemtotal').textContent='小計 '+money(p*q)});$('#grandTotal').textContent=money(collectItems().reduce((s,x)=>s+x.price*x.quantity,0))}
+async function imageData(file){if(!file)return null;if(file.size>8*1024*1024)throw new Error('元画像は8MB以下を選んでください。');const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)});const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=data});const scale=Math.min(1,1200/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return {name:file.name,type:'image/jpeg',dataUrl:c.toDataURL('image/jpeg',.78)}}
+$('#requestForm').addEventListener('submit',async e=>{
+  e.preventDefault();const btn=$('#submitRequestBtn');btn.disabled=true;btn.textContent='送信中...';
+  try{
+    const items=collectItems();if(!items.length)throw new Error('購入品目を入力してください。');
+    const applicantName=$('#applicantName').value.trim(),department=$('#department').value;localStorage.setItem(STORAGE.name,applicantName);localStorage.setItem(STORAGE.dept,department);
+    const attachment=await imageData($('#attachment').files[0]);const d=await api('create',{applicantName,department,desiredDate:$('#desiredDate').value,urgency:$('#urgency').value,reason:$('#reason').value.trim(),items,attachment});addMyRef(d.id,d.viewToken);closeModal('#requestModal');const mail=d.notification&&d.notification.email;if(mail&&mail.sent)toast(`申請しました：${d.id}／管理者へメール通知済み`);else if(mail&&mail.configured)toast(`申請しました：${d.id}／メール通知のみ失敗`,true);else toast(`申請しました：${d.id}／管理者メールは未設定`);await loadMine();
+  }catch(err){toast(err.message,true)}finally{btn.disabled=false;btn.textContent='申請を提出'}
+});
 
-      if (role === 'applicant') {
-        appBtn.className = baseBtnClass + "bg-emerald-600 text-white shadow-sm font-bold";
-        mgrBtn.className = baseBtnClass + "text-slate-600 hover:text-slate-900 hover:bg-slate-200 font-medium";
-        appText.textContent = "申請モード中";
-        mgrText.textContent = "決裁モード";
-        banner.className = "bg-sky-50 border-2 border-sky-400 rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs";
-        bannerTitle.className = "text-sm font-bold text-sky-950";
-        bannerTitle.textContent = "現在は【申請者ビュー】を表示しています";
-        bannerDesc.className = "text-[11px] sm:text-xs text-sky-800 font-medium mt-0.5";
-        bannerDesc.textContent = "必要な備品の明細を入力し、管理者に購入伺いを提出できます。";
-        bannerIcon.className = "p-2 bg-sky-500 text-white rounded-xl shadow-xs shrink-0";
-        
-        if (userContainer) userContainer.classList.remove('hidden');
-        if (limitContainer) limitContainer.classList.add('hidden');
-      } else {
-        mgrBtn.className = baseBtnClass + "bg-emerald-600 text-white shadow-sm font-bold";
-        appBtn.className = baseBtnClass + "text-slate-600 hover:text-slate-900 hover:bg-slate-200 font-medium";
-        appText.textContent = "申請モード";
-        mgrText.textContent = "決裁モード中";
-        banner.className = "bg-emerald-50 border-2
+// manager notification settings
+$('#notificationSettingsBtn').addEventListener('click',async()=>{
+  if(!state.adminPassword){toast('管理者ログインが必要です',true);return}
+  $('#notificationResult').textContent='読み込み中...';openModal('#notificationModal');
+  try{
+    const d=await api('getAdminSettings',{password:state.adminPassword});
+    $('#managerEmails').value=d.managerEmails||'';
+    $('#managerAppUrl').value=d.appUrl||location.href.split('#')[0];
+    $('#notificationResult').textContent=d.emailConfigured?'✓ メール通知先が設定されています':'通知先メールはまだ設定されていません';
+  }catch(e){$('#notificationResult').textContent='× '+e.message}
+});
+$('#cancelNotificationBtn').addEventListener('click',()=>closeModal('#notificationModal'));
+$('#saveNotificationBtn').addEventListener('click',async()=>{
+  try{
+    const d=await api('saveAdminSettings',{password:state.adminPassword,managerEmails:$('#managerEmails').value.trim(),appUrl:$('#managerAppUrl').value.trim()});
+    $('#notificationResult').textContent='✓ '+d.message;toast('通知設定を保存しました');
+  }catch(e){$('#notificationResult').textContent='× '+e.message;toast(e.message,true)}
+});
+$('#testNotificationBtn').addEventListener('click',async()=>{
+  const btn=$('#testNotificationBtn');btn.disabled=true;const old=btn.textContent;btn.textContent='送信中...';
+  try{
+    await api('saveAdminSettings',{password:state.adminPassword,managerEmails:$('#managerEmails').value.trim(),appUrl:$('#managerAppUrl').value.trim()});
+    const d=await api('testManagerEmail',{password:state.adminPassword,managerEmails:$('#managerEmails').value.trim()});
+    $('#notificationResult').textContent='✓ '+d.message;toast('テストメールを送信しました');
+  }catch(e){$('#notificationResult').textContent='× '+e.message;toast(e.message,true)}finally{btn.disabled=false;btn.textContent=old}
+});
+
+// password change
+$('#changePasswordBtn').addEventListener('click',()=>{$('#passwordForm').reset();openModal('#passwordModal')});$('#cancelPasswordBtn').addEventListener('click',()=>closeModal('#passwordModal'));
+$('#passwordForm').addEventListener('submit',async e=>{e.preventDefault();const cur=$('#currentPassword').value,np=$('#newPassword').value;if(np!==$('#newPassword2').value){toast('新しいパスワードが一致しません',true);return}try{await api('changePassword',{currentPassword:cur,newPassword:np});state.adminPassword=np;closeModal('#passwordModal');toast('パスワードを変更しました')}catch(err){toast(err.message,true)}});
+
+// settings
+$('#settingsBtn').addEventListener('click',()=>{$('#gasUrl').value=gasUrl();$('#connectionResult').textContent='';openModal('#settingsModal')});$('#cancelSettingsBtn').addEventListener('click',()=>closeModal('#settingsModal'));
+$('#saveSettingsBtn').addEventListener('click',()=>{const u=$('#gasUrl').value.trim();if(!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec/.test(u)){toast('GASの /exec URLを入力してください',true);return}localStorage.setItem(STORAGE.url,u);$('#apiNotice').classList.add('hidden');closeModal('#settingsModal');toast('接続先を保存しました');loadMine()});
+$('#testConnectionBtn').addEventListener('click',async()=>{const old=localStorage.getItem(STORAGE.url),u=$('#gasUrl').value.trim();if(!u){toast('URLを入力してください',true);return}localStorage.setItem(STORAGE.url,u);$('#connectionResult').textContent='接続確認中...';try{await api('health');$('#connectionResult').textContent='✓ 接続できました';}catch(e){$('#connectionResult').textContent='× '+e.message}if(old===null)localStorage.removeItem(STORAGE.url);else localStorage.setItem(STORAGE.url,old)});
+
+// outside modal tap intentionally disabled on mobile to prevent accidental loss.
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.overlay:not(.hidden)').forEach(x=>closeModal('#'+x.id))});
+window.addEventListener('unhandledrejection',e=>{console.error(e.reason)});
+loadMine();
+</script>
+</body>
+</html>
