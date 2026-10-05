@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEKKO株式会社 備品購入申請・決裁ワークフロー</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* 印刷時のスタイル設定 */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-area, #print-area * {
+        visibility: visible;
+      }
+      #print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        background: white;
+        color: black;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans antialiased">
+
+  <header class="bg-white border-b-2 border-slate-300 sticky top-0 z-30 shadow-xs no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <!-- NEKKOロゴアイコン（濃いグリーン） -->
+        <div class="w-10 h-10 rounded-xl bg-emerald-700 flex items-center justify-center text-white shadow-md shadow-emerald-700/20">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">NEKKO株式会社 備品購入申請</h1>
+          <p class="text-[11px] text-slate-500">店舗・部門向け 決裁ワークフロー</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- Role Switcher（グレーの枠線） -->
+        <div class="bg-slate-100 p-1 rounded-xl flex items-center border-2 border-slate-300 text-xs font-medium">
+          <button id="role-applicant-btn" onclick="switchRole('applicant')" class="px-3 py-1.5 rounded-lg transition-all flex items-center space-x-1.5 bg-emerald-600 text-white shadow-sm font-bold">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            <span id="role-applicant-text">申請者モード中</span>
+          </button>
+          <button id="role-manager-btn" onclick="attemptSwitchToManager()" class="px-3 py-1.5 rounded-lg transition-all flex items-center space-x-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-200 font-medium">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+            <span id="role-manager-text">管理者決裁モード</span>
+            <span id="pending-badge-header" class="hidden ml-1 px-1.5 py-0.2 bg-amber-500 text-white text-[10px] font-bold rounded-full">0</span>
+          </button>
+        </div>
+
+        <!-- New Application Button（濃いグリーン） -->
+        <button onclick="openNewModal()" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-emerald-700/20 transition flex items-center space-x-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          <span class="hidden sm:inline">新規申請を作成</span>
+          <span class="sm:hidden">新規作成</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- Role Context, User Filter & Manager Limit Banner -->
+    <div id="role-banner" class="bg-sky-50 border-2 border-sky-400 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+      <div class="flex items-center space-x-3">
+        <div id="role-icon" class="p-2 bg-sky-500 text-white rounded-xl shadow-xs">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        </div>
+        <div>
+          <h2 id="role-title" class="text-sm font-bold text-sky-950">現在は【申請者ビュー】を表示しています</h2>
+          <p id="role-desc" class="text-xs text-sky-800 font-medium">必要な備品の明細を入力し、管理者に購入伺いを提出できます。</p>
+        </div>
+      </div>
+      
+      <!-- あなたのお名前（申請者フィルタ）設定エリア -->
+      <div id="current-user-container" class="flex flex-col sm:flex-row sm:items-center gap-1.5 text-xs bg-white/90 p-2 rounded-xl border-2 border-sky-300 shadow-2xs">
+        <div class="flex items-center space-x-1.5 font-bold text-sky-950">
+          <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+          <span>👤 あなたのお名前:</span>
+        </div>
+        <div class="flex items-center space-x-1.5">
+          <div class="relative">
+            <input type="text" id="current-user-input" placeholder="例: 山田 太郎" onchange="updateCurrentUser(this.value)" class="px-2.5 py-1.5 pr-7 rounded-lg border-2 border-sky-300 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white text-sky-950 font-bold w-36 sm:w-44 shadow-2xs placeholder:text-slate-400 placeholder:font-normal text-xs">
+            <button id="clear-user-btn" type="button" onclick="clearCurrentUser()" title="解除して全員の申請を表示" class="hidden absolute right-1.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-rose-600 p-0.5 rounded-full hover:bg-slate-100">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+          <span id="user-filter-status" class="text-[11px] text-slate-500 hidden sm:inline">(名前を入れると自分の申請のみ表示)</span>
+        </div>
+      </div>
+
+      <!-- 管理者専用: 立替払い上限設定 & サンプル消去エリア -->
+      <div id="manager-limit-container" class="hidden flex flex-col sm:flex-row sm:items-center gap-3 text-xs bg-white/95 p-2 px-3 rounded-xl border-2 border-emerald-400 shadow-2xs">
+        <div class="flex items-center space-x-1 font-bold text-emerald-950">
+          <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>立替払い上限額:</span>
+        </div>
+        <div class="flex items-center space-x-1.5">
+          <div class="relative">
+            <span class="absolute left-2 top-1.5 text-xs font-bold text-slate-500">¥</span>
+            <input type="number" id="manager-limit-input" min="0" step="1000" class="pl-5 pr-2 py-1 rounded-lg border-2 border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-emerald-950 font-bold w-28 text-xs shadow-2xs" onchange="saveReimburseLimit(this.value)">
+          </div>
+          <button type="button" onclick="saveReimburseLimit(document.getElementById('manager-limit-input').value)" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg text-[11px] transition shadow-2xs">
+            保存
+          </button>
+        </div>
+        <!-- サンプルデータ一括削除ボタン -->
+        <button id="clear-sample-btn" type="button" onclick="clearAllSampleData()" class="ml-auto px-2.5 py-1.5 bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 border border-slate-300 hover:border-rose-300 font-bold rounded-lg text-[11px] transition flex items-center space-x-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+          <span>🧪 サンプルデータを全消去</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Statistics Overview Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white rounded-2xl p-4 border-2 border-slate-300 shadow-xs flex items-center space-x-3">
+        <div class="p-3 bg-amber-50 text-amber-600 rounded-xl">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div>
+          <p class="text-xs text-slate-700 font-bold">審査中（申請中）</p>
+          <p id="stat-pending" class="text-xl font-black text-slate-900">0 件</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 border-2 border-slate-300 shadow-xs flex items-center space-x-3">
+        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+        <div>
+          <p class="text-xs text-slate-700 font-bold">承認済み</p>
+          <p id="stat-approved" class="text-xl font-black text-emerald-700">0 件</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 border-2 border-slate-300 shadow-xs flex items-center space-x-3">
+        <div class="p-3 bg-rose-50 text-rose-600 rounded-xl">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </div>
+        <div>
+          <p class="text-xs text-slate-700 font-bold">却下・差戻し</p>
+          <p id="stat-rejected" class="text-xl font-black text-rose-700">0 件</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 border-2 border-slate-300 shadow-xs flex items-center space-x-3">
+        <div class="p-3 bg-sky-50 text-sky-600 rounded-xl">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div>
+          <p class="text-xs text-slate-700 font-bold">承認済 合計金額</p>
+          <p id="stat-total-amount" class="text-lg sm:text-xl font-black text-slate-900">¥0</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main List Card -->
+    <div class="bg-white rounded-2xl border-2 border-slate-300 shadow-xs overflow-hidden">
+      <!-- 管理者向けアラートエリア -->
+      <div id="manager-alert" class="hidden bg-amber-50 border-b-2 border-amber-300 p-3 px-5 flex items-center justify-between">
+        <div class="flex items-center space-x-2 text-amber-900">
+          <svg class="w-5 h-5 text-amber-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          <span class="text-xs sm:text-sm font-bold">未決裁の申請が <span id="alert-pending-count" class="text-base text-rose-600 font-black">0</span> 件あります。内容を確認して決裁してください。</span>
+        </div>
+      </div>
+
+      <!-- Table Header & Controls -->
+      <div class="p-4 sm:p-5 border-b-2 border-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">申請案件一覧</h3>
+          <p class="text-xs text-slate-500">案件をクリックして詳細確認・決裁承認・A4印刷が行えます</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- フィルタータブ (進行中 / 履歴) -->
+          <div class="inline-flex rounded-xl bg-slate-100 p-1 text-xs border border-slate-300">
+            <button onclick="setFilter('active')" id="filter-active" class="px-3 py-1.5 rounded-lg bg-white shadow-xs font-bold text-slate-900">進行中・要対応</button>
+            <button onclick="setFilter('history')" id="filter-history" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium">決裁履歴 (済・取消)</button>
+          </div>
+          <!-- 店舗・部署フィルター -->
+          <select id="dept-filter" onchange="applyFilters()" class="text-xs bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <option value="">すべての店舗・部署</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Application Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm text-slate-800">
+          <thead class="bg-slate-200/70 text-xs font-bold text-slate-900 uppercase border-b-2 border-slate-300">
+            <tr>
+              <th scope="col" class="py-3.5 px-4">綴りNo / 申請日</th>
+              <th scope="col" class="py-3.5 px-4">申請種別 / 部署</th>
+              <th scope="col" class="py-3.5 px-4">申請者</th>
+              <th scope="col" class="py-3.5 px-4">代表品目・件数</th>
+              <th scope="col" class="py-3.5 px-4">申請金額 (税込)</th>
+              <th scope="col" class="py-3.5 px-4">希望納期 / 購入日</th>
+              <th scope="col" class="py-3.5 px-4">ステータス</th>
+              <th scope="col" class="py-3.5 px-4 text-right">操作</th>
+            </tr>
+          </thead>
+          <tbody id="application-tbody" class="divide-y divide-slate-200 font-normal">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden p-12 text-center">
+        <svg class="mx-auto h-12 w-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <h4 class="mt-3 text-sm font-semibold text-slate-700">対象の申請データがありません</h4>
+        <p class="mt-1 text-xs text-slate-400">「新規申請を作成」から購入申請を登録してください。</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- New Application Modal -->
+  <div id="new-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden overflow-y-auto">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col my-auto border-2 border-slate-400 overflow-hidden">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-slate-100 border-b-2 border-slate-300 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          </span>
+          <div>
+            <h3 class="text-base font-bold text-slate-900">備品購入申請書の作成</h3>
+            <p class="text-xs text-slate-500">必要な品目と購入理由を入力して管理者に申請します</p>
+          </div>
+        </div>
+        <button onclick="closeNewModal()" type="button" class="text-slate-400 hover:text-slate-600 p-2 rounded-xl hover:bg-slate-200/60 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- Modal Body (Form) -->
+      <form id="purchase-form" onsubmit="handleFormSubmit(event)" class="flex-1 overflow-y-auto p-6 space-y-6">
+        
+        <!-- 申請区分（通常事前申請 or 急ぎ立替払い） -->
+        <div class="bg-amber-50/80 border-2 border-amber-300 p-4 rounded-2xl">
+          <label class="block text-xs font-bold text-amber-950 mb-2">申請区分（購入のタイミング） <span class="text-rose-500">*</span></label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <label class="flex items-center space-x-2.5 p-3 rounded-xl border-2 border-slate-300 bg-white cursor-pointer hover:border-emerald-500 transition has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/60 has-[:checked]:text-emerald-950">
+              <input type="radio" name="request-type" value="事前申請" checked onchange="toggleReimbursementFields(false)" class="text-emerald-700 focus:ring-emerald-600">
+              <div>
+                <span class="font-bold block">通常・事前申請（おすすめ）</span>
+                <span class="text-[11px] text-slate-500">管理者の決裁承認後に会社で購入・発注します</span>
+              </div>
+            </label>
+            <label class="flex items-center space-x-2.5 p-3 rounded-xl border-2 border-slate-300 bg-white cursor-pointer hover:border-amber-500 transition has-[:checked]:border-amber-600 has-[:checked]:bg-amber-100/60 has-[:checked]:text-amber-950">
+              <input type="radio" name="request-type" value="立替精算" onchange="toggleReimbursementFields(true)" class="text-amber-700 focus:ring-amber-600">
+              <div>
+                <span class="font-bold block text-amber-900 flex items-center space-x-1">
+                  <span>急ぎ立替払い（事後精算）</span>
+                  <span class="px-1.5 py-0.2 bg-rose-600 text-white rounded text-[10px]">要領収書</span>
+                </span>
+                <span class="text-[11px] text-amber-800">購入を急ぐため先に自腹立替済。事後承認と精算を申請</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- 立替払い専用の入力フィールド（初期非表示） -->
+        <div id="reimbursement-box" class="hidden p-4 bg-amber-100/50 border-2 border-amber-400 rounded-2xl space-y-3">
+          <div class="flex items-center justify-between text-xs font-bold text-amber-900">
+            <div class="flex items-center space-x-2">
+              <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              <span>立替精算情報（急ぎで購入した日付と精算希望方法）</span>
+            </div>
+            <!-- 管理者設定の上限額案内バッジ -->
+            <span id="reimburse-limit-badge" class="px-2 py-0.5 rounded-lg bg-amber-200 text-amber-950 border border-amber-400 text-[11px] font-bold">
+              上限: ¥10,000まで
+            </span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="block font-bold text-slate-800 mb-1">立替購入日（レシート・領収書日付） <span class="text-rose-500">*</span></label>
+              <input type="date" id="reimburse-paid-date" class="w-full text-xs font-medium bg-white border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-800 mb-1">精算希望方法 <span class="text-rose-500">*</span></label>
+              <select id="reimburse-method" class="w-full text-xs font-bold bg-white border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                <option value="現金手渡し精算">現金手渡し精算（店舗レジ/小口現金）</option>
+                <option value="次回給与合算振込">次回給与支払い時に合算振込</option>
+                <option value="経費口座振込">個人指定口座へ別振込</option>
+              </select>
+            </div>
+          </div>
+          <!-- 上限オーバー時の警告枠（自動表示） -->
+          <div id="reimburse-limit-warning" class="hidden p-2.5 rounded-xl bg-rose-100 border-2 border-rose-400 text-rose-900 text-xs font-bold flex items-center space-x-2">
+            <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <span id="reimburse-limit-warning-text">立替払いの上限金額を超えています。</span>
+          </div>
+          <p class="text-[11px] text-amber-800 font-bold bg-white/70 p-2 rounded-lg border border-amber-300">
+            ⚠️ 必ず下の「画像・見積書の添付」枠に【レシートまたは領収書の写真】を添付してください。原本は店舗・経理に提出してください。
+          </p>
+        </div>
+
+        <!-- Applicant Information Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-1">申請者氏名 <span class="text-rose-500">*</span></label>
+            <input type="text" id="applicant-name" required placeholder="山田 太郎" class="w-full text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-1">店舗・部署名 <span class="text-rose-500">*</span></label>
+            <input type="text" id="applicant-dept" list="dept-list" required placeholder="例: KOTOKA" class="w-full text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            <datalist id="dept-list">
+              <!-- Dynamically populated via JS -->
+            </datalist>
+          </div>
+          <div>
+            <label id="date-label" class="block text-xs font-bold text-slate-800 mb-1">購入希望日・納期 <span class="text-rose-500">*</span></label>
+            <input type="date" id="desired-date" required class="w-full text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Items Section -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center space-x-1.5">
+              <span>購入明細リスト</span>
+              <span class="text-[11px] font-normal text-slate-500">（複数品目を一括申請できます）</span>
+            </h4>
+            <button type="button" onclick="addItemRow()" class="text-xs text-emerald-800 hover:text-emerald-900 font-bold flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-emerald-100 hover:bg-emerald-200 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span>品目を追加</span>
+            </button>
+          </div>
+
+          <div class="border-2 border-slate-300 rounded-2xl overflow-hidden bg-slate-50/50">
+            <div id="items-container" class="divide-y divide-slate-200 p-2 space-y-2">
+              <!-- Item Row Template generated via JS -->
+            </div>
+          </div>
+
+          <!-- Total Calculation Display -->
+          <div class="mt-3 flex justify-end">
+            <div class="bg-emerald-50 border-2 border-emerald-300 px-4 py-2.5 rounded-xl flex items-center space-x-4">
+              <span class="text-xs font-bold text-emerald-900">申請合計金額 (税込):</span>
+              <span id="form-total-amount" class="text-xl font-black text-emerald-700">¥0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reasons and Delivery Destination -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-800 mb-1">購入理由・利用目的 <span class="text-rose-500">*</span></label>
+            <textarea id="purchase-reason" rows="3" required placeholder="例: 営業チーム増員に伴う備品の補充。また破損品の買い替えのため。" class="w-full text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl p-3 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1">納品場所・設置場所</label>
+              <input type="text" id="delivery-location" placeholder="例: KOTOKA バックヤード 備品棚" class="w-full text-sm font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1">緊急度</label>
+              <div class="flex items-center space-x-3 text-xs pt-1">
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="urgency" value="通常" checked class="text-emerald-600 focus:ring-emerald-500">
+                  <span class="text-slate-800 font-medium">通常</span>
+                </label>
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="urgency" value="至急" class="text-amber-600 focus:ring-amber-500">
+                  <span class="text-amber-700 font-bold">至急（3日以内）</span>
+                </label>
+                <label class="flex items-center space-x-1 cursor-pointer">
+                  <input type="radio" name="urgency" value="特急" class="text-rose-600 focus:ring-rose-500">
+                  <span class="text-rose-700 font-bold">特急（即時）</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 添付画像エリア -->
+        <div class="border-2 border-dashed border-slate-300 rounded-2xl p-4 bg-slate-50/70">
+          <label class="block text-xs font-bold text-slate-800 mb-1">画像・見積書の添付（任意 / 立替精算時は必須）</label>
+          <p class="text-[11px] text-slate-500 mb-3">破損箇所の写真や、Web画面・見積書・領収書のスクリーンショットを添付できます（スマホのカメラ撮影対応）</p>
+          
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <label class="cursor-pointer px-4 py-2 bg-white hover:bg-slate-100 text-slate-800 border-2 border-slate-300 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-xs">
+              <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              <span>画像を選択 / 撮影</span>
+              <input type="file" id="attachment-input" accept="image/*" class="hidden" onchange="handleImageSelection(event)">
+            </label>
+
+            <!-- 選択された画像のプレビュー -->
+            <div id="image-preview-container" class="hidden items-center space-x-3 bg-white px-3 py-1.5 rounded-xl border-2 border-slate-300">
+              <img id="image-preview-thumb" src="" alt="添付プレビュー" class="w-12 h-12 object-cover rounded-lg border border-slate-200">
+              <div class="text-xs">
+                <p id="image-preview-name" class="font-bold text-slate-800 max-w-[180px] truncate">-</p>
+                <p id="image-preview-size" class="text-slate-400 text-[10px]">-</p>
+              </div>
+              <button type="button" onclick="clearSelectedImage()" title="画像を削除" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Submit Footer -->
+        <div class="pt-4 border-t-2 border-slate-200 flex items-center justify-end space-x-3">
+          <button type="button" onclick="closeNewModal()" class="px-4 py-2.5 rounded-xl border-2 border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition">
+            キャンセル
+          </button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-xs font-bold text-white shadow-md shadow-emerald-700/20 transition flex items-center space-x-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>申請を提出する</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Detail & Decision Modal -->
+  <div id="detail-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden overflow-y-auto">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[94vh] flex flex-col my-auto border-2 border-slate-400 overflow-hidden">
+      <!-- Detail Header -->
+      <div class="px-6 py-4 bg-slate-100 border-b-2 border-slate-300 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <span id="detail-badge" class="px-2.5 py-1 rounded-full text-xs font-bold">ステータス</span>
+          <div>
+            <h3 id="detail-title" class="text-base font-bold text-slate-900">申請詳細</h3>
+            <p id="detail-id-date" class="text-xs text-slate-500">綴りNo: - | 申請日: -</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <!-- Print button -->
+          <button onclick="printCurrentApplication()" title="A4印刷プレビュー" class="px-3 py-1.5 border-2 border-slate-300 text-slate-800 hover:bg-slate-200 rounded-xl text-xs font-bold flex items-center space-x-1.5 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+            <span>印刷 / PDF</span>
+          </button>
+          <button onclick="closeDetailModal()" type="button" class="text-slate-400 hover:text-slate-600 p-2 rounded-xl hover:bg-slate-200 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Detail Body -->
+      <div class="flex-1 overflow-y-auto p-6 space-y-6">
+        <!-- Applicant Meta Box -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-slate-50 rounded-2xl border-2 border-slate-300 text-xs">
+          <div>
+            <span class="text-slate-500 block font-bold">申請区分</span>
+            <span id="detail-request-type" class="font-bold text-slate-900 text-sm">-</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block font-bold">申請者 / 所属部署</span>
+            <span id="detail-applicant" class="font-bold text-slate-900 text-sm">-</span>
+          </div>
+          <div>
+            <span id="detail-date-label" class="text-slate-500 block font-bold">希望納期</span>
+            <span id="detail-desired-date" class="font-bold text-slate-900 text-sm">-</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block font-bold">緊急度</span>
+            <span id="detail-urgency" class="font-bold text-slate-900 text-sm">-</span>
+          </div>
+        </div>
+
+        <!-- 立替精算詳細情報（立替申請時のみ表示） -->
+        <div id="detail-reimburse-info-box" class="hidden p-4 bg-amber-50 rounded-2xl border-2 border-amber-300 text-xs">
+          <div class="flex items-center space-x-1.5 font-bold text-amber-950 mb-2">
+            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            <span>立替払いの精算情報（急ぎ購入済）</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-800">
+            <div>
+              <span class="text-slate-500 font-bold block">立替購入日（領収書日）:</span>
+              <span id="detail-reimburse-paid-date" class="font-bold text-sm text-slate-900">-</span>
+            </div>
+            <div>
+              <span class="text-slate-500 font-bold block">精算方法:</span>
+              <span id="detail-reimburse-method" class="font-bold text-sm text-slate-900">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Items Table -->
+        <div>
+          <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">購入品目明細</h4>
+          <div class="border-2 border-slate-300 rounded-2xl overflow-hidden">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-100 border-b-2 border-slate-300 text-slate-700 font-bold">
+                <tr>
+                  <th class="py-2.5 px-3">#</th>
+                  <th class="py-2.5 px-3">品名・規格・型番</th>
+                  <th class="py-2.5 px-3">購入先/リンク</th>
+                  <th class="py-2.5 px-3 text-right">単価(税込)</th>
+                  <th class="py-2.5 px-3 text-center">数量</th>
+                  <th class="py-2.5 px-3 text-right">金額(税込)</th>
+                </tr>
+              </thead>
+              <tbody id="detail-items-tbody" class="divide-y divide-slate-200">
+                <!-- Dynamically populated -->
+              </tbody>
+              <tfoot class="bg-slate-100 border-t-2 border-slate-300 font-bold text-slate-900">
+                <tr>
+                  <td colspan="5" class="py-3 px-3 text-right">合計金額 (税込):</td>
+                  <td id="detail-total-amount" class="py-3 px-3 text-right text-base text-emerald-800">¥0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Reason and Location Box -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 bg-slate-50 rounded-2xl border-2 border-slate-300">
+            <span class="text-slate-500 block font-bold mb-1">購入理由・利用目的</span>
+            <p id="detail-reason" class="text-slate-900 font-medium whitespace-pre-wrap leading-relaxed">-</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-2xl border-2 border-slate-300">
+            <span class="text-slate-500 block font-bold mb-1">納品場所・設置場所</span>
+            <p id="detail-location" class="text-slate-900 font-medium">-</p>
+          </div>
+        </div>
+
+        <!-- 詳細画面での添付画像表示エリア -->
+        <div id="detail-attachment-box" class="hidden p-4 bg-slate-50 rounded-2xl border-2 border-slate-300 text-xs">
+          <span class="text-slate-600 block font-bold mb-2 flex items-center space-x-1.5">
+            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span>添付画像・見積書</span>
+          </span>
+          <div class="flex items-center space-x-4">
+            <a id="detail-attachment-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-block">
+              <img id="detail-attachment-img" src="" alt="添付画像" class="h-28 max-w-xs object-cover rounded-xl border-2 border-slate-300 shadow-xs hover:opacity-90 transition">
+            </a>
+            <div>
+              <a id="detail-attachment-btn" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1.5 px-3 py-2 bg-white border-2 border-slate-300 rounded-xl text-xs font-bold text-slate-800 hover:bg-slate-100 transition shadow-2xs">
+                <span>新しいタブで画像を開く</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 申請取り消し・削除ボタン（未決裁時、または管理者に表示） -->
+        <div id="delete-action-row" class="pt-2 flex items-center justify-between border-t border-slate-200">
+          <span class="text-[11px] text-slate-500 font-medium">※誤申請や不要になった場合は取り消し・削除を行えます（綴り番号は履歴に残ります）</span>
+          <button type="button" onclick="openDeleteConfirmModal()" class="px-3 py-1.5 text-xs font-bold text-rose-700 hover:text-rose-800 hover:bg-rose-50 rounded-xl border border-rose-300 transition flex items-center space-x-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            <span>この申請を取り消す / 削除</span>
+          </button>
+        </div>
+
+        <!-- Manager Decision Section -->
+        <div id="manager-section-container" class="border-t-2 border-slate-300 pt-5">
+          <div class="flex items-center space-x-2 mb-3">
+            <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <h4 class="text-sm font-bold text-slate-900">管理者 決裁エリア</h4>
+          </div>
+
+          <!-- 決裁済みの場合の記録表示 -->
+          <div id="detail-decision-record" class="hidden p-4 rounded-2xl border-2 border-slate-300 bg-slate-50 mb-3">
+            <div class="flex justify-between items-center text-xs mb-2">
+              <span id="detail-approver" class="font-bold text-slate-900">決裁者: -</span>
+              <span id="detail-decision-date" class="text-slate-600 font-bold">決裁日時: -</span>
+            </div>
+            <p class="text-xs font-bold text-slate-600 mb-1">管理者コメント:</p>
+            <p id="detail-manager-comment" class="text-xs text-slate-900 font-medium bg-white p-2.5 rounded-xl border border-slate-300 whitespace-pre-wrap">-</p>
+          </div>
+
+          <!-- 管理者アクション入力フォーム -->
+          <div id="manager-actions-box" class="space-y-3 bg-amber-50/70 p-4 rounded-2xl border-2 border-amber-300">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1">決裁者氏名 / 役職</label>
+              <!-- 登録された管理者名から選ぶプルダウン -->
+              <select id="manager-name-input" class="w-full text-xs font-bold bg-white border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                <option value="総務部長 佐藤">総務部長 佐藤</option>
+                <option value="鈴木 エリアマネージャー">鈴木 エリアマネージャー</option>
+                <option value="店長 / 拠点長">店長 / 拠点長</option>
+                <option value="システム管理者">システム管理者</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-800 mb-1">管理者コメント（指示事項や却下・保留の理由）</label>
+              <textarea id="manager-comment-input" rows="2" placeholder="例: 承認します。購入先サイトの法人アカウントで発注してください。" class="w-full text-xs font-medium bg-white border-2 border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
+            </div>
+            <div class="flex items-center justify-end space-x-2 pt-1">
+              <button onclick="updateDecision('rejected')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-xs">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <span>却下</span>
+              </button>
+              <button onclick="updateDecision('on_hold')" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-xs">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>差戻し / 保留</span>
+              </button>
+              <button onclick="updateDecision('approved')" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1 shadow-md shadow-emerald-700/20">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <span>承認する</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Authentication Modal (管理者パスワード認証画面) -->
+  <div id="admin-auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-md hidden">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border-2 border-slate-400 text-center">
+      <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+      </div>
+      <h3 class="text-base font-bold text-slate-900 mb-1">管理者認証</h3>
+      <p class="text-xs text-slate-600 mb-4">決裁を行うには管理者パスワードを入力してください。<br><span class="text-[11px] text-slate-400">（一度認証するとブラウザに記憶・省略されます）</span></p>
+      <form onsubmit="verifyAdminPassword(event)">
+        <input type="password" id="admin-password-input" class="w-full text-center text-lg font-bold bg-slate-50 border-2 border-slate-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none mb-4 font-mono tracking-widest placeholder:text-xs placeholder:tracking-normal placeholder:font-sans" placeholder="パスワード (初期値: admin)">
+        <div class="flex items-center justify-center space-x-2">
+          <button type="button" onclick="closeAdminAuthModal()" class="px-4 py-2 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition w-full">キャンセル</button>
+          <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-slate-900 hover:bg-black rounded-xl transition w-full shadow-xs">
+            認証する
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal (削除・取り消し確認モーダル) -->
+  <div id="delete-confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border-2 border-rose-300 text-left">
+      <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+      </div>
+      <h3 class="text-base font-bold text-slate-900 mb-1">申請の取り消し・削除</h3>
+      <p class="text-xs text-slate-600 mb-3">この申請を削除します。綴りナンバーは欠番追跡のため「決裁履歴」およびスプレッドシートに記録されます。</p>
+      
+      <div class="mb-4">
+        <label class="block text-xs font-bold text-slate-700 mb-1">取り消し・削除の理由 <span class="text-rose-500">*</span></label>
+        <input type="text" id="delete-reason-input" placeholder="例: 重複申請のため / 購入中止のため" class="w-full text-xs font-medium bg-slate-50 border-2 border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-rose-500 focus:outline-none">
+      </div>
+
+      <div class="flex items-center justify-end space-x-2">
+        <button type="button" onclick="closeDeleteConfirmModal()" class="px-4 py-2 text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition">キャンセル</button>
+        <button type="button" onclick="confirmDeleteApplication()" class="px-4 py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition shadow-xs flex items-center space-x-1">
+          <span>削除を実行する</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- A4 Print Layout Container -->
+  <div id="print-area" class="hidden">
+    <div style="font-family: 'Hiragino Sans', 'Meiryo', sans-serif; max-width: 750px; margin: 0 auto; color: #000; font-size: 13px; line-height: 1.5;">
+      <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 18px;">
+        <h1 style="font-size: 20px; font-weight: bold; margin: 0;">NEKKO株式会社 備品購入申請書</h1>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px;">
+        <tr>
+          <td style="border: 1px solid #333; padding: 6px; width: 15%; background: #f3f4f6; font-weight: bold;">綴りNo</td>
+          <td id="p-id" style="border: 1px solid #333; padding: 6px; width: 35%; font-family: monospace;">-</td>
+          <td style="border: 1px solid #333; padding: 6px; width: 15%; background: #f3f4f6; font-weight: bold;">申請日</td>
+          <td id="p-date" style="border: 1px solid #333; padding: 6px; width: 35%;">-</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">申請区分</td>
+          <td id="p-request-type" style="border: 1px solid #333; padding: 6px; font-weight: bold; color: #b45309;">-</td>
+          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">所属店舗・部署</td>
+          <td id="p-dept" style="border: 1px solid #333; padding: 6px;">-</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">申請者氏名</td>
+          <td id="p-name" style="border: 1px solid #333; padding: 6px; font-weight: bold;">-</td>
+          <td id="p-date-label" style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">希望納期 / 購入日</td>
+          <td id="p-desired-date" style="border: 1px solid #333; padding: 6px;">-</td>
+        </tr>
+        <tr id="p-reimburse-row">
+          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">精算方法</td>
+          <td id="p-reimburse-method" colspan="3" style="border: 1px solid #333; padding: 6px;">-</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #333; padding: 6px; background: #f3f4f6; font-weight: bold;">納品・保管場所</td>
+          <td id="p-location" colspan="3" style="border: 1px solid #333; padding: 6px;">-</td>
+        </tr>
+      </table>
+
+      <div style="margin-bottom: 14px;">
+        <div style="font-weight: bold; margin-bottom: 4px;">■ 購入品目明細</div>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: #f3f4f6;">
+              <th style="border: 1px solid #333; padding: 6px; width: 8%;">No.</th>
+              <th style="border: 1px solid #333; padding: 6px; width: 44%;">品名・型番・規格</th>
+              <th style="border: 1px solid #333; padding: 6px; width: 20%;">購入先/店名</th>
+              <th style="border: 1px solid #333; padding: 6px; width: 8%;">数量</th>
+              <th style="border: 1px solid #333; padding: 6px; width: 10%; text-align: right;">単価(税込)</th>
+              <th style="border: 1px solid #333; padding: 6px; width: 10%; text-align: right;">金額(税込)</th>
+            </tr>
+          </thead>
+          <tbody id="p-items-tbody"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" style="border: 1px solid #333; padding: 6px; text-align: right; font-weight: bold;">合計金額 (税込):</td>
+              <td id="p-total-amount" style="border: 1px solid #333; padding: 6px; text-align: right; font-weight: bold; font-size: 14px;">¥0</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <div style="font-weight: bold; margin-bottom: 4px;">■ 購入理由・利用目的</div>
+        <div id="p-reason" style="border: 1px solid #333; padding: 8px; min-height: 50px; white-space: pre-wrap;">-</div>
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-top: 20px;">
+        <div style="flex: 2; border: 1px solid #333; padding: 8px;">
+          <div style="font-weight: bold; margin-bottom: 4px;">■ 管理者 決裁欄</div>
+          <div>ステータス: <span id="p-status-box" style="font-weight: bold;">-</span></div>
+          <div style="margin-top: 4px;">コメント: <span id="p-manager-comment">-</span></div>
+        </div>
+        <div style="flex: 1; border: 1px solid #333; padding: 8px; text-align: center;">
+          <div style="font-weight: bold; font-size: 11px; margin-bottom: 4px;">承認印</div>
+          <div id="p-stamp-box" style="height: 55px; display: flex; align-items: center; justify-content: center; font-size: 12px;">未決裁</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Box -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div id="toast-content" class="bg-slate-900 text-white text-sm px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-2 border border-slate-700">
+      <span id="toast-icon">✓</span>
+      <span id="toast-msg">処理が完了しました</span>
+    </div>
+  </div>
+
+  <script>
+    // --- Application State ---
+    let currentRole = 'applicant'; // 'applicant' | 'manager'
+    let currentFilter = 'active'; // 'active' | 'history'
+    let currentDetailId = null;
+    let currentUser = localStorage.getItem('currentUser') || '';
+    let currentAttachedImage = null; // { name, type, dataUrl }
+
+    // 管理者パスワード設定 (初期値: admin)
+    let isAdminAuthenticated = localStorage.getItem('isAdminAuthenticated') === 'true';
+    const ADMIN_PASSWORD = "admin";
+
+    // 立替払いの上限金額（初期値: 10,000円）
+    let reimburseLimitAmount = Number(localStorage.getItem('reimburseLimitAmount')) || 10000;
+
+    // Google Apps Script Web App URL
+    const GAS_WEBAPP_URL = ""; // ここにデプロイしたGASのURLを入力
+
+    // サンプル初期データ（isSample: true を付与して本番データと明確に区別）
+    const initialSamples = [
+      {
+        id: 'REQ-202610-001',
+        isSample: true,
+        createdAt: '2026-10-01',
+        requestType: '事前申請',
+        applicantName: '佐藤 健太',
+        department: 'KOTOKA',
+        urgency: '通常',
+        desiredDate: '2026-10-15',
+        deliveryLocation: 'KOTOKA バックヤード',
+        reimbursePaidDate: '',
+        reimburseMethod: '',
+        reason: '【動作確認サンプル】新規スタッフ増員に伴うタブレット端末の追加および充電ケーブルの配備のため。',
+        items: [
+          { name: 'iPad 第10世代 64GB', store: 'Apple Store', price: 68800, quantity: 1 },
+          { name: 'USB-C 充電ケーブル 2m', store: 'Amazon', price: 1280, quantity: 2 }
+        ],
+        imageUrl: '',
+        status: 'approved',
+        managerName: '鈴木 エリアマネージャー',
+        managerComment: '承認します。初期設定はシステム担当に依頼してください。',
+        decisionDate: '2026-10-02'
+      },
+      {
+        id: 'REQ-202610-002',
+        isSample: true,
+        createdAt: '2026-10-03',
+        requestType: '立替精算',
+        applicantName: '高橋 涼子',
+        department: 'BAKERU',
+        urgency: '特急',
+        desiredDate: '2026-10-03',
+        deliveryLocation: 'BAKERU レジ横',
+        reimbursePaidDate: '2026-10-03',
+        reimburseMethod: '現金手渡し精算',
+        reason: '【動作確認サンプル】レジ用紙が営業時間中に完全に切れてしまい、緊急で立替購入しました。',
+        items: [
+          { name: 'サーマルロール紙 緊急購入 5巻', store: '近隣文具店', price: 1800, quantity: 1 }
+        ],
+        imageUrl: '',
+        status: 'pending',
+        managerName: '',
+        managerComment: '',
+        decisionDate: ''
+      },
+      {
+        id: 'REQ-202610-003',
+        isSample: true,
+        createdAt: '2026-10-04',
+        requestType: '事前申請',
+        applicantName: '中村 翔',
+        department: '本社 管理部',
+        urgency: '通常',
+        desiredDate: '2026-10-20',
+        deliveryLocation: '本社 2F',
+        reimbursePaidDate: '',
+        reimburseMethod: '',
+        reason: '【動作確認サンプル】経理担当用の疲労軽減エルゴノミクスキーボード。',
+        items: [
+          { name: 'Logicool ERGO K860 ワイヤレスキーボード', store: 'ビックカメラ', price: 17800, quantity: 1 }
+        ],
+        imageUrl: '',
+        status: 'pending',
+        managerName: '',
+        managerComment: '',
+        decisionDate: ''
+      }
+    ];
+
+    // ローカルストレージに既存データがあればそれを読み込み、なければ初期サンプルを読み込む
+    const savedApps = localStorage.getItem('applications_data');
+    let applications = savedApps ? JSON.parse(savedApps) : initialSamples;
+
+    // データの永続化ヘルパー
+    function saveApplications() {
+      localStorage.setItem('applications_data', JSON.stringify(applications));
+    }
+
+    // 月別完全シーケンシャルID（連番・綴りNo）生成関数
+    function generateSequentialId() {
+      const now = new Date();
+      const yyyymm = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}`;
+      const prefix = `REQ-${yyyymm}-`;
+
+      let maxSeq = 0;
+      applications.forEach(app => {
+        if (app.id && app.id.startsWith(prefix)) {
+          const seqPart = parseInt(app.id.replace(prefix, ''), 10);
+          if (!isNaN(seqPart) && seqPart > maxSeq) {
+            maxSeq = seqPart;
+          }
+        }
+      });
+
+      const nextSeq = String(maxSeq + 1).padStart(3, '0');
+      return `${prefix}${nextSeq}`;
+    }
+
+    // 店舗・部署名リストの動的更新（KOTOKA, BAKERU, 本社等）
+    function updateDeptDropdowns() {
+      const filter = document.getElementById('dept-filter');
+      if (!filter) return;
+      const currentFilterVal = filter.value;
+      const datalist = document.getElementById('dept-list');
+      
+      const baseDepts = ['KOTOKA', 'BAKERU', '本社'];
+      const usedDepts = applications.map(a => a.department);
+      const uniqueDepts = [...new Set([...baseDepts, ...usedDepts])].filter(Boolean);
+      
+      let filterHtml = '<option value="">すべての店舗・部署</option>';
+      uniqueDepts.forEach(dept => {
+        filterHtml += `<option value="${escapeHtml(dept)}">${escapeHtml(dept)}</option>`;
+      });
+      filter.innerHTML = filterHtml;
+      if (uniqueDepts.includes(currentFilterVal)) {
+        filter.value = currentFilterVal;
+      }
+      
+      if (datalist) {
+        let datalistHtml = '';
+        uniqueDepts.forEach(dept => {
+          datalistHtml += `<option value="${escapeHtml(dept)}"></option>`;
+        });
+        datalist.innerHTML = datalistHtml;
+      }
+    }
+
+    // 管理者モード切替時の認証確認
+    function attemptSwitchToManager() {
+      if (isAdminAuthenticated) {
+        switchRole('manager');
+      } else {
+        document.getElementById('admin-auth-modal').classList.remove('hidden');
+        setTimeout(() => document.getElementById('admin-password-input').focus(), 100);
+      }
+    }
+
+    // 管理者パスワード検証
+    function verifyAdminPassword(e) {
+      if (e) e.preventDefault();
+      const inputEl = document.getElementById('admin-password-input');
+      if (inputEl.value === ADMIN_PASSWORD) {
+        isAdminAuthenticated = true;
+        localStorage.setItem('isAdminAuthenticated', 'true');
+        closeAdminAuthModal();
+        switchRole('manager');
+        showToast('管理者として認証されました');
+      } else {
+        showToast('パスワードが違います', 'error');
+        inputEl.value = '';
+        inputEl.focus();
+      }
+    }
+
+    function closeAdminAuthModal() {
+      document.getElementById('admin-auth-modal').classList.add('hidden');
+      document.getElementById('admin-password-input').value = '';
+    }
+
+    // ロール切替処理（デザインハイライト対応）
+    function switchRole(role) {
+      currentRole = role;
+      const appBtn = document.getElementById('role-applicant-btn');
+      const mgrBtn = document.getElementById('role-manager-btn');
+      const appText = document.getElementById('role-applicant-text');
+      const mgrText = document.getElementById('role-manager-text');
+      const banner = document.getElementById('role-banner');
+      const bannerTitle = document.getElementById('role-title');
+      const bannerDesc = document.getElementById('role-desc');
+      const bannerIcon = document.getElementById('role-icon');
+      const userContainer = document.getElementById('current-user-container');
+      const limitContainer = document.getElementById('manager-limit-container');
+
+      if (role === 'applicant') {
+        appBtn.className = "px-3 py-1.5 rounded-lg transition-all flex items-center space-x-1.5 bg-emerald-600 text-white shadow-sm font-bold";
+        mgrBtn.className = "px-3 py-1.5 rounded-lg transition-all flex items-center space-x-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-200 font-medium";
+        appText.textContent = "申請者モード中";
+        mgrText.textContent = "管理者決裁モード";
+        banner.className = "bg-sky-50 border-2 border-sky-400 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs";
+        bannerTitle.className = "text-sm font-bold text-sky-950";
+        bannerTitle.textContent = "現在は【申請者ビュー】を表示しています";
+        bannerDesc.className = "text-xs text-sky-800 font-medium";
+        bannerDesc.textContent = "必要な備品の明細を入力し、管理者に購入伺いを提出できます。";
+        bannerIcon.className = "p-2 bg-sky-500 text-white rounded-xl shadow-xs";
+        
+        if (userContainer) userContainer.classList.remove('hidden');
+        if (limitContainer) limitContainer.classList.add('hidden');
+      } else {
+        mgrBtn.className = "px-3 py-1.5 rounded-lg transition-all flex items-center space-x-1.5 bg-emerald-600 text-white shadow-sm font-bold";
+        appBtn.className = "px-3 py-1.5 rounded-lg transition-all flex items-center space-x-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-200 font-medium";
+        appText.textContent = "申請者モード";
+        mgrText.textContent = "管理者決裁モード中";
+        banner.className = "bg-emerald-50 border-2 border-emerald-400 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs";
+        bannerTitle.className = "text-sm font-bold text-emerald-950";
+        bannerTitle.textContent = "現在は【管理者決裁モード】を表示しています";
+        bannerDesc.className = "text-xs text-emerald-800 font-medium";
+        bannerDesc.textContent = "提出された申請の確認・承認・却下・差戻し処理をワンクリックで行えます。";
+        bannerIcon.className = "p-2 bg-emerald-600 text-white rounded-xl shadow-xs";
+        
+        if (userContainer) userContainer.classList.add('hidden');
+        if (limitContainer) limitContainer.classList.remove('hidden');
+        const limitInput = document.getElementById('manager-limit-input');
+        if (limitInput) limitInput.value = reimburseLimitAmount;
+      }
+
+      renderList();
+      showToast(role === 'applicant' ? '申請者モードに切り替えました' : '管理者決裁モードに切り替えました');
+    }
+
+    // 立替払い選択時のフォーム開閉制御
+    function toggleReimbursementFields(isReimburse) {
+      const box = document.getElementById('reimbursement-box');
+      const dateLabel = document.getElementById('date-label');
+      const paidDateInput = document.getElementById('reimburse-paid-date');
+      const limitBadge = document.getElementById('reimburse-limit-badge');
+
+      if (isReimburse) {
+        box.classList.remove('hidden');
+        dateLabel.innerHTML = '立替精算希望日 <span class="text-rose-500">*</span>';
+        if (limitBadge) {
+          limitBadge.textContent = `上限: ${formatYen(reimburseLimitAmount)}まで`;
+        }
+        if (!paidDateInput.value) {
+          paidDateInput.value = new Date().toISOString().split('T')[0];
+        }
+        checkReimburseLimit();
+      } else {
+        box.classList.add('hidden');
+        dateLabel.innerHTML = '購入希望日・納期 <span class="text-rose-500">*</span>';
+      }
+    }
+
+    // 管理者が設定した立替上限金額を保存する処理
+    function saveReimburseLimit(val) {
+      const num = Number(val);
+      if (isNaN(num) || num < 0) {
+        showToast('有効な金額を入力してください', 'error');
+        return;
+      }
+      reimburseLimitAmount = num;
+      localStorage.setItem('reimburseLimitAmount', String(num));
+      const limitBadge = document.getElementById('reimburse-limit-badge');
+      if (limitBadge) {
+        limitBadge.textContent = `上限: ${formatYen(reimburseLimitAmount)}まで`;
+      }
+      showToast(`立替払いの上限金額を ${formatYen(num)} に設定しました`);
+    }
+
+    // 立替払い上限金額の超過チェック処理
+    function checkReimburseLimit() {
+      const typeRadio = document.querySelector('input[name="request-type"]:checked');
+      const isReimburse = typeRadio && typeRadio.value === '立替精算';
+      const warningBox = document.getElementById('reimburse-limit-warning');
+      const warningText = document.getElementById('reimburse-limit-warning-text');
+      if (!isReimburse || !warningBox) return false;
+
+      const rows = document.querySelectorAll('.item-line');
+      let total = 0;
+      rows.forEach(row => {
+        const price = Number(row.querySelector('.item-price')?.value) || 0;
+        const qty = Number(row.querySelector('.item-qty')?.value) || 0;
+        total += (price * qty);
+      });
+
+      if (total > reimburseLimitAmount) {
+        warningText.textContent = `【上限超過】立替精算の上限額（${formatYen(reimburseLimitAmount)}）を ${formatYen(total - reimburseLimitAmount)} 超過しています。事前申請を行うか管理者に確認してください。`;
+        warningBox.classList.remove('hidden');
+        return false;
+      } else {
+        warningBox.classList.add('hidden');
+        return true;
+      }
+    }
+
+    function calculateTotal(items) {
+      return (items || []).reduce((acc, item) => acc + (Number(item.price || 0) * Number(item.quantity || 0)), 0);
+    }
+
+    function formatYen(num) {
+      return '¥' + Number(num || 0).toLocaleString('ja-JP');
+    }
+
+    function updateStats() {
+      const pendingCount = applications.filter(a => a.status === 'pending').length;
+      const approvedCount = applications.filter(a => a.status === 'approved').length;
+      const rejectedCount = applications.filter(a => a.status === 'rejected' || a.status === 'on_hold').length;
+
+      const approvedTotal = applications
+        .filter(a => a.status === 'approved')
+        .reduce((sum, a) => sum + calculateTotal(a.items), 0);
+
+      document.getElementById('stat-pending').textContent = `${pendingCount} 件`;
+      document.getElementById('stat-approved').textContent = `${approvedCount} 件`;
+      document.getElementById('stat-rejected').textContent = `${rejectedCount} 件`;
+      document.getElementById('stat-total-amount').textContent = formatYen(approvedTotal);
+
+      const badge = document.getElementById('pending-badge-header');
+      if (pendingCount > 0) {
+        badge.textContent = pendingCount;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      const managerAlert = document.getElementById('manager-alert');
+      if (currentRole === 'manager' && pendingCount > 0) {
+        document.getElementById('alert-pending-count').textContent = pendingCount;
+        managerAlert.classList.remove('hidden');
+      } else {
+        managerAlert.classList.add('hidden');
+      }
+    }
+
+    function getStatusBadge(status) {
+      switch (status) {
+        case 'pending':
+          return `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-400 shadow-2xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span>審査中
+                  </span>`;
+        case 'approved':
+          return `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-400 shadow-2xs">
+                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    承認済
+                  </span>`;
+        case 'rejected':
+          return `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-800 border border-slate-400 shadow-2xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-500 mr-1.5"></span>却下済
+                  </span>`;
+        case 'on_hold':
+          return `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-900 border border-rose-400 shadow-2xs">
+                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    差戻し / 保留
+                  </span>`;
+        case 'deleted':
+          return `<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-slate-200 text-slate-600 border border-slate-400 shadow-2xs line-through">
+                    <svg class="w-3.5 h-3.5 mr-1 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    削除済
+                  </span>`;
+        default:
+          return '';
+      }
+    }
+
+    function setFilter(filterType) {
+      currentFilter = filterType;
+      ['active', 'history'].forEach(type => {
+        const btn = document.getElementById(`filter-${type}`);
+        if (type === filterType) {
+          btn.className = "px-3 py-1.5 rounded-lg bg-white shadow-xs font-bold text-slate-900";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium";
+        }
+      });
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const deptFilter = document.getElementById('dept-filter')?.value || '';
+      let filtered = [...applications];
+
+      if (currentFilter === 'active') {
+        filtered = filtered.filter(a => a.status === 'pending' || a.status === 'on_hold');
+      } else if (currentFilter === 'history') {
+        filtered = filtered.filter(a => a.status === 'approved' || a.status === 'rejected' || a.status === 'deleted');
+      }
+
+      if (deptFilter) {
+        filtered = filtered.filter(a => a.department === deptFilter);
+      }
+
+      if (currentRole === 'applicant' && currentUser) {
+        filtered = filtered.filter(a => a.applicantName && a.applicantName.includes(currentUser));
+      }
+
+      renderFilteredList(filtered);
+    }
+
+    function renderList() {
+      applyFilters();
+      updateStats();
+    }
+
+    function renderFilteredList(list) {
+      const tbody = document.getElementById('application-tbody');
+      const emptyState = document.getElementById('empty-state');
+      tbody.innerHTML = '';
+
+      if (list.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      list.forEach(app => {
+        const total = calculateTotal(app.items);
+        const firstItemName = app.items[0]?.name || '品目未設定';
+        const itemSummary = app.items.length > 1 ? `${firstItemName} 他${app.items.length - 1}件` : firstItemName;
+
+        const tr = document.createElement('tr');
+        if (app.status === 'deleted') {
+          tr.className = "bg-slate-100/60 opacity-60 hover:opacity-100 hover:bg-slate-200/50 transition cursor-pointer border-b border-slate-200";
+        } else if (app.status === 'on_hold') {
+          tr.className = "bg-rose-50/50 hover:bg-rose-100/60 transition cursor-pointer border-b-2 border-rose-300";
+        } else if (app.status === 'pending') {
+          tr.className = "bg-amber-50/40 hover:bg-amber-100/50 transition cursor-pointer border-b-2 border-amber-300";
+        } else {
+          tr.className = "hover:bg-slate-50 transition cursor-pointer border-b border-slate-200";
+        }
+
+        tr.onclick = (e) => {
+          if (e.target.closest('button')) return;
+          openDetailModal(app.id);
+        };
+
+        const isReimburse = app.requestType === '立替精算';
+        const typeBadge = isReimburse 
+          ? `<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-400">立替精算</span>`
+          : `<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-300">事前申請</span>`;
+
+        const sampleBadge = app.isSample 
+          ? `<span class="ml-1 inline-flex items-center px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-100 text-purple-700 border border-purple-300">サンプル</span>`
+          : '';
+
+        tr.innerHTML = `
+          <td class="py-3.5 px-4">
+            <div class="flex items-center">
+              <span class="font-mono font-bold ${app.status === 'deleted' ? 'line-through text-slate-500' : 'text-slate-900'}">${app.id}</span>
+              ${sampleBadge}
+            </div>
+            <div class="text-xs text-slate-500 mt-0.5">${app.createdAt}</div>
+          </td>
+          <td class="py-3.5 px-4">
+            <div class="mb-1">${typeBadge}</div>
+            <div class="text-xs text-slate-700 font-bold">${escapeHtml(app.department)}</div>
+          </td>
+          <td class="py-3.5 px-4">
+            <div class="font-bold text-slate-900">${escapeHtml(app.applicantName)}</div>
+          </td>
+          <td class="py-3.5 px-4">
+            <span class="text-slate-900 font-bold block max-w-xs truncate" title="${escapeHtml(firstItemName)}">${escapeHtml(itemSummary)}</span>
+            <span class="text-xs text-slate-500 font-medium">${app.items.reduce((c, i) => c + Number(i.quantity || 0), 0)} 点</span>
+          </td>
+          <td class="py-3.5 px-4 font-bold text-slate-900">${formatYen(total)}</td>
+          <td class="py-3.5 px-4">
+            <div class="text-xs font-bold text-slate-900">${app.desiredDate}</div>
+            ${app.urgency !== '通常' ? `<span class="inline-block text-[10px] font-bold text-rose-700 bg-rose-100 border border-rose-300 px-1.5 py-0.2 rounded mt-0.5">${app.urgency}</span>` : ''}
+          </td>
+          <td class="py-3.5 px-4">${getStatusBadge(app.status)}</td>
+          <td class="py-3.5 px-4 text-right">
+            <button onclick="openDetailModal('${app.id}')" class="px-3 py-1.5 rounded-xl border-2 border-slate-300 text-xs font-bold text-slate-800 hover:bg-slate-100 hover:border-slate-400 transition shadow-2xs">
+              ${currentRole === 'manager' && app.status === 'pending' ? '審査する' : '詳細確認'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function addItemRow(name = '', store = '', price = '', quantity = 1) {
+      const container = document.getElementById('items-container');
+      const rowId = 'item-row-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4);
+
+      const row = document.createElement('div');
+      row.id = rowId;
+      row.className = "bg-white p-3 rounded-xl border-2 border-slate-300 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center gap-3 item-line";
+
+      row.innerHTML = `
+        <div class="flex-1 w-full sm:w-auto">
+          <input type="text" placeholder="品名・型番 (例: ノートパソコン、事務用チェア)" value="${escapeHtml(name)}" required class="item-name w-full text-xs font-medium bg-slate-50 border-2 border-slate-300 rounded-lg px-2.5 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+        </div>
+        <div class="w-full sm:w-36">
+          <input type="text" placeholder="購入先/URL" value="${escapeHtml(store)}" class="item-store w-full text-xs font-medium bg-slate-50 border-2 border-slate-300 rounded-lg px-2.5 py-2 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+        </div>
+        <div class="flex items-center space-x-2 w-full sm:w-auto">
+          <div class="w-24">
+            <div class="relative">
+              <span class="absolute left-2 top-2 text-xs font-bold text-slate-500">¥</span>
+              <input type="number" min="0" step="1" placeholder="単価" value="${price}" oninput="updateFormTotal()" required class="item-price w-full text-xs font-bold pl-5 pr-2 py-2 bg-slate-50 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+            </div>
+          </div>
+          <div class="w-16">
+            <input type="number" min="1" step="1" placeholder="数量" value="${quantity}" oninput="updateFormTotal()" required class="item-qty w-full text-xs font-bold px-2 py-2 bg-slate-50 border-2 border-slate-300 rounded-lg text-center focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+          </div>
+          <button type="button" onclick="removeItemRow('${rowId}')" title="削除" class="p-2 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+          </button>
+        </div>
+      `;
+
+      container.appendChild(row);
+      updateFormTotal();
+    }
+
+    function removeItemRow(rowId) {
+      const container = document.getElementById('items-container');
+      if (container.children.length <= 1) {
+        showToast('品目は最低1件必要です', 'error');
+        return;
+      }
+      const el = document.getElementById(rowId);
+      if (el) el.remove();
+      updateFormTotal();
+    }
+
+    function updateFormTotal() {
+      const rows = document.querySelectorAll('.item-line');
+      let total = 0;
+      rows.forEach(row => {
+        const price = Number(row.querySelector('.item-price')?.value) || 0;
+        const qty = Number(row.querySelector('.item-qty')?.value) || 0;
+        total += (price * qty);
+      });
+      document.getElementById('form-total-amount').textContent = formatYen(total);
+      checkReimburseLimit();
+    }
+
+    function openNewModal() {
+      document.getElementById('purchase-form').reset();
+      document.getElementById('items-container').innerHTML = '';
+      
+      const nextWeek = new Date();
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      document.getElementById('desired-date').value = nextWeek.toISOString().split('T')[0];
+
+      if (currentUser) {
+        document.getElementById('applicant-name').value = currentUser;
+      }
+
+      // 申請区分を事前申請にリセット
+      const defaultRadio = document.querySelector('input[name="request-type"][value="事前申請"]');
+      if (defaultRadio) defaultRadio.checked = true;
+      toggleReimbursementFields(false);
+
+      addItemRow('', '', '', 1);
+      addItemRow('', '', '', 1);
+
+      clearSelectedImage();
+      document.getElementById('new-modal').classList.remove('hidden');
+    }
+
+    function closeNewModal() {
+      document.getElementById('new-modal').classList.add('hidden');
+      clearSelectedImage();
+    }
+
+    function handleImageSelection(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('画像サイズは5MB以下にしてください', 'error');
+        event.target.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        currentAttachedImage = {
+          name: file.name,
+          type: file.type,
+          dataUrl: dataUrl
+        };
+
+        const previewContainer = document.getElementById('image-preview-container');
+        const previewThumb = document.getElementById('image-preview-thumb');
+        const previewName = document.getElementById('image-preview-name');
+        const previewSize = document.getElementById('image-preview-size');
+
+        previewThumb.src = dataUrl;
+        previewName.textContent = file.name;
+        previewSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+        previewContainer.classList.remove('hidden');
+        previewContainer.classList.add('flex');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearSelectedImage() {
+      currentAttachedImage = null;
+      const input = document.getElementById('attachment-input');
+      if (input) input.value = '';
+      const previewContainer = document.getElementById('image-preview-container');
+      if (previewContainer) {
+        previewContainer.classList.add('hidden');
+        previewContainer.classList.remove('flex');
+      }
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const typeRadio = document.querySelector('input[name="request-type"]:checked');
+      const requestType = typeRadio ? typeRadio.value : '事前申請';
+      const applicantName = document.getElementById('applicant-name').value.trim();
+      const department = document.getElementById('applicant-dept').value.trim();
+      const desiredDate = document.getElementById('desired-date').value;
+      const reason = document.getElementById('purchase-reason').value.trim();
+      const deliveryLocation = document.getElementById('delivery-location').value.trim() || '社内規定場所';
+      const urgency = document.querySelector('input[name="urgency"]:checked').value;
+
+      // 立替精算情報
+      const reimbursePaidDate = requestType === '立替精算' ? document.getElementById('reimburse-paid-date').value : '';
+      const reimburseMethod = requestType === '立替精算' ? document.getElementById('reimburse-method').value : '';
+
+      if (requestType === '立替精算' && !reimbursePaidDate) {
+        showToast('立替購入日（領収書の日付）を入力してください', 'error');
+        return;
+      }
+
+      const rows = document.querySelectorAll('.item-line');
+      const items = [];
+      let totalAmount = 0;
+
+      rows.forEach(row => {
+        const name = row.querySelector('.item-name').value.trim();
+        const store = row.querySelector('.item-store').value.trim();
+        const price = Number(row.querySelector('.item-price').value);
+        const quantity = Number(row.querySelector('.item-qty').value);
+
+        if (name && price >= 0 && quantity > 0) {
+          items.push({ name, store: store || '指定なし', price, quantity });
+          totalAmount += (price * quantity);
+        }
+      });
+
+      if (items.length === 0) {
+        showToast('品目と有効な金額を入力してください', 'error');
+        return;
+      }
+
+      // 立替払い上限金額チェック
+      if (requestType === '立替精算' && totalAmount > reimburseLimitAmount) {
+        showToast(`立替払いは ${formatYen(reimburseLimitAmount)} までです。「事前申請」に切り替えて申請してください`, 'error');
+        checkReimburseLimit();
+        return;
+      }
+
+      const now = new Date();
+      const newId = generateSequentialId();
+
+      const newApp = {
+        id: newId,
+        isSample: false, // 本番申請
+        createdAt: now.toISOString().split('T')[0],
+        requestType,
+        applicantName,
+        department,
+        desiredDate,
+        deliveryLocation,
+        urgency,
+        reason,
+        reimbursePaidDate,
+        reimburseMethod,
+        items,
+        imageUrl: currentAttachedImage ? currentAttachedImage.dataUrl : '',
+        attachment: currentAttachedImage,
+        status: 'pending',
+        managerName: '',
+        managerComment: '',
+        decisionDate: ''
+      };
+
+      applications.unshift(newApp);
+      saveApplications(); // ローカルストレージに永続化
+
+      // GASへデータ送信
+      if (GAS_WEBAPP_URL) {
+        fetch(GAS_WEBAPP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'create', payload: newApp })
+        })
+        .then(res => res.json())
+        .then(result => {
+          if (result && result.imageUrl) {
+            newApp.imageUrl = result.imageUrl;
+            saveApplications(); // 画像URL更新後再保存
+          }
+        })
+        .catch(err => console.error("GAS送信エラー:", err));
+      }
+
+      updateCurrentUser(applicantName);
+      updateDeptDropdowns();
+      closeNewModal();
+      renderList();
+      showToast(`申請（綴りNo: ${newId}）を管理者に提出しました！`);
+    }
+
+    function openDetailModal(id) {
+      currentDetailId = id;
+      const app = applications.find(a => a.id === id);
+      if (!app) return;
+
+      document.getElementById('detail-id-date').textContent = `綴りNo: ${app.id} | 申請日: ${app.createdAt}`;
+      document.getElementById('detail-title').textContent = `${app.applicantName}さんの${app.requestType || '備品購入申請'}`;
+      document.getElementById('detail-badge').outerHTML = `<span id="detail-badge">${getStatusBadge(app.status)}</span>`;
+
+      // 申請区分
+      const reqTypeEl = document.getElementById('detail-request-type');
+      if (app.requestType === '立替精算') {
+        reqTypeEl.innerHTML = `<span class="px-2 py-0.5 bg-amber-100 text-amber-900 border border-amber-400 rounded-md font-bold">急ぎ立替精算</span>`;
+      } else {
+        reqTypeEl.innerHTML = `<span class="px-2 py-0.5 bg-slate-100 text-slate-800 border border-slate-300 rounded-md font-bold">通常事前申請</span>`;
+      }
+
+      document.getElementById('detail-applicant').textContent = `${app.applicantName} (${app.department})`;
+      document.getElementById('detail-date-label').textContent = app.requestType === '立替精算' ? '精算希望日' : '希望納期';
+      document.getElementById('detail-desired-date').textContent = app.desiredDate;
+      document.getElementById('detail-urgency').textContent = app.urgency;
+      document.getElementById('detail-reason').textContent = app.reason;
+      document.getElementById('detail-location').textContent = app.deliveryLocation || '社内規定場所';
+
+      // 立替精算ボックスの表示
+      const reimburseBox = document.getElementById('detail-reimburse-info-box');
+      if (app.requestType === '立替精算') {
+        document.getElementById('detail-reimburse-paid-date').textContent = app.reimbursePaidDate || '記載なし';
+        document.getElementById('detail-reimburse-method').textContent = app.reimburseMethod || '未指定';
+        reimburseBox.classList.remove('hidden');
+      } else {
+        reimburseBox.classList.add('hidden');
+      }
+
+      // 添付画像の表示
+      const attachBox = document.getElementById('detail-attachment-box');
+      const attachImg = document.getElementById('detail-attachment-img');
+      const attachLink = document.getElementById('detail-attachment-link');
+      const attachBtn = document.getElementById('detail-attachment-btn');
+
+      if (app.imageUrl) {
+        attachImg.src = app.imageUrl;
+        attachLink.href = app.imageUrl;
+        attachBtn.href = app.imageUrl;
+        attachBox.classList.remove('hidden');
+      } else {
+        attachBox.classList.add('hidden');
+      }
+
+      // 明細テーブルの構築
+      const tbody = document.getElementById('detail-items-tbody');
+      tbody.innerHTML = '';
+      app.items.forEach((item, index) => {
+        const subtotal = item.price * item.quantity;
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50";
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 text-slate-400 font-mono">${index + 1}</td>
+          <td class="py-2.5 px-3 font-semibold text-slate-800">${escapeHtml(item.name)}</td>
+          <td class="py-2.5 px-3 text-slate-600">${escapeHtml(item.store)}</td>
+          <td class="py-2.5 px-3 text-right text-slate-700 font-medium">${formatYen(item.price)}</td>
+          <td class="py-2.5 px-3 text-center text-slate-700 font-semibold">${item.quantity}</td>
+          <td class="py-2.5 px-3 text-right font-bold text-slate-900">${formatYen(subtotal)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const total = calculateTotal(app.items);
+      document.getElementById('detail-total-amount').textContent = formatYen(total);
+
+      // 削除ボタンと管理者エリアの表示制御
+      const deleteActionRow = document.getElementById('delete-action-row');
+      const managerContainer = document.getElementById('manager-section-container');
+      if (app.status === 'deleted') {
+        deleteActionRow.classList.add('hidden');
+        managerContainer.classList.add('hidden');
+      } else {
+        deleteActionRow.classList.remove('hidden');
+        managerContainer.classList.remove('hidden');
+      }
+
+      // 決裁記録と操作フォームの制御
+      const decisionRecord = document.getElementById('detail-decision-record');
+      const managerActionsBox = document.getElementById('manager-actions-box');
+
+      if (app.status !== 'pending' && app.status !== 'deleted') {
+        decisionRecord.classList.remove('hidden');
+        document.getElementById('detail-approver').textContent = `決裁者: ${app.managerName || '管理者'}`;
+        document.getElementById('detail-decision-date').textContent = `決裁日: ${app.decisionDate || '-'}`;
+        document.getElementById('detail-manager-comment').textContent = app.managerComment || '(コメントなし)';
+      } else if (app.status === 'deleted') {
+        decisionRecord.classList.remove('hidden');
+        document.getElementById('detail-approver').textContent = `処理区分: 申請取り消し・削除`;
+        document.getElementById('detail-decision-date').textContent = `削除日: ${app.decisionDate || '-'}`;
+        document.getElementById('detail-manager-comment').textContent = app.managerComment || '(削除理由なし)';
+      } else {
+        decisionRecord.classList.add('hidden');
+      }
+
+      if (currentRole === 'manager' || app.status === 'pending') {
+        if (app.status !== 'deleted') {
+          managerActionsBox.classList.remove('hidden');
+          document.getElementById('manager-comment-input').value = app.managerComment || '';
+        } else {
+          managerActionsBox.classList.add('hidden');
+        }
+      } else {
+        managerActionsBox.classList.add('hidden');
+      }
+
+      document.getElementById('detail-modal').classList.remove('hidden');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detail-modal').classList.add('hidden');
+      currentDetailId = null;
+    }
+
+    // 削除・取消しフロー
+    function openDeleteConfirmModal() {
+      document.getElementById('delete-reason-input').value = '';
+      document.getElementById('delete-confirm-modal').classList.remove('hidden');
+    }
+
+    function closeDeleteConfirmModal() {
+      document.getElementById('delete-confirm-modal').classList.add('hidden');
+    }
+
+    function confirmDeleteApplication() {
+      if (!currentDetailId) return;
+      const app = applications.find(a => a.id === currentDetailId);
+      if (!app) return;
+
+      const reason = document.getElementById('delete-reason-input').value.trim() || '申請者による取り消し';
+      const today = new Date().toISOString().split('T')[0];
+
+      app.status = 'deleted';
+      app.decisionDate = today;
+      app.managerComment = `【削除・取消】${reason}`;
+
+      saveApplications();
+
+      // サンプルデータの場合はGAS送信をスキップ
+      if (!app.isSample && GAS_WEBAPP_URL) {
+        fetch(GAS_WEBAPP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            action: 'delete', 
+            payload: { 
+              id: app.id, 
+              status: 'deleted', 
+              deleteReason: reason, 
+              decisionDate: today 
+            } 
+          })
+        }).catch(err => console.error("GAS削除エラー:", err));
+      }
+
+      closeDeleteConfirmModal();
+      closeDetailModal();
+      renderList();
+      showToast(app.isSample 
+        ? `サンプル案件 [${app.id}] を削除しました` 
+        : `綴りNo [${app.id}] を削除しました（履歴に欠番記録）`);
+    }
+
+    function updateDecision(newStatus) {
+      if (!currentDetailId) return;
+      const app = applications.find(a => a.id === currentDetailId);
+      if (!app) return;
+
+      const managerName = document.getElementById('manager-name-input').value.trim() || '承認者';
+      const managerComment = document.getElementById('manager-comment-input').value.trim();
+      const today = new Date().toISOString().split('T')[0];
+
+      app.status = newStatus;
+      app.managerName = managerName;
+      app.managerComment = managerComment;
+      app.decisionDate = today;
+
+      saveApplications();
+
+      if (!app.isSample && GAS_WEBAPP_URL) {
+        fetch(GAS_WEBAPP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'update', payload: app })
+        }).catch(err => console.error("GAS更新エラー:", err));
+      }
+
+      renderList();
+      closeDetailModal();
+
+      let statusMsg = '';
+      if (newStatus === 'approved') statusMsg = '申請を【承認】しました';
+      if (newStatus === 'rejected') statusMsg = '申請を【却下】しました';
+      if (newStatus === 'on_hold') statusMsg = '申請を【差戻し・保留】にしました';
+
+      showToast(`${app.id}: ${statusMsg}`);
+    }
+
+    // ★管理者専用：サンプルデータをすべて一括消去して本番開始する機能
+    function clearAllSampleData() {
+      const sampleCount = applications.filter(a => a.isSample).length;
+      if (sampleCount === 0) {
+        showToast('消去可能なサンプルデータはありません');
+        return;
+      }
+
+      // サンプルのみを配列から完全に除外
+      applications = applications.filter(a => !a.isSample);
+      saveApplications();
+      updateDeptDropdowns();
+      renderList();
+      showToast(`サンプルデータ ${sampleCount} 件を一括消去しました。本番申請を開始できます`);
+    }
+
+    function printCurrentApplication() {
+      if (!currentDetailId) return;
+      const app = applications.find(a => a.id === currentDetailId);
+      if (!app) return;
+
+      document.getElementById('p-id').textContent = app.id;
+      document.getElementById('p-date').textContent = app.createdAt;
+      document.getElementById('p-request-type').textContent = app.requestType === '立替精算' ? '【立替払精算（購入急ぎ事後承認）】' : '【通常事前伺い】';
+      document.getElementById('p-dept').textContent = app.department;
+      document.getElementById('p-name').textContent = app.applicantName;
+      document.getElementById('p-desired-date').textContent = app.desiredDate;
+      document.getElementById('p-date-label').textContent = app.requestType === '立替精算' ? '精算希望日' : '希望納期';
+      document.getElementById('p-location').textContent = app.deliveryLocation || '社内規定場所';
+      document.getElementById('p-reason').textContent = app.reason;
+
+      const reimburseRow = document.getElementById('p-reimburse-row');
+      if (app.requestType === '立替精算') {
+        reimburseRow.style.display = '';
+        document.getElementById('p-reimburse-method').textContent = `立替日: ${app.reimbursePaidDate || '-'} | 精算方法: ${app.reimburseMethod || '-'} (領収書添付要)`;
+      } else {
+        reimburseRow.style.display = 'none';
+      }
+
+      let statusJa = '審査中（未決裁）';
+      let stampContent = '未決裁';
+      if (app.status === 'approved') {
+        statusJa = '【 承 認 】';
+        stampContent = `<div style="display:inline-block; border:2px solid #059669; color:#059669; padding:4px 10px; border-radius:6px; font-weight:bold;">${escapeHtml(app.managerName || '管理者')}<br><span style="font-size:10px;">${app.decisionDate}</span></div>`;
+      } else if (app.status === 'rejected') {
+        statusJa = '【 却 下 】';
+        stampContent = `<div style="display:inline-block; border:2px solid #dc2626; color:#dc2626; padding:4px 10px; border-radius:6px; font-weight:bold;">却下済</div>`;
+      } else if (app.status === 'on_hold') {
+        statusJa = '【 保 留 / 差戻し 】';
+      } else if (app.status === 'deleted') {
+        statusJa = '【 削除・取消済 】';
+      }
+
+      document.getElementById('p-status-box').textContent = statusJa;
+      document.getElementById('p-stamp-box').innerHTML = stampContent;
+      document.getElementById('p-manager-comment').textContent = app.managerComment || '特になし';
+
+      const pTbody = document.getElementById('p-items-tbody');
+      pTbody.innerHTML = '';
+      app.items.forEach((item, idx) => {
+        const sub = item.price * item.quantity;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="border: 1px solid #333; padding: 6px; text-align: center;">${idx + 1}</td>
+          <td style="border: 1px solid #333; padding: 6px;">${escapeHtml(item.name)}</td>
+          <td style="border: 1px solid #333; padding: 6px;">${escapeHtml(item.store)}</td>
+          <td style="border: 1px solid #333; padding: 6px; text-align: center;">${item.quantity}</td>
+          <td style="border: 1px solid #333; padding: 6px; text-align: right;">${formatYen(item.price)}</td>
+          <td style="border: 1px solid #333; padding: 6px; text-align: right; font-weight: bold;">${formatYen(sub)}</td>
+        `;
+        pTbody.appendChild(tr);
+      });
+
+      const total = calculateTotal(app.items);
+      document.getElementById('p-total-amount').textContent = formatYen(total);
+
+      window.print();
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toast-msg');
+      const icon = document.getElementById('toast-icon');
+
+      msg.textContent = message;
+      if (type === 'error') {
+        icon.textContent = '✕';
+        icon.className = 'text-rose-400 font-bold';
+      } else {
+        icon.textContent = '✓';
+        icon.className = 'text-emerald-400 font-bold';
+      }
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3200);
+    }
+
+    function updateCurrentUser(name) {
+      currentUser = (name || '').trim();
+      localStorage.setItem('currentUser', currentUser);
+      
+      const inputEl = document.getElementById('current-user-input');
+      const clearBtn = document.getElementById('clear-user-btn');
+      const statusLabel = document.getElementById('user-filter-status');
+
+      if (inputEl && inputEl.value !== currentUser) {
+        inputEl.value = currentUser;
+      }
+
+      if (currentUser) {
+        if (clearBtn) clearBtn.classList.remove('hidden');
+        if (statusLabel) {
+          statusLabel.textContent = `(${currentUser}さんの申請を表示中)`;
+          statusLabel.className = "text-[11px] text-sky-800 font-bold hidden sm:inline";
+        }
+      } else {
+        if (clearBtn) clearBtn.classList.add('hidden');
+        if (statusLabel) {
+          statusLabel.textContent = '(名前を入れると自分の申請のみ表示)';
+          statusLabel.className = "text-[11px] text-slate-500 hidden sm:inline";
+        }
+      }
+
+      applyFilters();
+    }
+
+    function clearCurrentUser() {
+      updateCurrentUser('');
+      showToast('全員の申請を表示するように戻しました');
+    }
+
+    window.onload = function () {
+      updateCurrentUser(currentUser);
+      updateDeptDropdowns();
+      const limitInput = document.getElementById('manager-limit-input');
+      if (limitInput) {
+        limitInput.value = reimburseLimitAmount;
+      }
+      // 初期状態のUIを適用する
+      switchRole('applicant');
+    };
+  </script>
+</body>
+</html>
