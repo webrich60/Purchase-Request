@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<title>NEKKO 社内申請ツール v2.0.0 UI先行版</title>
+<title>NEKKO 社内申請ツール v2.0.2 UI先行版</title>
 <style>
 :root{
   --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
@@ -26,7 +26,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:man
 input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border-radius:12px;padding:10px 12px;background:#fff;color:#14231d;outline:none}textarea{min-height:112px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--green-dark);box-shadow:0 0 0 3px rgba(66,88,58,.12)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.sectionTitle{font-size:16px;font-weight:950;padding:8px 10px;background:#f0f5f2;border-left:5px solid var(--green);border-radius:8px;margin:18px 0 12px}
 .itemRow{display:grid;grid-template-columns:2fr 1.2fr .7fr 1fr auto;gap:8px;align-items:end;background:#f9fbfa;border:2px solid #d5e0db;border-radius:13px;padding:10px;margin-bottom:9px}.itemRow .field{margin:0}.itemAmount{font-weight:950;padding:10px 4px;white-space:nowrap}.removeBtn{border:0;background:#fde6e4;color:#8f211a;border-radius:9px;padding:10px 11px;font-weight:900;min-height:45px}.totalBox{display:flex;justify-content:space-between;align-items:center;border:2px solid #9fc2b3;background:#edf6f2;border-radius:13px;padding:12px 14px;font-weight:900}.totalBox strong{font-size:24px;color:var(--green-dark)}
-.historyGate{display:grid;grid-template-columns:1fr 1fr auto;gap:9px;align-items:end}.historyList,.adminList{display:grid;gap:10px}.appCard{border:2px solid #c9d7d1;background:#fff;border-radius:15px;padding:13px}.appCard.pending{border-color:#8fb5d9;background:var(--blue-soft)}.appCard.approved{border-color:#83b99a;background:var(--ok-soft)}.appCard.returned{border-color:#e1ae60;background:var(--warn-soft)}.appCard.rejected{border-color:#de9994;background:var(--danger-soft)}.appCard.deleted{border-color:#bfc6c2;background:var(--gray-soft)}
+.historyGate{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:end}.historyList,.adminList{display:grid;gap:10px}.appCard{border:2px solid #c9d7d1;background:#fff;border-radius:15px;padding:13px}.appCard.pending{border-color:#8fb5d9;background:var(--blue-soft)}.appCard.approved{border-color:#83b99a;background:var(--ok-soft)}.appCard.returned{border-color:#e1ae60;background:var(--warn-soft)}.appCard.rejected{border-color:#de9994;background:var(--danger-soft)}.appCard.deleted{border-color:#bfc6c2;background:var(--gray-soft)}
 .appCard .topline{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.appCard .title{font-size:17px;font-weight:950}.meta{font-size:13px;color:#5b6963;font-weight:700}.money{font-size:18px;font-weight:950}.badge{display:inline-flex;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:950}.badge.pending{background:#d9ebff;color:#20598f}.badge.approved{background:#d3f0df;color:#185d3e}.badge.returned{background:#ffe3ba;color:#7a4900}.badge.rejected{background:#f8d2cf;color:#7c201a}.badge.deleted{background:#dfe4e1;color:#45504a}
 .summaryGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.summary{background:#fff;border:2px solid #d0dcd6;border-radius:14px;padding:13px}.summary strong{display:block;font-size:27px}.summary.pending{border-color:#8fb5d9}.summary.approved{border-color:#83b99a}.summary.returned{border-color:#e1ae60}.summary.rejected{border-color:#de9994}
 .filters{display:grid;grid-template-columns:1.4fr .9fr .9fr .9fr;gap:8px}.managerTop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.loginBox{max-width:520px;margin:24px auto}.loginBox h2{text-align:center}.loginSub{text-align:center;color:#61716a;font-weight:700}
@@ -71,11 +71,8 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
         <div class="field"><label>申請者名 <span class="req">必須</span></label><input id="applicantName" required autocomplete="name"></div>
         <div class="field"><label>店舗・部署 <span class="req">必須</span></label><select id="department" required><option value="">選択してください</option><option>KOTKA</option><option>BAKERU</option><option>本部・管理</option><option>その他</option></select></div>
       </div>
-      <div class="grid2">
-        <div class="field"><label>本人用 履歴確認コード <span class="req">必須</span></label><input id="historyCode" minlength="4" maxlength="20" required placeholder="例：1234 または自分だけの文字列"></div>
-        <div class="field"><label>申請日</label><input id="requestDate" type="date" readonly></div>
-      </div>
-      <div class="hint">同じ氏名と履歴確認コードを使うと「自分の履歴」で絞り込めます。共有スプレッドシート接続後はスマホ・PC共通になります。</div>
+      <div class="field"><label>申請日</label><input id="requestDate" type="date" readonly></div>
+      <div class="hint">申請履歴は氏名で絞り込みます。共有スプレッドシート接続後はスマホ・PC共通で同じ履歴を確認できます。</div>
 
       <div id="dynamicFields"></div>
 
@@ -87,13 +84,12 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
 
     <section class="card">
       <h2>自分の申請履歴</h2>
-      <p class="meta">氏名と本人用履歴確認コードに一致する申請だけを表示します。</p>
+      <p class="meta">氏名を入力すると、その氏名で申請した履歴だけを表示します。</p>
       <div class="historyGate">
         <div class="field"><label>氏名</label><input id="historyName" placeholder="申請時の氏名"></div>
-        <div class="field"><label>履歴確認コード</label><input id="historyLookupCode" placeholder="申請時と同じコード"></div>
         <button id="historySearchBtn" class="btn secondary" type="button">履歴を見る</button>
       </div>
-      <div id="historyList" class="historyList"><div class="empty">氏名とコードを入力して「履歴を見る」を押してください。</div></div>
+      <div id="historyList" class="historyList"><div class="empty">氏名を入力して「履歴を見る」を押してください。</div></div>
     </section>
   </main>
 
@@ -127,7 +123,7 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
     </section>
   </main>
 
-  <div class="footer">NEKKO 社内申請 v2.0.0 UI先行版 / スプレッドシート連携前</div>
+  <div class="footer">NEKKO 社内申請 v2.0.2 UI先行版 / スプレッドシート連携前</div>
 </div>
 
 <div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
@@ -152,7 +148,7 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
 <script>
 (() => {
 'use strict';
-const VERSION='2.0.0-ui';
+const VERSION='2.0.2-ui';
 const STORE_KEY='nekko_internal_requests_'+VERSION;
 const SESSION_KEY='nekko_admin_session_'+VERSION;
 const ADMIN_EMAIL='nekko.222local@gmail.com';
@@ -181,7 +177,6 @@ function typeInfo(t){return TYPE_INFO[t]||TYPE_INFO.other}
 function statusClass(s){return s==='承認'?'approved':s==='差戻し'?'returned':s==='却下'?'rejected':s==='削除済'?'deleted':'pending'}
 function statusBadge(s){return `<span class="badge ${statusClass(s)}">${esc(s||'申請中')}</span>`}
 async function sha256(str){if(!crypto?.subtle)throw new Error('このブラウザでは簡易ログインを利用できません。');const b=new TextEncoder().encode(str);const h=await crypto.subtle.digest('SHA-256',b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-function historyHash(name,code){let h=2166136261;const s=(name.trim().toLowerCase()+'|'+code.trim());for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16).padStart(8,'0')}
 
 function renderFields(){
   $('formTitle').textContent=typeInfo(selectedType).label;
@@ -236,12 +231,12 @@ function amountOf(type,d){if(type==='equipment')return Number(d.total||0);if(typ
 function nextNo(type){const y=new Date().getFullYear();const prefix=typeInfo(type).prefix+'-'+y+'-';const nums=load().filter(x=>x.type===type&&String(x.number).startsWith(prefix)).map(x=>Number(String(x.number).slice(prefix.length))||0);return prefix+String(Math.max(0,...nums)+1).padStart(4,'0')}
 function summarize(r){const d=r.details||{};if(r.type==='equipment')return (d.items||[]).map(x=>x.name).join('、')||'備品申請';if(r.type==='expense')return `${d.payee||''} / ${d.category||''}`;if(r.type==='transport')return `${d.origin||''} → ${d.destination||''}`;if(r.type==='trip')return `${d.tripPhase||''} / ${d.destination||''}`;if(r.type==='meal')return `${d.counterparty||''} / ${d.venue||''}`;return d.title||'その他申請'}
 
-$('requestForm').addEventListener('submit',e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;const name=val('applicantName'),code=val('historyCode');if(code.length<4){toast('履歴確認コードは4文字以上で入力してください。');return}const details=buildDetails();const rows=load();const rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:nextNo(selectedType),type:selectedType,typeLabel:typeInfo(selectedType).short,applicantName:name,department:val('department'),requestDate:val('requestDate'),historyKey:historyHash(name,code),status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(selectedType,details),summary:summarize({type:selectedType,details}),details,notes:val('notes'),attachment:currentAttachment?{name:currentAttachment.name,type:currentAttachment.type,data:currentAttachment.data}:null};rows.unshift(rec);save(rows);toast(`申請しました：${rec.number}`);$('historyName').value=name;$('historyLookupCode').value=code;renderHistory();resetFormKeepIdentity();renderAdmin();});
-function resetFormKeepIdentity(){const n=val('applicantName'),dep=val('department'),code=val('historyCode');$('requestForm').reset();$('applicantName').value=n;$('department').value=dep;$('historyCode').value=code;$('requestDate').value=today();$('attachmentName').textContent='未選択';$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';currentAttachment=null;renderFields()}
+$('requestForm').addEventListener('submit',e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;const name=val('applicantName');const details=buildDetails();const rows=load();const rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:nextNo(selectedType),type:selectedType,typeLabel:typeInfo(selectedType).short,applicantName:name,department:val('department'),requestDate:val('requestDate'),status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(selectedType,details),summary:summarize({type:selectedType,details}),details,notes:val('notes'),attachment:currentAttachment?{name:currentAttachment.name,type:currentAttachment.type,data:currentAttachment.data}:null};rows.unshift(rec);save(rows);toast(`申請しました：${rec.number}`);$('historyName').value=name;renderHistory();resetFormKeepIdentity();renderAdmin();});
+function resetFormKeepIdentity(){const n=val('applicantName'),dep=val('department');$('requestForm').reset();$('applicantName').value=n;$('department').value=dep;$('requestDate').value=today();$('attachmentName').textContent='未選択';$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';currentAttachment=null;renderFields()}
 
 $('attachment').addEventListener('change',e=>{const f=e.target.files?.[0];currentAttachment=null;$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';$('attachmentName').textContent=f?`${f.name} / ${Math.round(f.size/1024)}KB`:'未選択';if(!f)return;if(f.size>800*1024){toast('UI先行版では添付は800KB以下で確認してください。');e.target.value='';$('attachmentName').textContent='未選択';return}const reader=new FileReader();reader.onload=()=>{currentAttachment={name:f.name,type:f.type,data:String(reader.result)};if(f.type.startsWith('image/')){$('attachmentPreview').src=String(reader.result);$('attachmentPreview').classList.add('show')}};reader.readAsDataURL(f)});
 
-function renderHistory(){const name=val('historyName'),code=val('historyLookupCode');if(!name||!code){$('historyList').innerHTML='<div class="empty">氏名とコードを入力してください。</div>';return}const key=historyHash(name,code);const rows=load().filter(r=>r.historyKey===key&&r.applicantName.trim().toLowerCase()===name.trim().toLowerCase());$('historyList').innerHTML=rows.length?rows.map(r=>cardHtml(r,false)).join(''):'<div class="empty">一致する申請履歴はありません。</div>';bindCardButtons(false)}
+function renderHistory(){const name=val('historyName');if(!name){$('historyList').innerHTML='<div class="empty">氏名を入力してください。</div>';return}const normalized=name.trim().toLowerCase();const rows=load().filter(r=>String(r.applicantName||'').trim().toLowerCase()===normalized);$('historyList').innerHTML=rows.length?rows.map(r=>cardHtml(r,false)).join(''):'<div class="empty">この氏名の申請履歴はありません。</div>';bindCardButtons(false)}
 $('historySearchBtn').onclick=renderHistory;
 
 function cardHtml(r,isAdmin){return `<article class="appCard ${statusClass(r.status)}"><div class="topline"><div><div class="title">${esc(r.number)}　${esc(r.typeLabel)}</div><div class="meta">${esc(r.applicantName)} / ${esc(r.department)} / ${esc(r.createdAt)}</div><div class="meta">${esc(r.summary)}</div></div><div style="text-align:right">${statusBadge(r.status)}<div class="money">${r.amount?yen(r.amount):''}</div></div></div>${r.managerComment?`<div class="meta" style="margin-top:8px"><b>管理者コメント：</b>${esc(r.managerComment)}</div>`:''}<div class="toolbar" style="margin-bottom:0"><button class="btn secondary detailBtn" data-id="${esc(r.id)}" data-admin="${isAdmin?'1':'0'}" type="button">詳細を見る</button></div></article>`}
