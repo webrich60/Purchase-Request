@@ -4,280 +4,270 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<title>NEKKO 備品購入申請 v1.2.9</title>
+<title>NEKKO 社内申請ツール v2.0.0 UI先行版</title>
 <style>
-:root{--green:#556b4d;--green2:#43563c;--greenSoft:#eef3ee;--ink:#17231f;--muted:#61716b;--line:#b9ccc4;--bg:#f3f6f4;--red:#a52a22;--amber:#8a5a00;--white:#fff;--shadow:0 8px 28px rgba(18,53,42,.12)}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{font-size:16px}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}button,input,select,textarea{font:inherit}button{touch-action:manipulation;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}.hidden{display:none!important}.app{max-width:1100px;margin:0 auto;padding:16px 16px 96px}
-.top{position:sticky;top:0;z-index:20;background:var(--green);padding:12px 14px;border-bottom:3px solid #394935;box-shadow:0 4px 16px rgba(41,55,36,.22);border-radius:0 0 14px 14px}.headrow{display:flex;gap:14px;align-items:center;justify-content:space-between}.brandbox{padding:6px 2px}.brand{font-size:30px;font-weight:950;letter-spacing:.002em;color:#fff;line-height:1.16;text-shadow:-0.8px -0.8px 0 #111,0.8px -0.8px 0 #111,-0.8px 0.8px 0 #111,0.8px 0.8px 0 #111}.brand small{display:block;font-size:16px;color:#fff;font-weight:820;text-shadow:-0.8px -0.8px 0 #111,0.8px -0.8px 0 #111,-0.8px 0.8px 0 #111,0.8px 0.8px 0 #111}.modewrap{display:flex;flex-direction:column;align-items:flex-end;gap:4px}.mode{display:flex;gap:6px;background:rgba(255,255,255,.18);padding:4px;border-radius:12px;border:1px solid rgba(255,255,255,.22)}.mode button{border:0;background:transparent;color:#f7faf7;padding:10px 14px;border-radius:9px;font-weight:850;min-height:44px}.mode button.active{background:#fff;color:#223126;box-shadow:0 2px 10px rgba(0,0,0,.14)}.modeNote{font-size:11px;color:#eef3ef;font-weight:700;text-align:right}
-.hero{margin:16px 0;background:linear-gradient(135deg,var(--greenSoft),#fff);border:2px solid #88ad9e;border-radius:18px;padding:16px}.hero h1{font-size:20px;margin:0 0 4px}.hero p{margin:0;color:#4d635a;font-weight:650}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.btn{border:0;border-radius:12px;min-height:46px;padding:10px 16px;font-weight:850;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn.primary{background:var(--green);color:#fff}.btn.secondary{background:#fff;color:var(--ink);border:2px solid var(--line)}.btn.green{background:#18794e;color:#fff}.btn.red{background:var(--red);color:#fff}.btn.ghost{background:#e7ece9;color:#294238}.btn.full{width:100%}.card{background:#fff;border:2px solid #c7d5cf;border-radius:18px;padding:16px;box-shadow:0 3px 14px rgba(23,52,42,.06);margin:12px 0}.card h2,.card h3{margin-top:0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1.3fr 1fr .8fr;gap:10px}.field{margin:0 0 14px}.field label{display:block;font-weight:850;margin-bottom:6px}.req{color:var(--red)}input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border-radius:12px;padding:10px 12px;background:#fff;color:#14231d;outline:none}textarea{min-height:110px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(20,104,79,.13)}.item{border:2px solid #d4e0db;background:#f9fbfa;border-radius:14px;padding:12px;margin-bottom:10px}.itemtop{display:flex;justify-content:space-between;gap:10px;align-items:center}.itemtotal{font-weight:900;color:var(--green)}.remove{border:0;background:#fee4e2;color:#8b1e16;border-radius:9px;padding:8px 11px;font-weight:800}.total{display:flex;justify-content:space-between;align-items:center;background:#edf6f2;border:2px solid #9fc5b5;border-radius:14px;padding:14px;margin:12px 0;font-weight:900}.total strong{font-size:24px;color:var(--green)}.notice{padding:12px 14px;border-radius:12px;background:#fff8e8;border:2px solid #f0ca73;color:#6e4700;font-weight:700}.empty{text-align:center;padding:28px 12px;color:#62736c;font-weight:700}.list{display:grid;gap:10px}.appcard{background:#fff;border:2px solid #c9d7d1;border-radius:16px;padding:14px}.appcard.deleted{background:#f0f2f1;border-color:#b6bfbb}.appcard .row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.meta{color:#62736c;font-size:13px;font-weight:650}.money{font-size:18px;font-weight:900}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:900}.badge.pending{background:#fff2cc;color:#7a4a00}.badge.approved{background:#dcfce7;color:#14532d}.badge.rejected{background:#fee2e2;color:#7f1d1d}.badge.deleted{background:#dfe3e1;color:#3e4944}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters>*{width:auto;min-width:130px}.overlay{position:fixed;inset:0;z-index:60;background:rgba(10,25,19,.52);display:flex;align-items:flex-end;justify-content:center;padding:16px}.modal{width:min(720px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modalActions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}.detailbox{background:#f7faf8;border:1px solid #d2ded9;border-radius:12px;padding:12px;margin:8px 0;white-space:pre-wrap}.deletedNotice{background:#f0f2f1;border:2px solid #aab4b0;border-radius:12px;padding:12px;margin:10px 0;color:#35413c;font-weight:750}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:100;background:#102b21;color:#fff;border-radius:12px;padding:12px 16px;font-weight:800;box-shadow:var(--shadow);max-width:calc(100vw - 32px)}.statusline{font-size:13px;color:#596c64;font-weight:700}.requestWarn{margin:0 0 14px;padding:10px 12px;border:2px solid #d6b46a;border-radius:12px;background:#fff8e8;color:#6e4700;font-size:13px;font-weight:750}.attachmentBox{border:2px dashed #9eb5aa;border-radius:14px;padding:12px;background:#f8faf9}.attachmentPreview{display:none;margin-top:10px}.attachmentPreview.show{display:block}.attachmentPreview img{display:block;max-width:100%;max-height:260px;margin:0 auto;border-radius:12px;border:1px solid #ccd7d2;background:#fff}.attachmentMeta{margin-top:7px;font-size:12px;color:#596c64;font-weight:700}.desktopOnly{display:block}.mobileOnly{display:none}
-@media(max-width:720px){html{font-size:17px}.app{padding:10px 10px 92px}.top{padding:8px}.headrow{align-items:stretch;flex-direction:column}.brand{font-size:26px}.brand small{font-size:15px}.modewrap{align-items:stretch}.mode{width:100%}.mode button{flex:1;padding:10px 8px}.modeNote{text-align:center;font-size:10px}.hero{margin:10px 0;padding:14px}.hero h1{font-size:19px}.grid2,.grid3{grid-template-columns:1fr}.btn{min-height:50px}.toolbar>.btn{flex:1 1 140px}.card{padding:13px;border-radius:16px}.item{padding:11px}.desktopOnly{display:none!important}.mobileOnly{display:block}.overlay{padding:0;align-items:flex-end}.modal{border-radius:20px 20px 0 0;max-height:92vh;padding:16px}.modalActions{position:sticky;bottom:-16px;background:#fff;padding:12px 0 16px}.modalActions .btn{flex:1}.filters>*{width:100%;min-width:0}.appcard .row{flex-direction:column}.money{font-size:20px}input,select,textarea{font-size:16px}}
+:root{
+  --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
+  --line:#bdcdc6;--bg:#f3f6f4;--white:#fff;--blue:#2f6fb0;--blue-soft:#eaf3ff;--ok:#24724e;
+  --ok-soft:#e6f7ee;--warn:#a66300;--warn-soft:#fff0d8;--danger:#aa3028;--danger-soft:#fde7e5;--gray:#66706b;
+  --gray-soft:#edf0ee;--shadow:0 8px 26px rgba(22,52,42,.11)
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}.hidden{display:none!important}.app{max-width:1120px;margin:0 auto;padding:14px 14px 96px}
+.top{position:sticky;top:0;z-index:30;background:var(--green);padding:10px 12px;border-bottom:3px solid #35462f;box-shadow:0 4px 16px rgba(41,55,36,.22);border-radius:0 0 15px 15px}
+.headrow{display:flex;justify-content:space-between;align-items:center;gap:14px}.brand{font-size:30px;line-height:1.12;font-weight:950;color:#fff;text-shadow:-1px -1px 0 #111,1px -1px 0 #111,-1px 1px 0 #111,1px 1px 0 #111}.brand small{display:block;margin-top:5px;font-size:14px;font-weight:800;color:#fff;text-shadow:none}
+.mode{display:flex;gap:5px;padding:4px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:12px}.mode button{border:0;background:transparent;color:#fff;font-weight:900;padding:10px 14px;border-radius:9px;min-height:44px}.mode button.active{background:#fff;color:#253227;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.hero{margin:14px 0;background:linear-gradient(135deg,var(--green-soft),#fff);border:2px solid #91ae9f;border-radius:18px;padding:15px}.hero h1{font-size:21px;margin:0 0 4px}.hero p{margin:0;color:#4d6259;font-weight:700}
+.notice{border:2px solid #d8b45d;background:#fff8e7;color:#6c4900;border-radius:12px;padding:11px 13px;font-weight:750;margin:10px 0}.info{border-color:#9dbbd7;background:#eef7ff;color:#294f71}.success{border-color:#8bc5a7;background:#edfaf3;color:#1d603f}
+.card{background:#fff;border:2px solid #c7d5cf;border-radius:17px;padding:15px;margin:12px 0;box-shadow:0 3px 14px rgba(23,52,42,.06)}.card h2,.card h3{margin-top:0}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.btn{border:0;border-radius:12px;min-height:47px;padding:10px 15px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn.primary{background:var(--green);color:#fff}.btn.secondary{background:#fff;color:var(--ink);border:2px solid var(--line)}.btn.blue{background:var(--blue);color:#fff}.btn.green{background:var(--ok);color:#fff}.btn.orange{background:#bf7200;color:#fff}.btn.red{background:var(--danger);color:#fff}.btn.gray{background:#e7ece9;color:#34443d}.btn.full{width:100%}.btn:disabled{opacity:.5;cursor:not-allowed}
+.typeGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.typeCard{border:2px solid #c8d5cf;background:#fff;border-radius:16px;padding:14px;text-align:left;min-height:100px}.typeCard strong{display:block;font-size:17px;margin-bottom:3px}.typeCard span{display:block;color:#607069;font-size:13px;font-weight:700}.typeCard.active{border-color:var(--green);background:#f0f6f1;box-shadow:0 0 0 3px rgba(85,107,77,.12)}
+.field{margin-bottom:13px}.field label{display:block;font-weight:900;margin-bottom:6px}.req{color:var(--danger)}.hint{font-size:12px;color:var(--muted);font-weight:650;margin-top:5px}
+input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border-radius:12px;padding:10px 12px;background:#fff;color:#14231d;outline:none}textarea{min-height:112px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--green-dark);box-shadow:0 0 0 3px rgba(66,88,58,.12)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.sectionTitle{font-size:16px;font-weight:950;padding:8px 10px;background:#f0f5f2;border-left:5px solid var(--green);border-radius:8px;margin:18px 0 12px}
+.itemRow{display:grid;grid-template-columns:2fr 1.2fr .7fr 1fr auto;gap:8px;align-items:end;background:#f9fbfa;border:2px solid #d5e0db;border-radius:13px;padding:10px;margin-bottom:9px}.itemRow .field{margin:0}.itemAmount{font-weight:950;padding:10px 4px;white-space:nowrap}.removeBtn{border:0;background:#fde6e4;color:#8f211a;border-radius:9px;padding:10px 11px;font-weight:900;min-height:45px}.totalBox{display:flex;justify-content:space-between;align-items:center;border:2px solid #9fc2b3;background:#edf6f2;border-radius:13px;padding:12px 14px;font-weight:900}.totalBox strong{font-size:24px;color:var(--green-dark)}
+.historyGate{display:grid;grid-template-columns:1fr 1fr auto;gap:9px;align-items:end}.historyList,.adminList{display:grid;gap:10px}.appCard{border:2px solid #c9d7d1;background:#fff;border-radius:15px;padding:13px}.appCard.pending{border-color:#8fb5d9;background:var(--blue-soft)}.appCard.approved{border-color:#83b99a;background:var(--ok-soft)}.appCard.returned{border-color:#e1ae60;background:var(--warn-soft)}.appCard.rejected{border-color:#de9994;background:var(--danger-soft)}.appCard.deleted{border-color:#bfc6c2;background:var(--gray-soft)}
+.appCard .topline{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.appCard .title{font-size:17px;font-weight:950}.meta{font-size:13px;color:#5b6963;font-weight:700}.money{font-size:18px;font-weight:950}.badge{display:inline-flex;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:950}.badge.pending{background:#d9ebff;color:#20598f}.badge.approved{background:#d3f0df;color:#185d3e}.badge.returned{background:#ffe3ba;color:#7a4900}.badge.rejected{background:#f8d2cf;color:#7c201a}.badge.deleted{background:#dfe4e1;color:#45504a}
+.summaryGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.summary{background:#fff;border:2px solid #d0dcd6;border-radius:14px;padding:13px}.summary strong{display:block;font-size:27px}.summary.pending{border-color:#8fb5d9}.summary.approved{border-color:#83b99a}.summary.returned{border-color:#e1ae60}.summary.rejected{border-color:#de9994}
+.filters{display:grid;grid-template-columns:1.4fr .9fr .9fr .9fr;gap:8px}.managerTop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.loginBox{max-width:520px;margin:24px auto}.loginBox h2{text-align:center}.loginSub{text-align:center;color:#61716a;font-weight:700}
+.overlay{position:fixed;inset:0;z-index:70;background:rgba(12,29,23,.56);display:flex;align-items:flex-end;justify-content:center;padding:16px}.modal{width:min(780px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modalActions{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}.detailGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail{background:#f8faf9;border:1px solid #d4ded9;border-radius:11px;padding:10px}.detail b{display:block;font-size:12px;color:#65756e;margin-bottom:3px}.detail.full{grid-column:1/-1}.statusComment{white-space:pre-wrap}
+.attachment{border:2px dashed #a7b9b1;border-radius:13px;background:#f9fbfa;padding:11px}.previewImg{display:none;max-width:100%;max-height:240px;margin-top:9px;border-radius:10px;border:1px solid #ccd7d2}.previewImg.show{display:block}.small{font-size:12px;color:#607069;font-weight:700}.empty{text-align:center;padding:26px 10px;color:#63716b;font-weight:750}.footer{text-align:center;color:#63716b;font-size:12px;font-weight:700;margin-top:22px}.toast{position:fixed;z-index:100;left:50%;bottom:22px;transform:translateX(-50%);background:#173327;color:#fff;border-radius:12px;padding:12px 16px;font-weight:850;box-shadow:var(--shadow);max-width:calc(100vw - 30px)}
+@media(max-width:800px){html{font-size:17px}.app{padding:9px 9px 90px}.top{padding:8px}.headrow{flex-direction:column;align-items:stretch}.brand{font-size:25px}.brand small{font-size:13px}.mode{width:100%}.mode button{flex:1}.hero{margin:10px 0}.typeGrid{grid-template-columns:1fr 1fr}.grid2,.grid3,.filters,.detailGrid,.historyGate{grid-template-columns:1fr}.itemRow{grid-template-columns:1fr 1fr}.itemRow .wide{grid-column:1/-1}.summaryGrid{grid-template-columns:1fr 1fr}.toolbar .btn{flex:1 1 145px}.appCard .topline{flex-direction:column}.overlay{padding:0}.modal{border-radius:20px 20px 0 0;padding:15px}.modalActions{position:sticky;bottom:-15px;background:#fff;padding:12px 0 15px}.modalActions .btn{flex:1}.detail.full{grid-column:auto}.filters>*{width:100%}}
+@media(max-width:470px){.typeGrid{grid-template-columns:1fr}.itemRow{grid-template-columns:1fr}.itemRow .wide{grid-column:auto}.summaryGrid{grid-template-columns:1fr 1fr}.brand{font-size:23px}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top">
+  <header class="top">
     <div class="headrow">
-      <div class="brandbox"><div class="brand">NEKKO 備品購入申請<small>必要な備品を申請し、管理者がスマホで確認・承認できます</small></div></div>
-      <div class="modewrap">
-        <div class="mode" role="tablist" aria-label="表示モード">
-          <button id="modeApplicant" class="active" type="button">申請モード</button>
-          <button id="modeManager" type="button">管理者モード</button>
-        </div>
-        <div class="modeNote">申請する方は「申請モード」のみご利用ください</div>
+      <div class="brand">NEKKO 社内申請<small>備品・経費・交通費・出張・接待会食・その他</small></div>
+      <div class="mode" aria-label="表示モード">
+        <button id="modeApplicant" class="active" type="button">申請者画面</button>
+        <button id="modeManager" type="button">管理者画面</button>
       </div>
     </div>
-  </div>
+  </header>
 
-  <section id="applicantView">
-    <div class="hero"><h1>備品購入の申請</h1><p>必要事項を入力すると申請が保存され、管理者へメールで通知されます。</p></div>
-    <div class="toolbar">
-      <button id="newRequestBtn" class="btn primary" type="button">＋ 申請する</button>
-      <button id="printBlankBtn" class="btn secondary" type="button">🖨 手書き用申請書を印刷</button>
-    </div>
-    <div id="apiNotice" class="notice hidden"></div>
-    <div class="card">
-      <h2>申請について</h2>
-      <p style="margin:0;color:#48637f;font-weight:700">この画面はパソコン・スマホ共通です。提出した申請はすべて同じGoogleスプレッドシートに保存され、管理者へメール通知されます。</p>
-    </div>
-  </section>
+  <main id="applicantView">
+    <section class="hero"><h1>社内申請</h1><p>申請の種類を選び、必要事項を入力してください。スマホ・パソコン共通画面です。</p></section>
+    <div class="notice info"><b>現在はUI先行版です。</b> 申請データはこのブラウザ内だけにテスト保存されます。共有スプレッドシート接続後はスマホ・PCで共通化します。</div>
 
-  <section id="managerView" class="hidden">
-    <div class="hero"><h1>管理者モード</h1><p>申請内容を確認し、承認・却下を行います。</p></div>
-    <div class="toolbar">
-      <button id="refreshAdminBtn" class="btn primary" type="button">↻ 一覧を更新</button>
-      <button id="notificationSettingsBtn" class="btn secondary" type="button">✉ 通知設定</button>
-      <button id="changePasswordBtn" class="btn secondary" type="button">🔐 パスワード変更</button>
-      <button id="logoutAdminBtn" class="btn ghost" type="button">管理者ログアウト</button>
-    </div>
-    <div class="filters card">
-      <select id="statusFilter"><option value="">すべての状態</option><option>申請中</option><option>承認</option><option>却下</option><option>削除済</option></select>
-      <input id="searchFilter" placeholder="申請者・部署・申請No.で検索">
-    </div>
-    <div id="adminList" class="list"></div>
-  </section>
+    <section class="card">
+      <h2>1. 申請種類を選択</h2>
+      <div class="typeGrid" id="typeGrid">
+        <button class="typeCard active" type="button" data-type="equipment"><strong>🧰 備品・消耗品</strong><span>備品、消耗品、店舗用品など</span></button>
+        <button class="typeCard" type="button" data-type="expense"><strong>🧾 経費精算</strong><span>立替購入、雑費、領収書精算など</span></button>
+        <button class="typeCard" type="button" data-type="transport"><strong>🚃 交通費</strong><span>電車、高速、駐車場、ガソリンなど</span></button>
+        <button class="typeCard" type="button" data-type="trip"><strong>🧳 出張申請・精算</strong><span>出張前の申請、出張後の精算</span></button>
+        <button class="typeCard" type="button" data-type="meal"><strong>🍽 接待・会食費</strong><span>相手先、人数、目的、金額</span></button>
+        <button class="typeCard" type="button" data-type="other"><strong>✍ その他</strong><span>上記にない申請を自由記入</span></button>
+      </div>
+    </section>
 
-  <div style="text-align:center;margin-top:24px"><div class="statusline">v1.2.9 / スマホ操作修正・画像添付・綴り番号・削除履歴・A4印刷 / Slack API未連携</div></div>
-</div>
-
-<!-- 申請フォーム -->
-<div id="requestModal" class="overlay hidden" aria-modal="true" role="dialog">
-  <div class="modal">
-    <h2>備品購入申請</h2>
-    <div id="requestConnectionNotice" class="requestWarn hidden"></div>
-    <form id="requestForm">
+    <form id="requestForm" class="card">
+      <h2 id="formTitle">備品・消耗品購入申請</h2>
+      <div class="sectionTitle">申請者情報</div>
       <div class="grid2">
-        <div class="field"><label>申請者名 <span class="req">必須</span></label><input id="applicantName" autocomplete="name" required></div>
-        <div class="field"><label>店舗・部署 <span class="req">必須</span></label><select id="department" required><option value="">選択してください</option><option>KOTKA</option><option>BAKERU</option><option>本社</option><option>その他</option></select></div>
+        <div class="field"><label>申請者名 <span class="req">必須</span></label><input id="applicantName" required autocomplete="name"></div>
+        <div class="field"><label>店舗・部署 <span class="req">必須</span></label><select id="department" required><option value="">選択してください</option><option>KOTKA</option><option>BAKERU</option><option>本部・管理</option><option>その他</option></select></div>
       </div>
       <div class="grid2">
-        <div class="field"><label>希望納期</label><input id="desiredDate" type="date"></div>
-        <div class="field"><label>緊急度</label><select id="urgency"><option>通常</option><option>急ぎ</option><option>至急</option></select></div>
+        <div class="field"><label>本人用 履歴確認コード <span class="req">必須</span></label><input id="historyCode" minlength="4" maxlength="20" required placeholder="例：1234 または自分だけの文字列"></div>
+        <div class="field"><label>申請日</label><input id="requestDate" type="date" readonly></div>
       </div>
-      <div class="field"><label>購入品目 <span class="req">必須</span></label><div id="items"></div><button id="addItemBtn" class="btn secondary full" type="button">＋ 品目を追加</button></div>
-      <div class="total"><span>合計金額（税込）</span><strong id="grandTotal">¥0</strong></div>
-      <div class="field"><label>購入理由・用途 <span class="req">必須</span></label><textarea id="reason" required placeholder="なぜ必要なのかを入力してください"></textarea></div>
-      <div class="field"><label>備考（任意）</label><textarea id="notes" placeholder="補足事項があれば入力してください"></textarea></div>
-      <div class="field"><label>画像添付（任意）</label><div class="attachmentBox"><input id="attachment" type="file" accept="image/*"><div class="statusline">商品写真・見積書・参考画像などを1枚添付できます。スマホ写真は送信前に自動縮小します。</div><div id="attachmentPreview" class="attachmentPreview"><img id="attachmentPreviewImg" alt="添付画像プレビュー"><div id="attachmentMeta" class="attachmentMeta"></div><button id="clearAttachmentBtn" class="btn secondary" type="button" style="margin-top:8px">画像を外す</button></div></div></div>
-      <div class="modalActions"><button id="printCurrentBtn" class="btn secondary" type="button">🖨 入力内容を印刷</button><button id="cancelRequestBtn" class="btn secondary" type="button">キャンセル</button><button id="submitRequestBtn" class="btn primary" type="submit">申請を提出</button></div>
+      <div class="hint">同じ氏名と履歴確認コードを使うと「自分の履歴」で絞り込めます。共有スプレッドシート接続後はスマホ・PC共通になります。</div>
+
+      <div id="dynamicFields"></div>
+
+      <div class="sectionTitle">添付・備考</div>
+      <div class="field attachment"><label>画像・資料添付</label><input id="attachment" type="file" accept="image/*,.pdf"><div class="small" id="attachmentName">未選択</div><img id="attachmentPreview" class="previewImg" alt="添付プレビュー"></div>
+      <div class="field"><label>備考</label><textarea id="notes" placeholder="補足があれば入力してください"></textarea></div>
+      <div class="toolbar"><button class="btn primary full" type="submit">申請する</button></div>
     </form>
-  </div>
+
+    <section class="card">
+      <h2>自分の申請履歴</h2>
+      <p class="meta">氏名と本人用履歴確認コードに一致する申請だけを表示します。</p>
+      <div class="historyGate">
+        <div class="field"><label>氏名</label><input id="historyName" placeholder="申請時の氏名"></div>
+        <div class="field"><label>履歴確認コード</label><input id="historyLookupCode" placeholder="申請時と同じコード"></div>
+        <button id="historySearchBtn" class="btn secondary" type="button">履歴を見る</button>
+      </div>
+      <div id="historyList" class="historyList"><div class="empty">氏名とコードを入力して「履歴を見る」を押してください。</div></div>
+    </section>
+  </main>
+
+  <main id="managerView" class="hidden">
+    <section id="managerLogin" class="card loginBox">
+      <h2>管理者ログイン</h2><p class="loginSub">申請の確認・承認・差戻し・却下を行います。</p>
+      <div class="field"><label>管理者メールアドレス</label><input id="adminEmail" type="email" autocomplete="username"></div>
+      <div class="field"><label>パスワード</label><input id="adminPassword" type="password" autocomplete="current-password"></div>
+      <button id="adminLoginBtn" class="btn primary full" type="button">ログイン</button>
+      <div class="hint">本番運用時はGAS側で認証します。このUI先行版では画面確認用の簡易ログインです。</div>
+    </section>
+
+    <section id="managerDashboard" class="hidden">
+      <div class="hero"><div class="managerTop"><div><h1>管理者画面</h1><p>全申請の確認、承認、差戻し、却下、検索ができます。</p></div><button id="adminLogoutBtn" class="btn gray" type="button">ログアウト</button></div></div>
+      <div class="summaryGrid">
+        <div class="summary pending"><span class="meta">申請中</span><strong id="countPending">0</strong></div>
+        <div class="summary approved"><span class="meta">承認</span><strong id="countApproved">0</strong></div>
+        <div class="summary returned"><span class="meta">差戻し</span><strong id="countReturned">0</strong></div>
+        <div class="summary rejected"><span class="meta">却下</span><strong id="countRejected">0</strong></div>
+      </div>
+      <section class="card">
+        <h2>申請検索・絞り込み</h2>
+        <div class="filters">
+          <input id="adminSearch" placeholder="氏名・綴り番号・部署・申請内容で検索">
+          <select id="adminStatus"><option value="">すべての状態</option><option>申請中</option><option>承認</option><option>差戻し</option><option>却下</option></select>
+          <select id="adminType"><option value="">すべての申請</option><option value="equipment">備品・消耗品</option><option value="expense">経費精算</option><option value="transport">交通費</option><option value="trip">出張申請・精算</option><option value="meal">接待・会食費</option><option value="other">その他</option></select>
+          <select id="adminDepartment"><option value="">すべての部署</option><option>KOTKA</option><option>BAKERU</option><option>本部・管理</option><option>その他</option></select>
+        </div>
+      </section>
+      <div id="adminList" class="adminList"></div>
+    </section>
+  </main>
+
+  <div class="footer">NEKKO 社内申請 v2.0.0 UI先行版 / スプレッドシート連携前</div>
 </div>
 
-<!-- 申請詳細 -->
-<div id="detailModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal"><div id="detailContent"></div><div class="modalActions" id="detailActions"></div></div></div>
-
-<!-- 管理者認証 -->
-<div id="adminModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal"><h2 id="adminModalTitle">管理者ログイン</h2><div id="adminSetupNote" class="notice hidden">初回のみ、管理者パスワードを設定してください。8文字以上を推奨します。</div><form id="adminForm"><div class="field"><label id="adminPasswordLabel">管理者パスワード</label><input id="adminPassword" type="password" autocomplete="current-password" required minlength="8"></div><div class="field hidden" id="adminPasswordConfirmWrap"><label>確認用パスワード</label><input id="adminPasswordConfirm" type="password" minlength="8"></div><div class="modalActions"><button id="cancelAdminBtn" type="button" class="btn secondary">キャンセル</button><button type="submit" class="btn primary">確認</button></div></form></div></div>
-
-<!-- パスワード変更 -->
-<div id="passwordModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal"><h2>管理者パスワード変更</h2><form id="passwordForm"><div class="field"><label>現在のパスワード</label><input id="currentPassword" type="password" required></div><div class="field"><label>新しいパスワード（8文字以上）</label><input id="newPassword" type="password" minlength="8" required></div><div class="field"><label>新しいパスワード（確認）</label><input id="newPassword2" type="password" minlength="8" required></div><div class="modalActions"><button id="cancelPasswordBtn" class="btn secondary" type="button">キャンセル</button><button class="btn primary" type="submit">変更する</button></div></form></div></div>
-
-<!-- 管理者通知設定 -->
-<div id="notificationModal" class="overlay hidden" aria-modal="true" role="dialog"><div class="modal">
-  <h2>管理者への通知設定</h2>
-  <p class="statusline">申請が提出されたときに管理者へメール通知します。Slack APIはまだ使用しません。</p>
-  <div class="field"><label>通知先メールアドレス</label><textarea id="managerEmails" placeholder="例: owner@example.com
-複数の場合はカンマ区切り"></textarea><div class="statusline">複数指定できます。カンマ・改行区切りに対応します。</div></div>
-  <div class="field"><label>この申請アプリのURL</label><input id="managerAppUrl" type="url" placeholder="https://...github.io/.../"><div class="statusline">通知メールの「申請を確認」リンクに使います。</div></div>
-  <div id="notificationResult" class="statusline"></div>
-  <div class="modalActions"><button id="testNotificationBtn" class="btn secondary" type="button">テストメール送信</button><button id="cancelNotificationBtn" class="btn ghost" type="button">閉じる</button><button id="saveNotificationBtn" class="btn primary" type="button">保存</button></div>
-</div></div>
-
+<div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2 id="detailTitle">申請詳細</h2>
+    <div id="detailBody"></div>
+    <div id="managerDecisionBox" class="hidden">
+      <div class="sectionTitle">管理者処理</div>
+      <div class="field"><label>管理者コメント</label><textarea id="managerComment" placeholder="差戻し理由、却下理由、承認時の補足など"></textarea></div>
+      <div class="modalActions">
+        <button id="approveBtn" class="btn green" type="button">承認</button>
+        <button id="returnBtn" class="btn orange" type="button">差戻し</button>
+        <button id="rejectBtn" class="btn red" type="button">却下</button>
+        <button id="closeDetailBtn" class="btn gray" type="button">閉じる</button>
+      </div>
+    </div>
+    <div id="applicantDetailActions" class="modalActions hidden"><button id="closeApplicantDetailBtn" class="btn gray" type="button">閉じる</button></div>
+  </div>
+</div>
 <div id="toast" class="toast hidden"></div>
 
 <script>
+(() => {
 'use strict';
-const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
-// ★GASをデプロイしたら、この1か所だけ /exec URLへ変更してください。
-// ここに設定した接続先を、PC・スマホ・Slackから開いた全員が共通で使用します。
-const GAS_WEB_APP_URL='PASTE_GAS_WEB_APP_URL_HERE';
-const state={mode:'applicant', adminPassword:'', adminApps:[], current:null, initialPasswordMode:false};
-const STORAGE={name:'nekko_equipment_name', dept:'nekko_equipment_dept'};
-function safeGet(key){try{return window.localStorage?localStorage.getItem(key):null}catch(_){return null}}
-function safeSet(key,value){try{if(window.localStorage)localStorage.setItem(key,value)}catch(_){/* Slack等の制限ブラウザでは保存しない */}}
+const VERSION='2.0.0-ui';
+const STORE_KEY='nekko_internal_requests_'+VERSION;
+const SESSION_KEY='nekko_admin_session_'+VERSION;
+const ADMIN_EMAIL='nekko.222local@gmail.com';
+const ADMIN_PASS_SHA256='e01da5e174c5091b32e166cf0737ee0fb7f521ad424b75eeb8a23725c5eeb1bb';
+const TYPE_INFO={
+  equipment:{label:'備品・消耗品購入申請',short:'備品・消耗品',prefix:'備品'},
+  expense:{label:'経費精算申請',short:'経費精算',prefix:'経費'},
+  transport:{label:'交通費申請',short:'交通費',prefix:'交通'},
+  trip:{label:'出張申請・出張精算',short:'出張',prefix:'出張'},
+  meal:{label:'接待・会食費申請',short:'接待・会食費',prefix:'会食'},
+  other:{label:'その他申請',short:'その他',prefix:'その他'}
+};
+let selectedType='equipment';
+let currentDetailId=null;
+let currentAttachment=null;
 
-function gasUrl(){return String(GAS_WEB_APP_URL||'').trim()}
-function toast(msg,error=false){const el=$('#toast');el.textContent=msg;el.style.background=error?'#8b1e16':'#10233f';el.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.add('hidden'),2800)}
-function money(v){return '¥'+Number(v||0).toLocaleString('ja-JP')}
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-function badge(status){const cls=status==='承認'?'approved':status==='却下'?'rejected':status==='削除済'?'deleted':'pending';return `<span class="badge ${cls}">${esc(status||'申請中')}</span>`}
-function openModal(id){$(id).classList.remove('hidden');document.body.style.overflow='hidden'}
-function closeModal(id){$(id).classList.add('hidden');document.body.style.overflow=''}
-function needUrl(){const u=gasUrl();if(/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec(?:[?#].*)?$/.test(u)){$('#apiNotice').classList.add('hidden');return true;}$('#apiNotice').textContent='管理者設定が未完了です。index.html の GAS_WEB_APP_URL にGASの /exec URLを1回だけ設定してください。スマホ側での入力は不要です。';$('#apiNotice').classList.remove('hidden');return false}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const yen=n=>'¥'+Number(n||0).toLocaleString('ja-JP');
+const today=()=>{const d=new Date();const z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)};
+const nowText=()=>new Date().toLocaleString('ja-JP');
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.remove('hidden');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.add('hidden'),2500)}
+function load(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'[]')}catch(_){return[]}}
+function save(rows){localStorage.setItem(STORE_KEY,JSON.stringify(rows))}
+function typeInfo(t){return TYPE_INFO[t]||TYPE_INFO.other}
+function statusClass(s){return s==='承認'?'approved':s==='差戻し'?'returned':s==='却下'?'rejected':s==='削除済'?'deleted':'pending'}
+function statusBadge(s){return `<span class="badge ${statusClass(s)}">${esc(s||'申請中')}</span>`}
+async function sha256(str){if(!crypto?.subtle)throw new Error('このブラウザでは簡易ログインを利用できません。');const b=new TextEncoder().encode(str);const h=await crypto.subtle.digest('SHA-256',b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function historyHash(name,code){let h=2166136261;const s=(name.trim().toLowerCase()+'|'+code.trim());for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(16).padStart(8,'0')}
 
-async function api(action,payload={}){
-  if(!needUrl())throw new Error('GAS URLが未設定です。');
-  const body=new URLSearchParams({data:JSON.stringify({action,payload})});
-  let res;
-  try{res=await fetch(gasUrl(),{method:'POST',body});}catch(e){throw new Error('GASへ接続できません。URLとデプロイ設定を確認してください。')}
-  const text=await res.text();
-  let data;try{data=JSON.parse(text)}catch(e){throw new Error('GASから正しいJSONが返りません。デプロイURLを確認してください。')}
-  if(!data.success)throw new Error(data.error||data.message||'処理に失敗しました。');
-  return data;
+function renderFields(){
+  $('formTitle').textContent=typeInfo(selectedType).label;
+  document.querySelectorAll('.typeCard').forEach(b=>b.classList.toggle('active',b.dataset.type===selectedType));
+  const d=$('dynamicFields');
+  if(selectedType==='equipment'){ d.innerHTML=`
+    <div class="sectionTitle">購入内容</div>
+    <div class="grid2"><div class="field"><label>希望納期</label><input id="desiredDate" type="date"></div><div class="field"><label>緊急度</label><select id="urgency"><option>通常</option><option>急ぎ</option><option>至急</option></select></div></div>
+    <div id="items"></div><button id="addItemBtn" type="button" class="btn secondary">＋ 品目を追加</button>
+    <div class="totalBox"><span>合計金額</span><strong id="equipmentTotal">¥0</strong></div>
+    <div class="field"><label>購入理由・用途 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
+    addItem();
+    $('addItemBtn').onclick=addItem;
+  } else if(selectedType==='expense') d.innerHTML=`
+    <div class="sectionTitle">経費内容</div><div class="grid2"><div class="field"><label>支払日 <span class="req">必須</span></label><input id="expenseDate" type="date" required></div><div class="field"><label>経費区分</label><select id="expenseCategory"><option>店舗用品</option><option>消耗品</option><option>広告宣伝</option><option>通信費</option><option>雑費</option><option>その他</option></select></div></div>
+    <div class="grid2"><div class="field"><label>支払先 <span class="req">必須</span></label><input id="payee" required></div><div class="field"><label>金額 <span class="req">必須</span></label><input id="amount" type="number" min="0" required></div></div>
+    <div class="field"><label>用途・理由 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
+  else if(selectedType==='transport') d.innerHTML=`
+    <div class="sectionTitle">交通内容</div><div class="grid2"><div class="field"><label>利用日 <span class="req">必須</span></label><input id="travelDate" type="date" required></div><div class="field"><label>交通手段 <span class="req">必須</span></label><select id="transportMode" required><option value="">選択</option><option>電車</option><option>バス</option><option>タクシー</option><option>自家用車</option><option>高速道路</option><option>駐車場</option><option>その他</option></select></div></div>
+    <div class="grid2"><div class="field"><label>出発地 <span class="req">必須</span></label><input id="origin" required></div><div class="field"><label>到着地 <span class="req">必須</span></label><input id="destination" required></div></div>
+    <div class="grid2"><div class="field"><label>片道・往復</label><select id="routeType"><option>往復</option><option>片道</option></select></div><div class="field"><label>金額 <span class="req">必須</span></label><input id="amount" type="number" min="0" required></div></div>
+    <div class="field"><label>利用目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
+  else if(selectedType==='trip') d.innerHTML=`
+    <div class="sectionTitle">出張内容</div><div class="grid2"><div class="field"><label>申請区分 <span class="req">必須</span></label><select id="tripPhase" required><option>事前申請</option><option>事後精算</option></select></div><div class="field"><label>出張先 <span class="req">必須</span></label><input id="destination" required></div></div>
+    <div class="grid2"><div class="field"><label>開始日 <span class="req">必須</span></label><input id="startDate" type="date" required></div><div class="field"><label>終了日 <span class="req">必須</span></label><input id="endDate" type="date" required></div></div>
+    <div class="grid3"><div class="field"><label>交通費</label><input id="transportCost" type="number" min="0" value="0"></div><div class="field"><label>宿泊費</label><input id="lodgingCost" type="number" min="0" value="0"></div><div class="field"><label>その他費用</label><input id="otherCost" type="number" min="0" value="0"></div></div>
+    <div class="field"><label>出張目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
+  else if(selectedType==='meal') d.innerHTML=`
+    <div class="sectionTitle">接待・会食内容</div><div class="grid2"><div class="field"><label>実施日 <span class="req">必須</span></label><input id="mealDate" type="date" required></div><div class="field"><label>店舗・会場 <span class="req">必須</span></label><input id="venue" required></div></div>
+    <div class="grid2"><div class="field"><label>相手先・会社名 <span class="req">必須</span></label><input id="counterparty" required></div><div class="field"><label>参加人数</label><input id="participants" type="number" min="1" value="2"></div></div>
+    <div class="field"><label>金額 <span class="req">必須</span></label><input id="amount" type="number" min="0" required></div><div class="field"><label>目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
+  else d.innerHTML=`
+    <div class="sectionTitle">その他申請</div><div class="field"><label>申請タイトル <span class="req">必須</span></label><input id="otherTitle" required placeholder="例：イベント参加申請"></div>
+    <div class="grid2"><div class="field"><label>希望日・実施日</label><input id="otherDate" type="date"></div><div class="field"><label>金額（必要な場合）</label><input id="amount" type="number" min="0"></div></div>
+    <div class="field"><label>申請内容・目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
 }
-
-function setMode(mode){
-  state.mode=mode;$('#modeApplicant').classList.toggle('active',mode==='applicant');$('#modeManager').classList.toggle('active',mode==='manager');
-  $('#applicantView').classList.toggle('hidden',mode!=='applicant');$('#managerView').classList.toggle('hidden',mode!=='manager');
+function addItem(){
+  const wrap=$('items');const row=document.createElement('div');row.className='itemRow';row.innerHTML=`<div class="field wide"><label>品名・型番 <span class="req">必須</span></label><input class="itemName" required></div><div class="field"><label>購入先</label><input class="itemStore"></div><div class="field"><label>数量</label><input class="itemQty" type="number" min="1" value="1"></div><div class="field"><label>単価</label><input class="itemPrice" type="number" min="0" value="0"></div><div class="itemAmount">¥0</div><button class="removeBtn" type="button">削除</button>`;
+  row.querySelector('.removeBtn').onclick=()=>{row.remove();calcEquipment()};row.querySelectorAll('input').forEach(i=>i.addEventListener('input',calcEquipment));wrap.appendChild(row);calcEquipment();
 }
-
-$('#modeApplicant').addEventListener('click',()=>setMode('applicant'));
-$('#modeManager').addEventListener('click',async()=>{
-  if(state.adminPassword){setMode('manager');await loadAdmin();return}
-  if(!needUrl())return;
-  try{const st=await api('adminStatus');state.initialPasswordMode=!st.passwordConfigured;prepareAdminModal();openModal('#adminModal')}catch(e){toast(e.message,true)}
-});
-
-function prepareAdminModal(){
-  $('#adminModalTitle').textContent=state.initialPasswordMode?'管理者パスワード初期設定':'管理者ログイン';
-  $('#adminSetupNote').classList.toggle('hidden',!state.initialPasswordMode);
-  $('#adminPasswordLabel').textContent=state.initialPasswordMode?'新しい管理者パスワード':'管理者パスワード';
-  $('#adminPasswordConfirmWrap').classList.toggle('hidden',!state.initialPasswordMode);
-  $('#adminPassword').value='';$('#adminPasswordConfirm').value='';
+function calcEquipment(){let total=0;document.querySelectorAll('.itemRow').forEach(r=>{const q=Number(r.querySelector('.itemQty')?.value||0),p=Number(r.querySelector('.itemPrice')?.value||0),a=q*p;total+=a;const el=r.querySelector('.itemAmount');if(el)el.textContent=yen(a)});if($('equipmentTotal'))$('equipmentTotal').textContent=yen(total);return total}
+function val(id){return $(id)?.value?.trim?.()??''}
+function buildDetails(){
+  if(selectedType==='equipment'){const items=[...document.querySelectorAll('.itemRow')].map(r=>({name:r.querySelector('.itemName').value.trim(),store:r.querySelector('.itemStore').value.trim(),qty:Number(r.querySelector('.itemQty').value||1),price:Number(r.querySelector('.itemPrice').value||0)})).filter(x=>x.name);return {desiredDate:val('desiredDate'),urgency:val('urgency'),items,total:calcEquipment(),purpose:val('purpose')}}
+  if(selectedType==='expense')return {expenseDate:val('expenseDate'),category:val('expenseCategory'),payee:val('payee'),amount:Number(val('amount')||0),purpose:val('purpose')};
+  if(selectedType==='transport')return {travelDate:val('travelDate'),transportMode:val('transportMode'),origin:val('origin'),destination:val('destination'),routeType:val('routeType'),amount:Number(val('amount')||0),purpose:val('purpose')};
+  if(selectedType==='trip')return {tripPhase:val('tripPhase'),destination:val('destination'),startDate:val('startDate'),endDate:val('endDate'),transportCost:Number(val('transportCost')||0),lodgingCost:Number(val('lodgingCost')||0),otherCost:Number(val('otherCost')||0),purpose:val('purpose')};
+  if(selectedType==='meal')return {mealDate:val('mealDate'),venue:val('venue'),counterparty:val('counterparty'),participants:Number(val('participants')||0),amount:Number(val('amount')||0),purpose:val('purpose')};
+  return {title:val('otherTitle'),date:val('otherDate'),amount:Number(val('amount')||0),purpose:val('purpose')};
 }
-$('#cancelAdminBtn').addEventListener('click',()=>closeModal('#adminModal'));
-$('#adminForm').addEventListener('submit',async e=>{
-  e.preventDefault();const pw=$('#adminPassword').value;
-  try{
-    if(state.initialPasswordMode){if(pw!==$('#adminPasswordConfirm').value)throw new Error('確認用パスワードが一致しません。');await api('setInitialPassword',{newPassword:pw});toast('管理者パスワードを設定しました')}
-    else await api('verifyAdmin',{password:pw});
-    state.adminPassword=pw;closeModal('#adminModal');setMode('manager');await loadAdmin();
-  }catch(err){toast(err.message,true)}
-});
+function amountOf(type,d){if(type==='equipment')return Number(d.total||0);if(type==='trip')return Number(d.transportCost||0)+Number(d.lodgingCost||0)+Number(d.otherCost||0);return Number(d.amount||0)}
+function nextNo(type){const y=new Date().getFullYear();const prefix=typeInfo(type).prefix+'-'+y+'-';const nums=load().filter(x=>x.type===type&&String(x.number).startsWith(prefix)).map(x=>Number(String(x.number).slice(prefix.length))||0);return prefix+String(Math.max(0,...nums)+1).padStart(4,'0')}
+function summarize(r){const d=r.details||{};if(r.type==='equipment')return (d.items||[]).map(x=>x.name).join('、')||'備品申請';if(r.type==='expense')return `${d.payee||''} / ${d.category||''}`;if(r.type==='transport')return `${d.origin||''} → ${d.destination||''}`;if(r.type==='trip')return `${d.tripPhase||''} / ${d.destination||''}`;if(r.type==='meal')return `${d.counterparty||''} / ${d.venue||''}`;return d.title||'その他申請'}
 
-$('#logoutAdminBtn').addEventListener('click',()=>{state.adminPassword='';setMode('applicant');toast('管理者モードを終了しました')});
-$('#refreshAdminBtn').addEventListener('click',loadAdmin);$('#statusFilter').addEventListener('change',renderAdmin);$('#searchFilter').addEventListener('input',renderAdmin);
+$('requestForm').addEventListener('submit',e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;const name=val('applicantName'),code=val('historyCode');if(code.length<4){toast('履歴確認コードは4文字以上で入力してください。');return}const details=buildDetails();const rows=load();const rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:nextNo(selectedType),type:selectedType,typeLabel:typeInfo(selectedType).short,applicantName:name,department:val('department'),requestDate:val('requestDate'),historyKey:historyHash(name,code),status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(selectedType,details),summary:summarize({type:selectedType,details}),details,notes:val('notes'),attachment:currentAttachment?{name:currentAttachment.name,type:currentAttachment.type,data:currentAttachment.data}:null};rows.unshift(rec);save(rows);toast(`申請しました：${rec.number}`);$('historyName').value=name;$('historyLookupCode').value=code;renderHistory();resetFormKeepIdentity();renderAdmin();});
+function resetFormKeepIdentity(){const n=val('applicantName'),dep=val('department'),code=val('historyCode');$('requestForm').reset();$('applicantName').value=n;$('department').value=dep;$('historyCode').value=code;$('requestDate').value=today();$('attachmentName').textContent='未選択';$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';currentAttachment=null;renderFields()}
 
-async function loadAdmin(){
-  if(!state.adminPassword){setMode('applicant');return}
-  $('#adminList').innerHTML='<div class="card">読み込み中...</div>';
-  try{const d=await api('listAdmin',{password:state.adminPassword});state.adminApps=d.applications||[];renderAdmin()}catch(e){toast(e.message,true);if(/認証/.test(e.message)){$('#logoutAdminBtn').click()}}
-}
-function renderAdmin(){
-  const status=$('#statusFilter').value,q=$('#searchFilter').value.trim().toLowerCase();
-  const rows=state.adminApps.filter(a=>(!status||a.status===status)&&(!q||`${a.id} ${a.applicantName} ${a.department}`.toLowerCase().includes(q)));
-  $('#adminList').innerHTML=rows.length?rows.map(a=>appCard(a)).join(''):'<div class="card empty">該当する申請はありません。</div>';
-  $$('#adminList [data-open]').forEach(b=>b.addEventListener('click',()=>openDetail(b.dataset.open,true)));
-}
+$('attachment').addEventListener('change',e=>{const f=e.target.files?.[0];currentAttachment=null;$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';$('attachmentName').textContent=f?`${f.name} / ${Math.round(f.size/1024)}KB`:'未選択';if(!f)return;if(f.size>800*1024){toast('UI先行版では添付は800KB以下で確認してください。');e.target.value='';$('attachmentName').textContent='未選択';return}const reader=new FileReader();reader.onload=()=>{currentAttachment={name:f.name,type:f.type,data:String(reader.result)};if(f.type.startsWith('image/')){$('attachmentPreview').src=String(reader.result);$('attachmentPreview').classList.add('show')}};reader.readAsDataURL(f)});
 
-function appCard(a){const del=a.deleted||a.status==='削除済';const delMeta=del?`<div class="meta" style="margin-top:5px">削除日時：${esc(a.deletedAt||'-')} / 削除理由：${esc(a.deleteReason||'-')}</div>`:'';return `<div class="appcard ${del?'deleted':''}"><div class="row"><div><div class="meta">綴り番号 ${esc(a.id)} ・ ${esc(a.createdAt)}</div><div style="font-weight:900;font-size:18px">${esc(a.applicantName)} / ${esc(a.department)}</div><div class="meta">${esc(a.reason).slice(0,80)}</div>${delMeta}</div><div style="text-align:right">${badge(a.status)}<div class="money">${money(a.total)}</div></div></div><div style="margin-top:10px"><button class="btn secondary full" type="button" data-open="${esc(a.id)}">${del?'削除記録を確認':'内容を確認・承認'}</button></div></div>`}
+function renderHistory(){const name=val('historyName'),code=val('historyLookupCode');if(!name||!code){$('historyList').innerHTML='<div class="empty">氏名とコードを入力してください。</div>';return}const key=historyHash(name,code);const rows=load().filter(r=>r.historyKey===key&&r.applicantName.trim().toLowerCase()===name.trim().toLowerCase());$('historyList').innerHTML=rows.length?rows.map(r=>cardHtml(r,false)).join(''):'<div class="empty">一致する申請履歴はありません。</div>';bindCardButtons(false)}
+$('historySearchBtn').onclick=renderHistory;
 
-function findApp(id){return state.adminApps.find(a=>a.id===id)}
-function openDetail(id,admin=true){
-  const a=findApp(id);if(!a)return;state.current={app:a,admin:true};
-  const deleted=a.deleted||a.status==='削除済';
-  const items=Array.isArray(a.items)&&a.items.length?a.items.map(i=>`<div>・${esc(i.name)}${i.store?' / '+esc(i.store):''}　${esc(i.quantity)}個 × ${money(i.price)}</div>`).join(''):`<div>${esc(a.itemsText||'-').replace(/\n/g,'<br>')}</div>`;
-  const deletedInfo=deleted?`<div class="deletedNotice"><b>この申請は削除済みです。</b><br>削除日時：${esc(a.deletedAt||'-')}<br>削除者：${esc(a.deletedBy||'-')}<br>削除理由：${esc(a.deleteReason||'-')}<br>削除前ステータス：${esc(a.previousStatus||'-')}</div>`:'';
-  $('#detailContent').innerHTML=`<h2>備品購入申請書</h2>${deletedInfo}<div class="detailbox"><b>綴り番号（申請No.） ${esc(a.id)}</b>　${badge(a.status)}<br>申請日時：${esc(a.createdAt)}</div><div class="grid2"><div class="detailbox"><b>申請者</b><br>${esc(a.applicantName)}</div><div class="detailbox"><b>店舗・部署</b><br>${esc(a.department)}</div><div class="detailbox"><b>希望納期</b><br>${esc(a.desiredDate||'-')}</div><div class="detailbox"><b>緊急度</b><br>${esc(a.urgency||'通常')}</div></div><div class="detailbox"><b>購入品目</b><br>${items}<hr><b>合計 ${money(a.total)}</b></div><div class="detailbox"><b>購入理由・用途</b><br>${esc(a.reason).replace(/\n/g,'<br>')}</div><div class="detailbox"><b>備考</b><br>${esc(a.notes||'-').replace(/\n/g,'<br>')}</div>${a.attachmentUrl?`<div class="detailbox"><a href="${esc(a.attachmentUrl)}" target="_blank" rel="noopener">添付画像を開く</a></div>`:''}<div class="detailbox"><b>管理者確認</b><br>決裁者：${esc(a.managerName||'-')}<br>決裁日時：${esc(a.decisionDate||'-')}<br>コメント：${esc(a.managerComment||'-')}</div>`;
-  const actions=$('#detailActions');actions.innerHTML='';
-  const close=document.createElement('button');close.className='btn secondary';close.type='button';close.textContent='閉じる';close.onclick=()=>closeModal('#detailModal');actions.appendChild(close);
-  const print=document.createElement('button');print.className='btn secondary';print.type='button';print.textContent='🖨 申請書を印刷';print.onclick=()=>printApplication(a);actions.appendChild(print);
-  if(admin&&!deleted){['承認','却下'].forEach(st=>{const b=document.createElement('button');b.className='btn '+(st==='承認'?'green':'red');b.type='button';b.textContent=st;b.onclick=()=>decide(st);actions.appendChild(b)});const del=document.createElement('button');del.className='btn ghost';del.type='button';del.textContent='削除済みにする';del.onclick=removeCurrent;actions.appendChild(del)}
-  openModal('#detailModal');
-}
-async function decide(status){
-  const a=state.current.app;if(a.deleted||a.status==='削除済'){toast('削除済みの申請は変更できません',true);return}const managerName=prompt('管理者名を入力してください',safeGet('nekko_manager_name')||'')??'';if(!managerName)return;safeSet('nekko_manager_name',managerName);const comment=prompt(`${status}コメント（任意）`,'')??'';
-  try{await api('updateStatus',{password:state.adminPassword,id:a.id,status,managerName,managerComment:comment});closeModal('#detailModal');toast(`${status}しました`);await loadAdmin()}catch(e){toast(e.message,true)}
-}
-async function removeCurrent(){
-  const a=state.current.app;if(a.deleted||a.status==='削除済'){toast('すでに削除済みです',true);return}
-  if(!confirm('この申請を「削除済み」として履歴に残します。完全削除はしません。よろしいですか？'))return;
-  const deletedBy=prompt('削除する管理者名を入力してください',safeGet('nekko_manager_name')||'管理者')??'';if(!deletedBy)return;safeSet('nekko_manager_name',deletedBy);
-  const reason=prompt('削除理由を入力してください','')??'';if(!reason.trim()){toast('削除理由を入力してください',true);return}
-  try{await api('delete',{password:state.adminPassword,id:a.id,deleteReason:reason,deletedBy});closeModal('#detailModal');toast('削除済みとして履歴に残しました');await loadAdmin()}catch(e){toast(e.message,true)}
-}
+function cardHtml(r,isAdmin){return `<article class="appCard ${statusClass(r.status)}"><div class="topline"><div><div class="title">${esc(r.number)}　${esc(r.typeLabel)}</div><div class="meta">${esc(r.applicantName)} / ${esc(r.department)} / ${esc(r.createdAt)}</div><div class="meta">${esc(r.summary)}</div></div><div style="text-align:right">${statusBadge(r.status)}<div class="money">${r.amount?yen(r.amount):''}</div></div></div>${r.managerComment?`<div class="meta" style="margin-top:8px"><b>管理者コメント：</b>${esc(r.managerComment)}</div>`:''}<div class="toolbar" style="margin-bottom:0"><button class="btn secondary detailBtn" data-id="${esc(r.id)}" data-admin="${isAdmin?'1':'0'}" type="button">詳細を見る</button></div></article>`}
+function bindCardButtons(isAdmin){document.querySelectorAll(isAdmin?'#adminList .detailBtn':'#historyList .detailBtn').forEach(b=>b.onclick=()=>openDetail(b.dataset.id,isAdmin))}
 
-function printApplication(app=null){
-  const blank=!app;
-  const rows=blank?Array.from({length:5},()=>({name:'',store:'',quantity:'',price:''})):(Array.isArray(app.items)&&app.items.length?app.items:[]);
-  const itemRows=[...rows];while(itemRows.length<5)itemRows.push({name:'',store:'',quantity:'',price:''});
-  const subtotal=x=>blank?'':(Number(x.price||0)*Number(x.quantity||0)).toLocaleString('ja-JP');
-  const h=`<!doctype html><html lang="ja"><head><meta charset="utf-8"><title>NEKKO 備品購入申請書</title><style>@page{size:A4;margin:10mm}*{box-sizing:border-box}body{font-family:"Noto Sans JP","Yu Gothic",sans-serif;color:#111;margin:0;font-size:12px}.sheet{width:100%}.head{background:#556b4d;padding:9px;border-radius:4px 4px 0 0}.title{background:linear-gradient(180deg,#fafafa,#efefef);border:2px solid #d2d2d2;padding:10px 14px;font-size:22px;font-weight:900;letter-spacing:.06em;color:#111}.sub{font-size:10px;color:#4d5b55;margin-top:2px}table{width:100%;border-collapse:collapse;margin-top:8px}th,td{border:1px solid #444;padding:6px;vertical-align:top}th{background:#eef2f0;text-align:left;font-weight:800}.line{height:42px}.reason{height:78px}.approval{height:56px}.attachArea{height:78px;position:relative}.attachHint{color:#777;font-size:10px}.right{text-align:right}.center{text-align:center}.small{font-size:10px;color:#444}.deleted{margin-top:8px;border:2px solid #777;background:#eee;padding:7px;font-weight:800}.foot{margin-top:8px;font-size:10px;color:#555}@media print{button{display:none}}</style></head><body><div class="sheet"><div class="head"><div class="title">NEKKO 備品購入申請書<div class="sub">Equipment Purchase Request</div></div></div>${app&&(app.deleted||app.status==='削除済')?`<div class="deleted">削除済み記録　削除日時：${esc(app.deletedAt||'-')}　削除理由：${esc(app.deleteReason||'-')}</div>`:''}<table><tr><th style="width:18%">綴り番号<br><span class="small">（申請No.）</span></th><td style="width:32%">${blank?'（管理者記入）':esc(app.id||'')}</td><th style="width:18%">申請日</th><td>${blank?'　年　月　日':esc((app.createdAt||'').slice(0,10))}</td></tr><tr><th>申請者</th><td>${blank?'':esc(app.applicantName||'')}</td><th>店舗・部署</th><td>${blank?'':esc(app.department||'')}</td></tr><tr><th>希望納期</th><td>${blank?'':esc(app.desiredDate||'')}</td><th>緊急度</th><td>${blank?'□ 通常　□ 急ぎ　□ 至急':esc(app.urgency||'通常')}</td></tr></table><table><tr><th style="width:31%">品名・型番</th><th style="width:25%">購入先</th><th style="width:10%">数量</th><th style="width:16%">単価(税込)</th><th style="width:18%">金額</th></tr>${itemRows.map(i=>`<tr class="line"><td>${esc(i.name||'')}</td><td>${esc(i.store||'')}</td><td class="center">${esc(i.quantity||'')}</td><td class="right">${i.price!==''&&i.price!=null?money(i.price):''}</td><td class="right">${subtotal(i)?'¥'+subtotal(i):''}</td></tr>`).join('')}<tr><th colspan="4" class="right">合計金額（税込）</th><td class="right"><b>${blank?'':money(app.total)}</b></td></tr></table><table><tr><th style="width:18%">購入理由・用途</th><td class="reason">${blank?'':esc(app.reason||'').replace(/\n/g,'<br>')}</td></tr><tr><th>備考</th><td class="line">${blank?'':esc(app.notes||'').replace(/\n/g,'<br>')}</td></tr></table><table><tr><th style="width:18%">添付資料・商品画像</th><td class="attachArea">${blank?'<span class="attachHint">写真・見積書・商品資料などを必要に応じて貼付してください。</span>':(app.attachmentUrl?'<b>画像添付あり</b><br><span class="attachHint">電子データは管理画面の申請詳細から確認できます。</span>':'<span class="attachHint">添付なし</span>')}</td></tr><tr><th>管理者確認</th><td class="approval">□ 承認　□ 却下　　決裁者：${blank?'':esc(app.managerName||'')}　　日付：${blank?'':esc(app.decisionDate||'')}<br>コメント：${blank?'':esc(app.managerComment||'')}</td></tr></table><div class="foot">※手書き用は綴り番号（申請No.）を管理者が記入してください。電子申請ではシステムが綴り番号を自動採番します。削除した電子申請も番号を再利用せず、削除済みとして履歴に残ります。<br>NEKKO 備品購入申請 v1.2.9</div></div><script>window.onload=()=>{setTimeout(()=>window.print(),150)}<\/script></body></html>`;
-  const w=window.open('','_blank');if(!w){toast('印刷画面を開けません。ポップアップを許可してください。',true);return}w.document.open();w.document.write(h);w.document.close();
-}
+function detailPairs(r){const d=r.details||{};let rows=[['綴り番号',r.number],['状態',r.status],['申請種類',r.typeLabel],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['申請日時',r.createdAt],['合計金額',r.amount?yen(r.amount):'—']];if(r.type==='equipment'){rows.push(['希望納期',d.desiredDate||'—'],['緊急度',d.urgency||'—'],['購入理由・用途',d.purpose||'—'],['品目',(d.items||[]).map(x=>`${x.name} / ${x.store||'購入先未定'} / ${x.qty}個 × ${yen(x.price)}`).join('\n')||'—'])}else if(r.type==='expense'){rows.push(['支払日',d.expenseDate||'—'],['経費区分',d.category||'—'],['支払先',d.payee||'—'],['用途・理由',d.purpose||'—'])}else if(r.type==='transport'){rows.push(['利用日',d.travelDate||'—'],['交通手段',d.transportMode||'—'],['区間',`${d.origin||'—'} → ${d.destination||'—'}`],['片道・往復',d.routeType||'—'],['利用目的',d.purpose||'—'])}else if(r.type==='trip'){rows.push(['申請区分',d.tripPhase||'—'],['出張先',d.destination||'—'],['期間',`${d.startDate||'—'} ～ ${d.endDate||'—'}`],['交通費',yen(d.transportCost||0)],['宿泊費',yen(d.lodgingCost||0)],['その他費用',yen(d.otherCost||0)],['出張目的',d.purpose||'—'])}else if(r.type==='meal'){rows.push(['実施日',d.mealDate||'—'],['店舗・会場',d.venue||'—'],['相手先・会社名',d.counterparty||'—'],['参加人数',d.participants?`${d.participants}名`:'—'],['目的',d.purpose||'—'])}else rows.push(['申請タイトル',d.title||'—'],['希望日・実施日',d.date||'—'],['申請内容・目的',d.purpose||'—']);if(r.notes)rows.push(['備考',r.notes]);if(r.managerComment)rows.push(['管理者コメント',r.managerComment]);return rows}
+function openDetail(id,isAdmin){const r=load().find(x=>x.id===id);if(!r)return;currentDetailId=id;$('detailTitle').textContent=`${r.number}　${r.typeLabel}`;$('detailBody').innerHTML=`<div class="detailGrid">${detailPairs(r).map(([k,v])=>`<div class="detail ${String(v).includes('\n')||String(v).length>80?'full':''}"><b>${esc(k)}</b><div class="statusComment">${esc(v)}</div></div>`).join('')}</div>${r.attachment?`<div class="sectionTitle">添付</div><div class="detail"><b>${esc(r.attachment.name)}</b>${r.attachment.type?.startsWith('image/')?`<img src="${r.attachment.data}" style="max-width:100%;max-height:320px;border-radius:10px;margin-top:8px">`:'<div class="small">このUI先行版ではPDFはファイル名のみ確認します。</div>'}</div>`:''}`;$('detailModal').classList.remove('hidden');$('managerDecisionBox').classList.toggle('hidden',!isAdmin);$('applicantDetailActions').classList.toggle('hidden',isAdmin);$('managerComment').value=r.managerComment||''}
+function closeDetail(){$('detailModal').classList.add('hidden');currentDetailId=null}
+$('closeDetailBtn').onclick=closeDetail;$('closeApplicantDetailBtn').onclick=closeDetail;$('detailModal').addEventListener('click',e=>{if(e.target===$('detailModal'))closeDetail()});
+function decide(status){if(!currentDetailId)return;const rows=load();const r=rows.find(x=>x.id===currentDetailId);if(!r)return;r.status=status;r.managerComment=val('managerComment');r.updatedAt=nowText();save(rows);closeDetail();renderAdmin();toast(`${r.number} を「${status}」にしました。`)}
+$('approveBtn').onclick=()=>decide('承認');$('returnBtn').onclick=()=>decide('差戻し');$('rejectBtn').onclick=()=>decide('却下');
 
-// request form
-$('#newRequestBtn').addEventListener('click',()=>{resetRequest();const ok=needUrl();const n=$('#requestConnectionNotice');if(ok){n.classList.add('hidden');n.textContent='';}else{n.textContent='送信先の初期設定が未完了です。入力・印刷はできますが、「申請を提出」はGAS設定後に利用できます。スマホ側でGAS URLを入力する必要はありません。';n.classList.remove('hidden');}openModal('#requestModal')});
-$('#printBlankBtn').addEventListener('click',()=>printApplication(null));
-$('#cancelRequestBtn').addEventListener('click',()=>closeModal('#requestModal'));$('#addItemBtn').addEventListener('click',()=>addItem());
-$('#printCurrentBtn').addEventListener('click',()=>{const items=collectItems();printApplication({id:'未採番',createdAt:new Date().toISOString().slice(0,10),applicantName:$('#applicantName').value.trim(),department:$('#department').value,desiredDate:$('#desiredDate').value,urgency:$('#urgency').value,reason:$('#reason').value.trim(),notes:$('#notes').value.trim(),items,total:items.reduce((sum,x)=>sum+x.price*x.quantity,0),status:'申請前',attachmentUrl:($('#attachment').files&&$('#attachment').files[0])?'local-preview':''});});
-function resetRequest(){
-  $('#requestForm').reset();$('#applicantName').value=safeGet(STORAGE.name)||'';$('#department').value=safeGet(STORAGE.dept)||'';$('#items').innerHTML='';addItem();calcTotal();clearAttachmentPreview();
-}
-function addItem(v={}){
-  const box=document.createElement('div');box.className='item';box.innerHTML=`<div class="itemtop"><b>購入品目</b><button type="button" class="remove">削除</button></div><div class="field"><label>品名・型番 <span class="req">必須</span></label><input class="iname" value="${esc(v.name||'')}" required></div><div class="grid3"><div class="field"><label>購入先</label><input class="istore" value="${esc(v.store||'')}"></div><div class="field"><label>単価（税込）</label><input class="iprice" inputmode="numeric" type="number" min="0" step="1" value="${v.price||''}"></div><div class="field"><label>数量</label><input class="iqty" inputmode="numeric" type="number" min="1" step="1" value="${v.quantity||1}"></div></div><div class="itemtotal">小計 ¥0</div>`;
-  box.querySelector('.remove').onclick=()=>{if($$('#items .item').length===1){toast('品目は1件以上必要です',true);return}box.remove();calcTotal()};box.querySelectorAll('input').forEach(i=>i.addEventListener('input',calcTotal));$('#items').appendChild(box);calcTotal();
-}
-function collectItems(){return $$('#items .item').map(box=>({name:box.querySelector('.iname').value.trim(),store:box.querySelector('.istore').value.trim(),price:Number(box.querySelector('.iprice').value||0),quantity:Number(box.querySelector('.iqty').value||1)})).filter(x=>x.name)}
-function calcTotal(){$$('#items .item').forEach(box=>{const p=Number(box.querySelector('.iprice').value||0),q=Number(box.querySelector('.iqty').value||1);box.querySelector('.itemtotal').textContent='小計 '+money(p*q)});$('#grandTotal').textContent=money(collectItems().reduce((s,x)=>s+x.price*x.quantity,0))}
-function clearAttachmentPreview(){const input=$('#attachment');if(input)input.value='';const wrap=$('#attachmentPreview');if(wrap)wrap.classList.remove('show');const img=$('#attachmentPreviewImg');if(img)img.removeAttribute('src');const meta=$('#attachmentMeta');if(meta)meta.textContent='';}
-$('#attachment').addEventListener('change',()=>{const f=$('#attachment').files&&$('#attachment').files[0];if(!f){clearAttachmentPreview();return}if(!f.type.startsWith('image/')){toast('画像ファイルを選択してください',true);clearAttachmentPreview();return}if(f.size>8*1024*1024){toast('元画像は8MB以下を選んでください',true);clearAttachmentPreview();return}const r=new FileReader();r.onload=()=>{$('#attachmentPreviewImg').src=r.result;$('#attachmentMeta').textContent=`${f.name} / ${(f.size/1024/1024).toFixed(1)}MB`;$('#attachmentPreview').classList.add('show')};r.readAsDataURL(f)});
-$('#clearAttachmentBtn').addEventListener('click',clearAttachmentPreview);
-async function imageData(file){if(!file)return null;if(file.size>8*1024*1024)throw new Error('元画像は8MB以下を選んでください。');const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)});const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=data});const scale=Math.min(1,1200/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return {name:file.name,type:'image/jpeg',dataUrl:c.toDataURL('image/jpeg',.78)}}
-$('#requestForm').addEventListener('submit',async e=>{
-  e.preventDefault();const btn=$('#submitRequestBtn');btn.disabled=true;btn.textContent='送信中...';
-  try{
-    const items=collectItems();if(!items.length)throw new Error('購入品目を入力してください。');
-    const applicantName=$('#applicantName').value.trim(),department=$('#department').value;safeSet(STORAGE.name,applicantName);safeSet(STORAGE.dept,department);
-    const attachment=await imageData($('#attachment').files[0]);const d=await api('create',{applicantName,department,desiredDate:$('#desiredDate').value,urgency:$('#urgency').value,reason:$('#reason').value.trim(),notes:$('#notes').value.trim(),items,attachment});closeModal('#requestModal');const mail=d.notification&&d.notification.email;if(mail&&mail.sent)toast(`申請しました：${d.id}／管理者へメール通知済み`);else if(mail&&mail.configured)toast(`申請しました：${d.id}／申請は保存済み・メール通知のみ失敗`,true);else toast(`申請しました：${d.id}／管理者メールは未設定`);
-  }catch(err){toast(err.message,true)}finally{btn.disabled=false;btn.textContent='申請を提出'}
-});
+function renderAdmin(){if($('managerDashboard').classList.contains('hidden'))return;const rows=load();$('countPending').textContent=rows.filter(r=>r.status==='申請中').length;$('countApproved').textContent=rows.filter(r=>r.status==='承認').length;$('countReturned').textContent=rows.filter(r=>r.status==='差戻し').length;$('countRejected').textContent=rows.filter(r=>r.status==='却下').length;const q=val('adminSearch').toLowerCase(),st=val('adminStatus'),ty=val('adminType'),dep=val('adminDepartment');const filtered=rows.filter(r=>{const hay=[r.number,r.applicantName,r.department,r.typeLabel,r.summary,JSON.stringify(r.details||{})].join(' ').toLowerCase();return(!q||hay.includes(q))&&(!st||r.status===st)&&(!ty||r.type===ty)&&(!dep||r.department===dep)});$('adminList').innerHTML=filtered.length?filtered.map(r=>cardHtml(r,true)).join(''):'<div class="card empty">条件に一致する申請はありません。</div>';bindCardButtons(true)}
+['adminSearch','adminStatus','adminType','adminDepartment'].forEach(id=>$(id).addEventListener(id==='adminSearch'?'input':'change',renderAdmin));
 
-// manager notification settings
-$('#notificationSettingsBtn').addEventListener('click',async()=>{
-  if(!state.adminPassword){toast('管理者ログインが必要です',true);return}
-  $('#notificationResult').textContent='読み込み中...';openModal('#notificationModal');
-  try{
-    const d=await api('getAdminSettings',{password:state.adminPassword});
-    $('#managerEmails').value=d.managerEmails||'';
-    $('#managerAppUrl').value=d.appUrl||location.href.split('#')[0];
-    $('#notificationResult').textContent=d.emailConfigured?'✓ メール通知先が設定されています':'通知先メールはまだ設定されていません';
-  }catch(e){$('#notificationResult').textContent='× '+e.message}
-});
-$('#cancelNotificationBtn').addEventListener('click',()=>closeModal('#notificationModal'));
-$('#saveNotificationBtn').addEventListener('click',async()=>{
-  try{
-    const d=await api('saveAdminSettings',{password:state.adminPassword,managerEmails:$('#managerEmails').value.trim(),appUrl:$('#managerAppUrl').value.trim()});
-    $('#notificationResult').textContent='✓ '+d.message;toast('通知設定を保存しました');
-  }catch(e){$('#notificationResult').textContent='× '+e.message;toast(e.message,true)}
-});
-$('#testNotificationBtn').addEventListener('click',async()=>{
-  const btn=$('#testNotificationBtn');btn.disabled=true;const old=btn.textContent;btn.textContent='送信中...';
-  try{
-    await api('saveAdminSettings',{password:state.adminPassword,managerEmails:$('#managerEmails').value.trim(),appUrl:$('#managerAppUrl').value.trim()});
-    const d=await api('testManagerEmail',{password:state.adminPassword,managerEmails:$('#managerEmails').value.trim()});
-    $('#notificationResult').textContent='✓ '+d.message;toast('テストメールを送信しました');
-  }catch(e){$('#notificationResult').textContent='× '+e.message;toast(e.message,true)}finally{btn.disabled=false;btn.textContent=old}
-});
+async function adminLogin(){const email=val('adminEmail').toLowerCase(),pass=val('adminPassword');if(email!==ADMIN_EMAIL){toast('メールアドレスまたはパスワードが違います。');return}try{const h=await sha256(pass);if(h!==ADMIN_PASS_SHA256){toast('メールアドレスまたはパスワードが違います。');return}sessionStorage.setItem(SESSION_KEY,'1');showAdminDashboard()}catch(e){toast(e.message)}}
+function showAdminDashboard(){$('managerLogin').classList.add('hidden');$('managerDashboard').classList.remove('hidden');$('adminPassword').value='';renderAdmin()}
+function adminLogout(){sessionStorage.removeItem(SESSION_KEY);$('managerDashboard').classList.add('hidden');$('managerLogin').classList.remove('hidden');$('adminPassword').value=''}
+$('adminLoginBtn').onclick=adminLogin;$('adminPassword').addEventListener('keydown',e=>{if(e.key==='Enter')adminLogin()});$('adminLogoutBtn').onclick=adminLogout;
 
-// password change
-$('#changePasswordBtn').addEventListener('click',()=>{$('#passwordForm').reset();openModal('#passwordModal')});$('#cancelPasswordBtn').addEventListener('click',()=>closeModal('#passwordModal'));
-$('#passwordForm').addEventListener('submit',async e=>{e.preventDefault();const cur=$('#currentPassword').value,np=$('#newPassword').value;if(np!==$('#newPassword2').value){toast('新しいパスワードが一致しません',true);return}try{await api('changePassword',{currentPassword:cur,newPassword:np});state.adminPassword=np;closeModal('#passwordModal');toast('パスワードを変更しました')}catch(err){toast(err.message,true)}});
+function switchMode(mode){const admin=mode==='manager';$('modeApplicant').classList.toggle('active',!admin);$('modeManager').classList.toggle('active',admin);$('applicantView').classList.toggle('hidden',admin);$('managerView').classList.toggle('hidden',!admin);if(admin&&sessionStorage.getItem(SESSION_KEY)==='1')showAdminDashboard()}
+$('modeApplicant').onclick=()=>switchMode('applicant');$('modeManager').onclick=()=>switchMode('manager');
+document.querySelectorAll('.typeCard').forEach(b=>b.onclick=()=>{selectedType=b.dataset.type;renderFields()});
 
-// outside modal tap intentionally disabled on mobile to prevent accidental loss.
-document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.overlay:not(.hidden)').forEach(x=>closeModal('#'+x.id))});
-window.addEventListener('unhandledrejection',e=>{console.error(e.reason)});
-if(!needUrl()){}
+$('requestDate').value=today();renderFields();
+})();
 </script>
 </body>
 </html>
