@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<title>NEKKO 社内申請ツール v2.0.2 UI先行版</title>
+<title>NEKKO 社内申請ツール v2.0.3 UI先行版</title>
 <style>
 :root{
   --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
@@ -32,6 +32,7 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
 .filters{display:grid;grid-template-columns:1.4fr .9fr .9fr .9fr;gap:8px}.managerTop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.loginBox{max-width:520px;margin:24px auto}.loginBox h2{text-align:center}.loginSub{text-align:center;color:#61716a;font-weight:700}
 .overlay{position:fixed;inset:0;z-index:70;background:rgba(12,29,23,.56);display:flex;align-items:flex-end;justify-content:center;padding:16px}.modal{width:min(780px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modalActions{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}.detailGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail{background:#f8faf9;border:1px solid #d4ded9;border-radius:11px;padding:10px}.detail b{display:block;font-size:12px;color:#65756e;margin-bottom:3px}.detail.full{grid-column:1/-1}.statusComment{white-space:pre-wrap}
 .attachment{border:2px dashed #a7b9b1;border-radius:13px;background:#f9fbfa;padding:11px}.previewImg{display:none;max-width:100%;max-height:240px;margin-top:9px;border-radius:10px;border:1px solid #ccd7d2}.previewImg.show{display:block}.small{font-size:12px;color:#607069;font-weight:700}.empty{text-align:center;padding:26px 10px;color:#63716b;font-weight:750}.footer{text-align:center;color:#63716b;font-size:12px;font-weight:700;margin-top:22px}.toast{position:fixed;z-index:100;left:50%;bottom:22px;transform:translateX(-50%);background:#173327;color:#fff;border-radius:12px;padding:12px 16px;font-weight:850;box-shadow:var(--shadow);max-width:calc(100vw - 30px)}
+.printHint{margin-top:7px;padding:9px 11px;border:1px solid #b8cddd;background:#f2f8fd;border-radius:10px;color:#355b77;font-size:12px;font-weight:750}
 @media(max-width:800px){html{font-size:17px}.app{padding:9px 9px 90px}.top{padding:8px}.headrow{flex-direction:column;align-items:stretch}.brand{font-size:25px}.brand small{font-size:13px}.mode{width:100%}.mode button{flex:1}.hero{margin:10px 0}.typeGrid{grid-template-columns:1fr 1fr}.grid2,.grid3,.filters,.detailGrid,.historyGate{grid-template-columns:1fr}.itemRow{grid-template-columns:1fr 1fr}.itemRow .wide{grid-column:1/-1}.summaryGrid{grid-template-columns:1fr 1fr}.toolbar .btn{flex:1 1 145px}.appCard .topline{flex-direction:column}.overlay{padding:0}.modal{border-radius:20px 20px 0 0;padding:15px}.modalActions{position:sticky;bottom:-15px;background:#fff;padding:12px 0 15px}.modalActions .btn{flex:1}.detail.full{grid-column:auto}.filters>*{width:100%}}
 @media(max-width:470px){.typeGrid{grid-template-columns:1fr}.itemRow{grid-template-columns:1fr}.itemRow .wide{grid-column:auto}.summaryGrid{grid-template-columns:1fr 1fr}.brand{font-size:23px}}
 </style>
@@ -79,7 +80,11 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
       <div class="sectionTitle">添付・備考</div>
       <div class="field attachment"><label>画像・資料添付</label><input id="attachment" type="file" accept="image/*,.pdf"><div class="small" id="attachmentName">未選択</div><img id="attachmentPreview" class="previewImg" alt="添付プレビュー"></div>
       <div class="field"><label>備考</label><textarea id="notes" placeholder="補足があれば入力してください"></textarea></div>
-      <div class="toolbar"><button class="btn primary full" type="submit">申請する</button></div>
+      <div class="toolbar">
+        <button class="btn primary" style="flex:1" type="submit">申請する</button>
+        <button id="printDraftBtn" class="btn blue" style="flex:1" type="button">A4 PDF・印刷</button>
+      </div>
+      <div class="printHint">紙で提出する場合は「A4 PDF・印刷」を押してください。Chromeの印刷画面で「PDFに保存」を選べばPDF保存、プリンターを選べばA4印刷できます。電子申請前の紙申請は綴り番号欄を「管理者記入」として出力します。</div>
     </form>
 
     <section class="card">
@@ -123,13 +128,14 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
     </section>
   </main>
 
-  <div class="footer">NEKKO 社内申請 v2.0.2 UI先行版 / スプレッドシート連携前</div>
+  <div class="footer">NEKKO 社内申請 v2.0.3 UI先行版 / スプレッドシート連携前</div>
 </div>
 
 <div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
   <div class="modal">
     <h2 id="detailTitle">申請詳細</h2>
     <div id="detailBody"></div>
+    <div class="toolbar"><button id="printDetailBtn" class="btn blue" type="button">A4 PDF・印刷</button></div>
     <div id="managerDecisionBox" class="hidden">
       <div class="sectionTitle">管理者処理</div>
       <div class="field"><label>管理者コメント</label><textarea id="managerComment" placeholder="差戻し理由、却下理由、承認時の補足など"></textarea></div>
@@ -148,8 +154,9 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
 <script>
 (() => {
 'use strict';
-const VERSION='2.0.2-ui';
-const STORE_KEY='nekko_internal_requests_'+VERSION;
+const VERSION='2.0.3-ui';
+// v2.0.2のテストデータをそのまま引き継ぐため、保存キーは固定します。
+const STORE_KEY='nekko_internal_requests_2.0.2-ui';
 const SESSION_KEY='nekko_admin_session_'+VERSION;
 const ADMIN_EMAIL='nekko.222local@gmail.com';
 const ADMIN_PASS_SHA256='e01da5e174c5091b32e166cf0737ee0fb7f521ad424b75eeb8a23725c5eeb1bb';
@@ -231,7 +238,47 @@ function amountOf(type,d){if(type==='equipment')return Number(d.total||0);if(typ
 function nextNo(type){const y=new Date().getFullYear();const prefix=typeInfo(type).prefix+'-'+y+'-';const nums=load().filter(x=>x.type===type&&String(x.number).startsWith(prefix)).map(x=>Number(String(x.number).slice(prefix.length))||0);return prefix+String(Math.max(0,...nums)+1).padStart(4,'0')}
 function summarize(r){const d=r.details||{};if(r.type==='equipment')return (d.items||[]).map(x=>x.name).join('、')||'備品申請';if(r.type==='expense')return `${d.payee||''} / ${d.category||''}`;if(r.type==='transport')return `${d.origin||''} → ${d.destination||''}`;if(r.type==='trip')return `${d.tripPhase||''} / ${d.destination||''}`;if(r.type==='meal')return `${d.counterparty||''} / ${d.venue||''}`;return d.title||'その他申請'}
 
+function buildDraftRecord(){
+  if(!$('requestForm').reportValidity())return null;
+  const details=buildDetails();
+  return {id:'paper-draft',number:'管理者記入',type:selectedType,typeLabel:typeInfo(selectedType).short,applicantName:val('applicantName'),department:val('department'),requestDate:val('requestDate'),status:'紙申請',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(selectedType,details),summary:summarize({type:selectedType,details}),details,notes:val('notes'),attachment:currentAttachment?{name:currentAttachment.name,type:currentAttachment.type,data:currentAttachment.data}:null};
+}
+function printableValue(v){return esc(v??'—').replace(/\n/g,'<br>')}
+function printableDetailRows(r){
+  const skip=new Set(['綴り番号','状態','申請種類','申請者','店舗・部署','申請日','申請日時','合計金額']);
+  return detailPairs(r).filter(([k])=>!skip.has(k));
+}
+function printApplication(r){
+  if(!r)return;
+  const info=typeInfo(r.type), rows=printableDetailRows(r);
+  const attachName=r.attachment?.name?esc(r.attachment.name):'なし';
+  const attachImage=(r.attachment?.type||'').startsWith('image/')&&r.attachment?.data?`<div class="attachmentImage"><div class="cap">添付画像</div><img src="${r.attachment.data}" alt="添付画像"></div>`:'';
+  const statusText=r.status==='紙申請'?'紙申請（未処理）':r.status;
+  const html=`<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(r.number)}_${esc(r.typeLabel)}_A4申請書</title><style>
+  @page{size:A4 portrait;margin:12mm}
+  *{box-sizing:border-box}html,body{margin:0;padding:0;background:#eef1ef;color:#111;font-family:"Yu Gothic","Meiryo","Noto Sans JP",sans-serif;font-size:10.5pt;line-height:1.45}
+  .controls{position:sticky;top:0;z-index:10;background:#253b2d;color:#fff;padding:10px;display:flex;justify-content:center;gap:10px;align-items:center;flex-wrap:wrap}.controls button{border:0;border-radius:8px;padding:9px 14px;font-weight:800;cursor:pointer}.controls .print{background:#fff;color:#1e3426}.controls .close{background:#d9e1dc;color:#1e3426}.controls span{font-size:9pt;font-weight:700}
+  .sheet{width:186mm;min-height:273mm;margin:10px auto;background:#fff;padding:0;box-shadow:0 2mm 8mm rgba(0,0,0,.12)}
+  .doc{padding:8mm 8mm 7mm}.brand{font-size:11pt;font-weight:800;letter-spacing:.04em;color:#405743}.title{text-align:center;font-size:20pt;font-weight:900;margin:1mm 0 5mm;border-bottom:2px solid #405743;padding-bottom:3mm}.headgrid{display:grid;grid-template-columns:1fr 68mm;gap:4mm;margin-bottom:4mm}.noBox,.statusBox{border:1px solid #222;padding:2.5mm 3mm;min-height:12mm}.label{font-size:8.5pt;font-weight:800;color:#444;margin-bottom:1mm}.big{font-size:12pt;font-weight:900}
+  table{width:100%;border-collapse:collapse;table-layout:fixed;margin-bottom:4mm}th,td{border:1px solid #222;padding:2.4mm 2.8mm;vertical-align:top;word-break:break-word}th{width:34mm;background:#eef3ef;text-align:left;font-weight:800}td{min-height:9mm}.amount{font-size:15pt;font-weight:900;text-align:right}.section{font-size:11pt;font-weight:900;margin:4mm 0 2mm;border-left:4px solid #405743;padding-left:2mm}.approval{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid #222;margin-top:5mm}.approval>div{min-height:23mm;border-right:1px solid #222;padding:2mm}.approval>div:last-child{border-right:0}.approval b{display:block;text-align:center;font-size:9pt;margin-bottom:2mm}.approval .value{text-align:center;font-weight:800;padding-top:4mm}.comment{white-space:pre-wrap}.attachmentImage{page-break-inside:avoid;margin-top:4mm;border:1px solid #999;padding:3mm}.attachmentImage .cap{font-weight:800;margin-bottom:2mm}.attachmentImage img{display:block;max-width:100%;max-height:78mm;margin:auto;object-fit:contain}.foot{font-size:8pt;color:#555;text-align:right;margin-top:3mm}
+  @media print{html,body{background:#fff}.controls{display:none}.sheet{width:auto;min-height:0;margin:0;box-shadow:none}.doc{padding:0}}
+  </style></head><body>
+  <div class="controls"><button class="print" onclick="window.print()">PDF保存 / A4印刷</button><button class="close" onclick="window.close()">閉じる</button><span>印刷画面で「PDFに保存」またはプリンターを選択してください。</span></div>
+  <main class="sheet"><div class="doc"><div class="brand">NEKKO</div><div class="title">${esc(info.label)}</div>
+  <div class="headgrid"><div class="noBox"><div class="label">綴り番号</div><div class="big">${esc(r.number||'管理者記入')}</div></div><div class="statusBox"><div class="label">処理状況</div><div class="big">${esc(statusText||'申請中')}</div></div></div>
+  <table><tr><th>申請者</th><td>${esc(r.applicantName||'—')}</td><th style="width:27mm">店舗・部署</th><td>${esc(r.department||'—')}</td></tr><tr><th>申請日</th><td>${esc(r.requestDate||'—')}</td><th style="width:27mm">合計金額</th><td class="amount">${r.amount?yen(r.amount):'—'}</td></tr></table>
+  <div class="section">申請内容</div><table>${rows.map(([k,v])=>`<tr><th>${esc(k)}</th><td colspan="3">${printableValue(v)}</td></tr>`).join('')}<tr><th>添付資料</th><td colspan="3">${attachName}</td></tr></table>
+  ${r.managerComment?`<div class="section">管理者コメント</div><table><tr><th>コメント</th><td class="comment">${printableValue(r.managerComment)}</td></tr></table>`:''}
+  <div class="approval"><div><b>申請者</b><div class="value">${esc(r.applicantName||'')}</div></div><div><b>確認</b><div class="value">${r.status==='差戻し'?'差戻し':r.status==='却下'?'却下':''}</div></div><div><b>承認</b><div class="value">${r.status==='承認'?'承認済':''}</div></div></div>
+  ${attachImage}<div class="foot">出力日時：${esc(nowText())} / NEKKO 社内申請 v2.0.3</div></div></main></body></html>`;
+  const w=window.open('','_blank');
+  if(!w){toast('印刷画面を開けませんでした。ポップアップを許可してください。');return}
+  w.document.open();w.document.write(html);w.document.close();
+  try{w.opener=null}catch(_){ }
+}
+
 $('requestForm').addEventListener('submit',e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;const name=val('applicantName');const details=buildDetails();const rows=load();const rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:nextNo(selectedType),type:selectedType,typeLabel:typeInfo(selectedType).short,applicantName:name,department:val('department'),requestDate:val('requestDate'),status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(selectedType,details),summary:summarize({type:selectedType,details}),details,notes:val('notes'),attachment:currentAttachment?{name:currentAttachment.name,type:currentAttachment.type,data:currentAttachment.data}:null};rows.unshift(rec);save(rows);toast(`申請しました：${rec.number}`);$('historyName').value=name;renderHistory();resetFormKeepIdentity();renderAdmin();});
+$('printDraftBtn').onclick=()=>{const r=buildDraftRecord();if(r)printApplication(r)};
 function resetFormKeepIdentity(){const n=val('applicantName'),dep=val('department');$('requestForm').reset();$('applicantName').value=n;$('department').value=dep;$('requestDate').value=today();$('attachmentName').textContent='未選択';$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';currentAttachment=null;renderFields()}
 
 $('attachment').addEventListener('change',e=>{const f=e.target.files?.[0];currentAttachment=null;$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';$('attachmentName').textContent=f?`${f.name} / ${Math.round(f.size/1024)}KB`:'未選択';if(!f)return;if(f.size>800*1024){toast('UI先行版では添付は800KB以下で確認してください。');e.target.value='';$('attachmentName').textContent='未選択';return}const reader=new FileReader();reader.onload=()=>{currentAttachment={name:f.name,type:f.type,data:String(reader.result)};if(f.type.startsWith('image/')){$('attachmentPreview').src=String(reader.result);$('attachmentPreview').classList.add('show')}};reader.readAsDataURL(f)});
@@ -239,13 +286,14 @@ $('attachment').addEventListener('change',e=>{const f=e.target.files?.[0];curren
 function renderHistory(){const name=val('historyName');if(!name){$('historyList').innerHTML='<div class="empty">氏名を入力してください。</div>';return}const normalized=name.trim().toLowerCase();const rows=load().filter(r=>String(r.applicantName||'').trim().toLowerCase()===normalized);$('historyList').innerHTML=rows.length?rows.map(r=>cardHtml(r,false)).join(''):'<div class="empty">この氏名の申請履歴はありません。</div>';bindCardButtons(false)}
 $('historySearchBtn').onclick=renderHistory;
 
-function cardHtml(r,isAdmin){return `<article class="appCard ${statusClass(r.status)}"><div class="topline"><div><div class="title">${esc(r.number)}　${esc(r.typeLabel)}</div><div class="meta">${esc(r.applicantName)} / ${esc(r.department)} / ${esc(r.createdAt)}</div><div class="meta">${esc(r.summary)}</div></div><div style="text-align:right">${statusBadge(r.status)}<div class="money">${r.amount?yen(r.amount):''}</div></div></div>${r.managerComment?`<div class="meta" style="margin-top:8px"><b>管理者コメント：</b>${esc(r.managerComment)}</div>`:''}<div class="toolbar" style="margin-bottom:0"><button class="btn secondary detailBtn" data-id="${esc(r.id)}" data-admin="${isAdmin?'1':'0'}" type="button">詳細を見る</button></div></article>`}
-function bindCardButtons(isAdmin){document.querySelectorAll(isAdmin?'#adminList .detailBtn':'#historyList .detailBtn').forEach(b=>b.onclick=()=>openDetail(b.dataset.id,isAdmin))}
+function cardHtml(r,isAdmin){return `<article class="appCard ${statusClass(r.status)}"><div class="topline"><div><div class="title">${esc(r.number)}　${esc(r.typeLabel)}</div><div class="meta">${esc(r.applicantName)} / ${esc(r.department)} / ${esc(r.createdAt)}</div><div class="meta">${esc(r.summary)}</div></div><div style="text-align:right">${statusBadge(r.status)}<div class="money">${r.amount?yen(r.amount):''}</div></div></div>${r.managerComment?`<div class="meta" style="margin-top:8px"><b>管理者コメント：</b>${esc(r.managerComment)}</div>`:''}<div class="toolbar" style="margin-bottom:0"><button class="btn secondary detailBtn" data-id="${esc(r.id)}" data-admin="${isAdmin?'1':'0'}" type="button">詳細を見る</button><button class="btn blue printBtn" data-id="${esc(r.id)}" type="button">A4 PDF・印刷</button></div></article>`}
+function bindCardButtons(isAdmin){const root=isAdmin?'#adminList':'#historyList';document.querySelectorAll(root+' .detailBtn').forEach(b=>b.onclick=()=>openDetail(b.dataset.id,isAdmin));document.querySelectorAll(root+' .printBtn').forEach(b=>b.onclick=()=>printApplication(load().find(x=>x.id===b.dataset.id)))}
 
 function detailPairs(r){const d=r.details||{};let rows=[['綴り番号',r.number],['状態',r.status],['申請種類',r.typeLabel],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['申請日時',r.createdAt],['合計金額',r.amount?yen(r.amount):'—']];if(r.type==='equipment'){rows.push(['希望納期',d.desiredDate||'—'],['緊急度',d.urgency||'—'],['購入理由・用途',d.purpose||'—'],['品目',(d.items||[]).map(x=>`${x.name} / ${x.store||'購入先未定'} / ${x.qty}個 × ${yen(x.price)}`).join('\n')||'—'])}else if(r.type==='expense'){rows.push(['支払日',d.expenseDate||'—'],['経費区分',d.category||'—'],['支払先',d.payee||'—'],['用途・理由',d.purpose||'—'])}else if(r.type==='transport'){rows.push(['利用日',d.travelDate||'—'],['交通手段',d.transportMode||'—'],['区間',`${d.origin||'—'} → ${d.destination||'—'}`],['片道・往復',d.routeType||'—'],['利用目的',d.purpose||'—'])}else if(r.type==='trip'){rows.push(['申請区分',d.tripPhase||'—'],['出張先',d.destination||'—'],['期間',`${d.startDate||'—'} ～ ${d.endDate||'—'}`],['交通費',yen(d.transportCost||0)],['宿泊費',yen(d.lodgingCost||0)],['その他費用',yen(d.otherCost||0)],['出張目的',d.purpose||'—'])}else if(r.type==='meal'){rows.push(['実施日',d.mealDate||'—'],['店舗・会場',d.venue||'—'],['相手先・会社名',d.counterparty||'—'],['参加人数',d.participants?`${d.participants}名`:'—'],['目的',d.purpose||'—'])}else rows.push(['申請タイトル',d.title||'—'],['希望日・実施日',d.date||'—'],['申請内容・目的',d.purpose||'—']);if(r.notes)rows.push(['備考',r.notes]);if(r.managerComment)rows.push(['管理者コメント',r.managerComment]);return rows}
 function openDetail(id,isAdmin){const r=load().find(x=>x.id===id);if(!r)return;currentDetailId=id;$('detailTitle').textContent=`${r.number}　${r.typeLabel}`;$('detailBody').innerHTML=`<div class="detailGrid">${detailPairs(r).map(([k,v])=>`<div class="detail ${String(v).includes('\n')||String(v).length>80?'full':''}"><b>${esc(k)}</b><div class="statusComment">${esc(v)}</div></div>`).join('')}</div>${r.attachment?`<div class="sectionTitle">添付</div><div class="detail"><b>${esc(r.attachment.name)}</b>${r.attachment.type?.startsWith('image/')?`<img src="${r.attachment.data}" style="max-width:100%;max-height:320px;border-radius:10px;margin-top:8px">`:'<div class="small">このUI先行版ではPDFはファイル名のみ確認します。</div>'}</div>`:''}`;$('detailModal').classList.remove('hidden');$('managerDecisionBox').classList.toggle('hidden',!isAdmin);$('applicantDetailActions').classList.toggle('hidden',isAdmin);$('managerComment').value=r.managerComment||''}
 function closeDetail(){$('detailModal').classList.add('hidden');currentDetailId=null}
 $('closeDetailBtn').onclick=closeDetail;$('closeApplicantDetailBtn').onclick=closeDetail;$('detailModal').addEventListener('click',e=>{if(e.target===$('detailModal'))closeDetail()});
+$('printDetailBtn').onclick=()=>{if(!currentDetailId)return;printApplication(load().find(x=>x.id===currentDetailId))};
 function decide(status){if(!currentDetailId)return;const rows=load();const r=rows.find(x=>x.id===currentDetailId);if(!r)return;r.status=status;r.managerComment=val('managerComment');r.updatedAt=nowText();save(rows);closeDetail();renderAdmin();toast(`${r.number} を「${status}」にしました。`)}
 $('approveBtn').onclick=()=>decide('承認');$('returnBtn').onclick=()=>decide('差戻し');$('rejectBtn').onclick=()=>decide('却下');
 
