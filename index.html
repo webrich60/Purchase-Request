@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<title>NEKKO 社内申請ツール v2.0.5 UI先行版</title>
+<title>NEKKO 社内申請ツール v2.0.6 UI先行版</title>
 <style>
 :root{
   --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
@@ -24,6 +24,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:man
 .typeGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.typeCard{border:2px solid #c8d5cf;background:#fff;border-radius:16px;padding:14px;text-align:left;min-height:100px}.typeCard strong{display:block;font-size:17px;margin-bottom:3px}.typeCard span{display:block;color:#607069;font-size:13px;font-weight:700}.typeCard.active{border-color:var(--green);background:#f0f6f1;box-shadow:0 0 0 3px rgba(85,107,77,.12)}
 .field{margin-bottom:13px}.field label{display:block;font-weight:900;margin-bottom:6px}.req{color:var(--danger)}.hint{font-size:12px;color:var(--muted);font-weight:650;margin-top:5px}
 input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border-radius:12px;padding:10px 12px;background:#fff;color:#14231d;outline:none}textarea{min-height:112px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--green-dark);box-shadow:0 0 0 3px rgba(66,88,58,.12)}
+.moneyInputWrap{display:flex;align-items:stretch;width:100%;border:2px solid #adc5bb;border-radius:12px;background:#fff;overflow:hidden;min-height:48px}.moneyInputWrap:focus-within{border-color:var(--green-dark);box-shadow:0 0 0 3px rgba(66,88,58,.12)}.moneyPrefix{display:flex;align-items:center;justify-content:center;min-width:46px;padding:0 10px;background:#f0f5f2;border-right:1px solid #c8d5cf;font-size:18px;font-weight:950;color:#26372f}.moneyInputWrap .moneyInput{border:0!important;border-radius:0;box-shadow:none!important;min-height:46px;padding-left:10px;font-weight:850;font-variant-numeric:tabular-nums}.stepper{display:grid;grid-template-columns:52px minmax(80px,1fr) 52px;align-items:stretch;border:2px solid #adc5bb;border-radius:12px;overflow:hidden;background:#fff;min-height:50px}.stepper:focus-within{border-color:var(--green-dark);box-shadow:0 0 0 3px rgba(66,88,58,.12)}.stepperBtn{border:0;background:#eef3ee;color:#24352d;font-size:26px;font-weight:950;min-height:50px}.stepperBtn:active{background:#dfe9e1}.stepperInput{border:0!important;border-left:1px solid #c8d5cf!important;border-right:1px solid #c8d5cf!important;border-radius:0!important;box-shadow:none!important;text-align:center;font-size:19px;font-weight:950;min-height:50px;padding:8px}.stepperUnit{display:block;margin-top:5px;font-size:12px;color:var(--muted);font-weight:750}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.sectionTitle{font-size:16px;font-weight:950;padding:8px 10px;background:#f0f5f2;border-left:5px solid var(--green);border-radius:8px;margin:18px 0 12px}
 .itemRow{display:grid;grid-template-columns:2fr 1.2fr .7fr 1fr auto;gap:8px;align-items:end;background:#f9fbfa;border:2px solid #d5e0db;border-radius:13px;padding:10px;margin-bottom:9px}.itemRow .field{margin:0}.itemAmount{font-weight:950;padding:10px 4px;white-space:nowrap}.removeBtn{border:0;background:#fde6e4;color:#8f211a;border-radius:9px;padding:10px 11px;font-weight:900;min-height:45px}.totalBox{display:flex;justify-content:space-between;align-items:center;border:2px solid #9fc2b3;background:#edf6f2;border-radius:13px;padding:12px 14px;font-weight:900}.totalBox strong{font-size:24px;color:var(--green-dark)}
 .historyGate{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:end}.historyList,.adminList{display:grid;gap:10px}.appCard{border:2px solid #c9d7d1;background:#fff;border-radius:15px;padding:13px}.appCard.pending{border-color:#8fb5d9;background:var(--blue-soft)}.appCard.approved{border-color:#83b99a;background:var(--ok-soft)}.appCard.returned{border-color:#e1ae60;background:var(--warn-soft)}.appCard.rejected{border-color:#de9994;background:var(--danger-soft)}.appCard.deleted{border-color:#bfc6c2;background:var(--gray-soft)}
@@ -42,7 +43,7 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
 .pdfPreviewHelp{font-size:12px;font-weight:750;opacity:.92}
 @media(max-width:800px){.pdfPreviewOverlay{padding:0}.pdfPreviewShell{height:100vh;border-radius:0}.pdfPreviewStage{padding:8px}.pdfPreviewFrame{height:calc(100vh - 118px)}.pdfPreviewBar{align-items:flex-start}.pdfPreviewActions{width:100%}.pdfPreviewActions .btn{flex:1}.pdfPreviewHelp{width:100%}}
 
-@media(max-width:800px){html{font-size:17px}.app{padding:9px 9px 90px}.top{padding:8px}.headrow{flex-direction:column;align-items:stretch}.brand{font-size:25px}.brand small{font-size:13px}.mode{width:100%}.mode button{flex:1}.hero{margin:10px 0}.typeGrid{grid-template-columns:1fr 1fr}.grid2,.grid3,.filters,.detailGrid,.historyGate{grid-template-columns:1fr}.itemRow{grid-template-columns:1fr 1fr}.itemRow .wide{grid-column:1/-1}.summaryGrid{grid-template-columns:1fr 1fr}.toolbar .btn{flex:1 1 145px}.appCard .topline{flex-direction:column}.overlay{padding:0}.modal{border-radius:20px 20px 0 0;padding:15px}.modalActions{position:sticky;bottom:-15px;background:#fff;padding:12px 0 15px}.modalActions .btn{flex:1}.detail.full{grid-column:auto}.filters>*{width:100%}}
+@media(max-width:800px){html{font-size:17px}.app{padding:9px 9px 90px}.top{padding:8px}.headrow{flex-direction:column;align-items:stretch}.brand{font-size:25px}.brand small{font-size:13px}.mode{width:100%}.mode button{flex:1}.hero{margin:10px 0}.typeGrid{grid-template-columns:1fr 1fr}.grid2,.grid3,.filters,.detailGrid,.historyGate{grid-template-columns:1fr}.itemRow{grid-template-columns:1fr 1fr}.itemRow .wide{grid-column:1/-1}.summaryGrid{grid-template-columns:1fr 1fr}.toolbar .btn{flex:1 1 145px}.appCard .topline{flex-direction:column}.overlay{padding:0}.modal{border-radius:20px 20px 0 0;padding:15px}.modalActions{position:sticky;bottom:-15px;background:#fff;padding:12px 0 15px}.modalActions .btn{flex:1}.detail.full{grid-column:auto}.filters>*{width:100%}.moneyInputWrap{min-height:54px}.moneyPrefix{min-width:50px;font-size:20px}.moneyInputWrap .moneyInput{min-height:52px;font-size:19px}.stepper{grid-template-columns:58px minmax(90px,1fr) 58px;min-height:56px}.stepperBtn,.stepperInput{min-height:56px}.stepperBtn{font-size:29px}.stepperInput{font-size:20px}}
 @media(max-width:470px){.typeGrid{grid-template-columns:1fr}.itemRow{grid-template-columns:1fr}.itemRow .wide{grid-column:auto}.summaryGrid{grid-template-columns:1fr 1fr}.brand{font-size:23px}}
 </style>
 </head>
@@ -137,7 +138,7 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
     </section>
   </main>
 
-  <div class="footer">NEKKO 社内申請 v2.0.5 UI先行版 / スプレッドシート連携前</div>
+  <div class="footer">NEKKO 社内申請 v2.0.6 UI先行版 / スプレッドシート連携前</div>
 </div>
 
 <div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
@@ -182,7 +183,7 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
 <script>
 (() => {
 'use strict';
-const VERSION='2.0.4-ui';
+const VERSION='2.0.6-ui';
 // v2.0.2のテストデータをそのまま引き継ぐため、保存キーは固定します。
 const STORE_KEY='nekko_internal_requests_2.0.2-ui';
 const SESSION_KEY='nekko_admin_session_'+VERSION;
@@ -203,7 +204,12 @@ let currentPreviewRecord=null;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-const yen=n=>'¥'+Number(n||0).toLocaleString('ja-JP');
+const yen=n=>'￥'+Number(n||0).toLocaleString('ja-JP');
+const parseMoney=v=>{const digits=String(v??'').replace(/[^0-9]/g,'');return digits?Number(digits):0};
+const moneyMarkup=(id,opts={})=>`<div class="moneyInputWrap"><span class="moneyPrefix">￥</span><input id="${id}" class="moneyInput" type="text" inputmode="numeric" autocomplete="off" placeholder="0" ${opts.required?'required':''} value="${opts.value??''}"></div>`;
+function formatMoneyInput(el){if(!el)return;const digits=String(el.value??'').replace(/[^0-9]/g,'');el.value=digits?Number(digits).toLocaleString('ja-JP'):''}
+function initMoneyInputs(root=document){root.querySelectorAll('.moneyInput').forEach(el=>{formatMoneyInput(el);el.addEventListener('input',()=>formatMoneyInput(el));el.addEventListener('blur',()=>formatMoneyInput(el))})}
+function initParticipantStepper(){const input=$('participants');if(!input)return;const stepper=input.closest('.stepper');const clamp=()=>{const digits=String(input.value??'').replace(/[^0-9]/g,'');input.value=String(Math.max(1,Number(digits||1)))};input.addEventListener('input',()=>{input.value=String(input.value??'').replace(/[^0-9]/g,'')});input.addEventListener('blur',clamp);stepper?.querySelectorAll('.stepperBtn').forEach(btn=>btn.addEventListener('click',()=>{clamp();input.value=String(Math.max(1,Number(input.value||1)+Number(btn.dataset.step||0)));input.dispatchEvent(new Event('input',{bubbles:true}))}))}
 const today=()=>{const d=new Date();const z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)};
 const nowText=()=>new Date().toLocaleString('ja-JP');
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.remove('hidden');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.add('hidden'),2500)}
@@ -222,46 +228,48 @@ function renderFields(){
     <div class="sectionTitle">購入内容</div>
     <div class="grid2"><div class="field"><label>希望納期</label><input id="desiredDate" type="date"></div><div class="field"><label>緊急度</label><select id="urgency"><option>通常</option><option>急ぎ</option><option>至急</option></select></div></div>
     <div id="items"></div><button id="addItemBtn" type="button" class="btn secondary">＋ 品目を追加</button>
-    <div class="totalBox"><span>合計金額</span><strong id="equipmentTotal">¥0</strong></div>
+    <div class="totalBox"><span>合計金額</span><strong id="equipmentTotal">￥0</strong></div>
     <div class="field"><label>購入理由・用途 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
     addItem();
     $('addItemBtn').onclick=addItem;
   } else if(selectedType==='expense') d.innerHTML=`
     <div class="sectionTitle">経費内容</div><div class="grid2"><div class="field"><label>支払日 <span class="req">必須</span></label><input id="expenseDate" type="date" required></div><div class="field"><label>経費区分</label><select id="expenseCategory"><option>店舗用品</option><option>消耗品</option><option>広告宣伝</option><option>通信費</option><option>雑費</option><option>その他</option></select></div></div>
-    <div class="grid2"><div class="field"><label>支払先 <span class="req">必須</span></label><input id="payee" required></div><div class="field"><label>金額 <span class="req">必須</span></label><input id="amount" type="number" min="0" required></div></div>
+    <div class="grid2"><div class="field"><label>支払先 <span class="req">必須</span></label><input id="payee" required></div><div class="field"><label>金額 <span class="req">必須</span></label>${moneyMarkup('amount',{required:true})}</div></div>
     <div class="field"><label>用途・理由 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
   else if(selectedType==='transport') d.innerHTML=`
     <div class="sectionTitle">交通内容</div><div class="grid2"><div class="field"><label>利用日 <span class="req">必須</span></label><input id="travelDate" type="date" required></div><div class="field"><label>交通手段 <span class="req">必須</span></label><select id="transportMode" required><option value="">選択</option><option>電車</option><option>バス</option><option>タクシー</option><option>自家用車</option><option>高速道路</option><option>駐車場</option><option>その他</option></select></div></div>
     <div class="grid2"><div class="field"><label>出発地 <span class="req">必須</span></label><input id="origin" required></div><div class="field"><label>到着地 <span class="req">必須</span></label><input id="destination" required></div></div>
-    <div class="grid2"><div class="field"><label>片道・往復</label><select id="routeType"><option>往復</option><option>片道</option></select></div><div class="field"><label>金額 <span class="req">必須</span></label><input id="amount" type="number" min="0" required></div></div>
+    <div class="grid2"><div class="field"><label>片道・往復</label><select id="routeType"><option>往復</option><option>片道</option></select></div><div class="field"><label>金額 <span class="req">必須</span></label>${moneyMarkup('amount',{required:true})}</div></div>
     <div class="field"><label>利用目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
   else if(selectedType==='trip') d.innerHTML=`
     <div class="sectionTitle">出張内容</div><div class="grid2"><div class="field"><label>申請区分 <span class="req">必須</span></label><select id="tripPhase" required><option>事前申請</option><option>事後精算</option></select></div><div class="field"><label>出張先 <span class="req">必須</span></label><input id="destination" required></div></div>
     <div class="grid2"><div class="field"><label>開始日 <span class="req">必須</span></label><input id="startDate" type="date" required></div><div class="field"><label>終了日 <span class="req">必須</span></label><input id="endDate" type="date" required></div></div>
-    <div class="grid3"><div class="field"><label>交通費</label><input id="transportCost" type="number" min="0" value="0"></div><div class="field"><label>宿泊費</label><input id="lodgingCost" type="number" min="0" value="0"></div><div class="field"><label>その他費用</label><input id="otherCost" type="number" min="0" value="0"></div></div>
+    <div class="grid3"><div class="field"><label>交通費</label>${moneyMarkup('transportCost',{value:'0'})}</div><div class="field"><label>宿泊費</label>${moneyMarkup('lodgingCost',{value:'0'})}</div><div class="field"><label>その他費用</label>${moneyMarkup('otherCost',{value:'0'})}</div></div>
     <div class="field"><label>出張目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
   else if(selectedType==='meal') d.innerHTML=`
     <div class="sectionTitle">接待・会食内容</div><div class="grid2"><div class="field"><label>実施日 <span class="req">必須</span></label><input id="mealDate" type="date" required></div><div class="field"><label>店舗・会場 <span class="req">必須</span></label><input id="venue" required></div></div>
-    <div class="grid2"><div class="field"><label>相手先・会社名 <span class="req">必須</span></label><input id="counterparty" required></div><div class="field"><label>参加人数</label><input id="participants" type="number" min="1" value="2"></div></div>
-    <div class="field"><label>金額 <span class="req">必須</span></label><input id="amount" type="number" min="0" required></div><div class="field"><label>目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
+    <div class="grid2"><div class="field"><label>相手先・会社名 <span class="req">必須</span></label><input id="counterparty" required></div><div class="field"><label>参加人数</label><div class="stepper"><button class="stepperBtn" type="button" data-step="-1" aria-label="参加人数を1人減らす">−</button><input id="participants" class="stepperInput" type="text" inputmode="numeric" value="2" aria-label="参加人数"><button class="stepperBtn" type="button" data-step="1" aria-label="参加人数を1人増やす">＋</button></div><span class="stepperUnit">－／＋ボタンはスマホでも使えます</span></div></div>
+    <div class="field"><label>金額 <span class="req">必須</span></label>${moneyMarkup('amount',{required:true})}</div><div class="field"><label>目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
   else d.innerHTML=`
     <div class="sectionTitle">その他申請</div><div class="field"><label>申請タイトル <span class="req">必須</span></label><input id="otherTitle" required placeholder="例：イベント参加申請"></div>
-    <div class="grid2"><div class="field"><label>希望日・実施日</label><input id="otherDate" type="date"></div><div class="field"><label>金額（必要な場合）</label><input id="amount" type="number" min="0"></div></div>
+    <div class="grid2"><div class="field"><label>希望日・実施日</label><input id="otherDate" type="date"></div><div class="field"><label>金額（必要な場合）</label>${moneyMarkup('amount')}</div></div>
     <div class="field"><label>申請内容・目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
+  initMoneyInputs(d);
+  initParticipantStepper();
 }
 function addItem(){
-  const wrap=$('items');const row=document.createElement('div');row.className='itemRow';row.innerHTML=`<div class="field wide"><label>品名・型番 <span class="req">必須</span></label><input class="itemName" required></div><div class="field"><label>購入先</label><input class="itemStore"></div><div class="field"><label>数量</label><input class="itemQty" type="number" min="1" value="1"></div><div class="field"><label>単価</label><input class="itemPrice" type="number" min="0" value="0"></div><div class="itemAmount">¥0</div><button class="removeBtn" type="button">削除</button>`;
-  row.querySelector('.removeBtn').onclick=()=>{row.remove();calcEquipment()};row.querySelectorAll('input').forEach(i=>i.addEventListener('input',calcEquipment));wrap.appendChild(row);calcEquipment();
+  const wrap=$('items');const row=document.createElement('div');row.className='itemRow';row.innerHTML=`<div class="field wide"><label>品名・型番 <span class="req">必須</span></label><input class="itemName" required></div><div class="field"><label>購入先</label><input class="itemStore"></div><div class="field"><label>数量</label><input class="itemQty" type="number" min="1" value="1"></div><div class="field"><label>単価</label><div class="moneyInputWrap"><span class="moneyPrefix">￥</span><input class="itemPrice moneyInput" type="text" inputmode="numeric" autocomplete="off" value="0"></div></div><div class="itemAmount">￥0</div><button class="removeBtn" type="button">削除</button>`;
+  initMoneyInputs(row);row.querySelector('.removeBtn').onclick=()=>{row.remove();calcEquipment()};row.querySelectorAll('input').forEach(i=>i.addEventListener('input',calcEquipment));wrap.appendChild(row);calcEquipment();
 }
-function calcEquipment(){let total=0;document.querySelectorAll('.itemRow').forEach(r=>{const q=Number(r.querySelector('.itemQty')?.value||0),p=Number(r.querySelector('.itemPrice')?.value||0),a=q*p;total+=a;const el=r.querySelector('.itemAmount');if(el)el.textContent=yen(a)});if($('equipmentTotal'))$('equipmentTotal').textContent=yen(total);return total}
+function calcEquipment(){let total=0;document.querySelectorAll('.itemRow').forEach(r=>{const q=Number(r.querySelector('.itemQty')?.value||0),p=parseMoney(r.querySelector('.itemPrice')?.value||0),a=q*p;total+=a;const el=r.querySelector('.itemAmount');if(el)el.textContent=yen(a)});if($('equipmentTotal'))$('equipmentTotal').textContent=yen(total);return total}
 function val(id){return $(id)?.value?.trim?.()??''}
 function buildDetails(){
-  if(selectedType==='equipment'){const items=[...document.querySelectorAll('.itemRow')].map(r=>({name:r.querySelector('.itemName').value.trim(),store:r.querySelector('.itemStore').value.trim(),qty:Number(r.querySelector('.itemQty').value||1),price:Number(r.querySelector('.itemPrice').value||0)})).filter(x=>x.name);return {desiredDate:val('desiredDate'),urgency:val('urgency'),items,total:calcEquipment(),purpose:val('purpose')}}
-  if(selectedType==='expense')return {expenseDate:val('expenseDate'),category:val('expenseCategory'),payee:val('payee'),amount:Number(val('amount')||0),purpose:val('purpose')};
-  if(selectedType==='transport')return {travelDate:val('travelDate'),transportMode:val('transportMode'),origin:val('origin'),destination:val('destination'),routeType:val('routeType'),amount:Number(val('amount')||0),purpose:val('purpose')};
-  if(selectedType==='trip')return {tripPhase:val('tripPhase'),destination:val('destination'),startDate:val('startDate'),endDate:val('endDate'),transportCost:Number(val('transportCost')||0),lodgingCost:Number(val('lodgingCost')||0),otherCost:Number(val('otherCost')||0),purpose:val('purpose')};
-  if(selectedType==='meal')return {mealDate:val('mealDate'),venue:val('venue'),counterparty:val('counterparty'),participants:Number(val('participants')||0),amount:Number(val('amount')||0),purpose:val('purpose')};
-  return {title:val('otherTitle'),date:val('otherDate'),amount:Number(val('amount')||0),purpose:val('purpose')};
+  if(selectedType==='equipment'){const items=[...document.querySelectorAll('.itemRow')].map(r=>({name:r.querySelector('.itemName').value.trim(),store:r.querySelector('.itemStore').value.trim(),qty:Number(r.querySelector('.itemQty').value||1),price:parseMoney(r.querySelector('.itemPrice').value||0)})).filter(x=>x.name);return {desiredDate:val('desiredDate'),urgency:val('urgency'),items,total:calcEquipment(),purpose:val('purpose')}}
+  if(selectedType==='expense')return {expenseDate:val('expenseDate'),category:val('expenseCategory'),payee:val('payee'),amount:parseMoney(val('amount')),purpose:val('purpose')};
+  if(selectedType==='transport')return {travelDate:val('travelDate'),transportMode:val('transportMode'),origin:val('origin'),destination:val('destination'),routeType:val('routeType'),amount:parseMoney(val('amount')),purpose:val('purpose')};
+  if(selectedType==='trip')return {tripPhase:val('tripPhase'),destination:val('destination'),startDate:val('startDate'),endDate:val('endDate'),transportCost:parseMoney(val('transportCost')),lodgingCost:parseMoney(val('lodgingCost')),otherCost:parseMoney(val('otherCost')),purpose:val('purpose')};
+  if(selectedType==='meal')return {mealDate:val('mealDate'),venue:val('venue'),counterparty:val('counterparty'),participants:Number(val('participants')||0),amount:parseMoney(val('amount')),purpose:val('purpose')};
+  return {title:val('otherTitle'),date:val('otherDate'),amount:parseMoney(val('amount')),purpose:val('purpose')};
 }
 function amountOf(type,d){if(type==='equipment')return Number(d.total||0);if(type==='trip')return Number(d.transportCost||0)+Number(d.lodgingCost||0)+Number(d.otherCost||0);return Number(d.amount||0)}
 function nextNo(type){const y=new Date().getFullYear();const prefix=typeInfo(type).prefix+'-'+y+'-';const nums=load().filter(x=>x.type===type&&String(x.number).startsWith(prefix)).map(x=>Number(String(x.number).slice(prefix.length))||0);return prefix+String(Math.max(0,...nums)+1).padStart(4,'0')}
@@ -274,7 +282,7 @@ function buildDraftRecord(){
 }
 function isBlankPrintable(v){
   const t=String(v??'').trim();
-  return !t || t==='—' || t==='¥0' || t==='0名' || t==='→' || t==='— → —' || t==='— ～ —';
+  return !t || t==='—' || t==='￥0' || t==='0名' || t==='→' || t==='— → —' || t==='— ～ —';
 }
 function printableValue(v){
   if(isBlankPrintable(v))return '<span class="blankCell">&nbsp;</span>';
@@ -330,7 +338,7 @@ function buildA4Document(r,withControls){
     <table class="formTable"><tr><th>コメント</th><td class="managerCell">${r.managerComment?printableValue(r.managerComment):'<span class="blankCell">&nbsp;</span>'}</td></tr></table>
     <div class="approvalTitle">承認欄</div>
     <div class="approval"><div><b>申請者</b><div class="value">${applicant}</div></div><div><b>確認・差戻し</b><div class="value">${r.status==='差戻し'?'差戻し':r.status==='却下'?'却下':''}</div></div><div><b>承認</b><div class="value">${r.status==='承認'?'承認済':''}</div></div></div>
-    ${attachImage}<div class="foot">出力日時：${esc(nowText())} / NEKKO 社内申請 v2.0.5</div>
+    ${attachImage}<div class="foot">出力日時：${esc(nowText())} / NEKKO 社内申請 v2.0.6</div>
   </div></main></body></html>`;
 }
 function openA4Preview(r){
