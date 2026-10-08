@@ -7,7 +7,7 @@
 <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="bingbot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>NEKKO 申請 v2.1.6</title>
+<title>NEKKO 申請 v2.1.7</title>
 <style>
 :root{
   --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
@@ -169,7 +169,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
     </section>
   </main>
 
-  <div class="footer">NEKKO 申請 v2.1.6 / Google スプレッドシート連携対応</div>
+  <div class="footer">NEKKO 申請 v2.1.7 / Google スプレッドシート連携対応</div>
 </div>
 
 <div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
@@ -281,7 +281,7 @@ async function checkConnection(){
   const box=$('connectionNotice'),txt=$('connectionText');
   if(!apiConfigured()){box.classList.remove('online');box.classList.add('offline');txt.textContent='未設定（現在はこの端末だけのデモ保存）。GASデプロイ後にURLを設定してください。';return}
   txt.textContent='接続確認中...';
-  try{const r=await api('health');box.classList.remove('offline');box.classList.add('online');txt.textContent=`接続済み / GAS ${r.version||''} / スマホ・PC共通保存`;}
+  try{const r=await api('health');box.classList.remove('offline');box.classList.add('online');txt.textContent='接続済み / GAS接続済み / スマホ・PC共通保存';}
   catch(e){box.classList.remove('online');box.classList.add('offline');txt.textContent='接続エラー：'+e.message;}
 }
 function typeInfo(t){return TYPE_INFO[t]||TYPE_INFO.other}
