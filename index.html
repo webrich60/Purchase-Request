@@ -7,7 +7,7 @@
 <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="bingbot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>NEKKO 申請 v2.1.2</title>
+<title>NEKKO 申請 v2.1.3</title>
 <style>
 :root{
   --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
@@ -35,6 +35,7 @@ input,select,textarea{width:100%;min-height:48px;border:2px solid #adc5bb;border
 .summaryGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.summary{background:#fff;border:2px solid #d0dcd6;border-radius:14px;padding:13px}.summary strong{display:block;font-size:27px}.summary.pending{border-color:#8fb5d9}.summary.approved{border-color:#83b99a}.summary.returned{border-color:#e1ae60}.summary.rejected{border-color:#de9994}
 .filters{display:grid;grid-template-columns:1.4fr .9fr .9fr .9fr;gap:8px}.managerTop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.loginBox{max-width:520px;margin:24px auto}.loginBox h2{text-align:center}.loginSub{text-align:center;color:#61716a;font-weight:700}
 .overlay{position:fixed;inset:0;z-index:70;background:rgba(12,29,23,.56);display:flex;align-items:flex-end;justify-content:center;padding:16px}.modal{width:min(780px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modalActions{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}.detailGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail{background:#f8faf9;border:1px solid #d4ded9;border-radius:11px;padding:10px}.detail b{display:block;font-size:12px;color:#65756e;margin-bottom:3px}.detail.full{grid-column:1/-1}.statusComment{white-space:pre-wrap}
+.confirmModal{width:min(820px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:0;box-shadow:0 18px 54px rgba(0,0,0,.28);border:2px solid #8ea394}.confirmHead{background:#080a09;color:#fff;padding:18px 20px;border-bottom:5px solid var(--green);border-radius:18px 18px 0 0}.confirmHead h2{margin:0;font-size:23px}.confirmHead p{margin:7px 0 0;color:#d6ddd8;font-weight:750}.confirmBody{padding:18px}.confirmQuestion{border:2px solid #7f9d8d;background:#edf5f0;border-radius:14px;padding:14px 16px;margin-bottom:15px;font-size:18px;font-weight:950;color:#1d372b}.confirmQuestion small{display:block;margin-top:4px;font-size:13px;color:#52675d;font-weight:750}.confirmGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.confirmItem{border:1px solid #c7d4ce;background:#f9fbfa;border-radius:11px;padding:10px 12px;min-height:64px}.confirmItem.full{grid-column:1/-1}.confirmItem b{display:block;font-size:12px;color:#63736b;margin-bottom:4px}.confirmItem span{display:block;font-size:16px;font-weight:850;white-space:pre-wrap;overflow-wrap:anywhere}.confirmAmount{font-size:21px!important;color:var(--green-dark)}.confirmActions{display:grid;grid-template-columns:1fr 1.35fr;gap:10px;margin-top:18px}.confirmActions .btn{min-height:54px;font-size:16px}.confirmFinal{background:var(--green-dark)!important;color:#fff!important;box-shadow:0 5px 14px rgba(63,82,56,.22)}.confirmNote{font-size:12px;color:#617069;font-weight:700;margin-top:10px;text-align:center}@media(max-width:640px){.confirmGrid{grid-template-columns:1fr}.confirmItem.full{grid-column:auto}.confirmActions{grid-template-columns:1fr}.confirmHead{padding:15px}.confirmBody{padding:14px}.confirmQuestion{font-size:17px}}
 .attachment{border:2px dashed #a7b9b1;border-radius:13px;background:#f9fbfa;padding:11px}.previewImg{display:none;max-width:100%;max-height:240px;margin-top:9px;border-radius:10px;border:1px solid #ccd7d2}.previewImg.show{display:block}.small{font-size:12px;color:#607069;font-weight:700}.empty{text-align:center;padding:26px 10px;color:#63716b;font-weight:750}.footer{text-align:center;color:#63716b;font-size:12px;font-weight:700;margin-top:22px}.toast{position:fixed;z-index:100;left:50%;bottom:22px;transform:translateX(-50%);background:#173327;color:#fff;border-radius:12px;padding:12px 16px;font-weight:850;box-shadow:var(--shadow);max-width:calc(100vw - 30px)}
 .printHint{margin-top:7px;padding:9px 11px;border:1px solid #b8cddd;background:#f2f8fd;border-radius:10px;color:#355b77;font-size:12px;font-weight:750}
 .pdfPreviewOverlay{position:fixed;inset:0;z-index:90;background:rgba(8,19,15,.72);display:flex;align-items:stretch;justify-content:center;padding:12px}
@@ -121,7 +122,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
       <div class="field attachment"><label>画像・資料添付</label><input id="attachment" type="file" accept="image/*,.pdf"><div class="small" id="attachmentName">未選択</div><img id="attachmentPreview" class="previewImg" alt="添付プレビュー"></div>
       <div class="field"><label>備考</label><textarea id="notes" placeholder="補足があれば入力してください"></textarea></div>
       <div class="toolbar">
-        <button class="btn primary" style="flex:1" type="submit">申請する</button>
+        <button class="btn primary" style="flex:1" type="submit">申請内容を確認する</button>
         <button id="printDraftBtn" class="btn blue" style="flex:1" type="button">A4申請書プレビュー</button>
       </div>
       <div class="printHint">「A4申請書プレビュー」は未記入でも確認できます。A4用紙・罫線付きの正式な申請書フォーマットを表示し、入力済みの内容は自動で差し込みます。確認後に「PDF保存・印刷」へ進めます。電子申請前は綴り番号欄を「管理者記入」として表示します。</div>
@@ -168,7 +169,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
     </section>
   </main>
 
-  <div class="footer">NEKKO 申請 v2.1.1 / Google スプレッドシート連携対応</div>
+  <div class="footer">NEKKO 申請 v2.1.3 / Google スプレッドシート連携対応</div>
 </div>
 
 <div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
@@ -187,6 +188,24 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
       </div>
     </div>
     <div id="applicantDetailActions" class="modalActions hidden"><button id="closeApplicantDetailBtn" class="btn gray" type="button">閉じる</button></div>
+  </div>
+</div>
+
+<div id="submitConfirmModal" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="submitConfirmTitle">
+  <div class="confirmModal">
+    <div class="confirmHead">
+      <h2 id="submitConfirmTitle">申請内容の最終確認</h2>
+      <p>入力した内容を確認してから申請を確定します。</p>
+    </div>
+    <div class="confirmBody">
+      <div class="confirmQuestion">これで間違いないですか？<small>間違いがなければ、下の「この内容で申請する」を押してください。</small></div>
+      <div id="submitConfirmBody" class="confirmGrid"></div>
+      <div class="confirmActions">
+        <button id="submitConfirmBackBtn" class="btn secondary" type="button">← 入力画面に戻って修正</button>
+        <button id="submitConfirmFinalBtn" class="btn confirmFinal" type="button">✓ この内容で申請する</button>
+      </div>
+      <div class="confirmNote">「この内容で申請する」を押すまでは、スプレッドシートへ送信されません。</div>
+    </div>
   </div>
 </div>
 
@@ -213,7 +232,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 <script>
 (() => {
 'use strict';
-const VERSION='2.1.1-gas-ui';
+const VERSION='2.1.3-gas-confirm';
 // GASをウェブアプリとしてデプロイ後、/exec で終わるURLをここへ貼り付けてください。
 const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbzArfOp_P3IywHKH8ICOd5FH4GBx5D6AY2JBL87ZVeqcd4pZsiUdLCMwkI68X_BOQXVQg/exec';
 const STORE_KEY='nekko_internal_requests_2.0.2-ui'; // GAS未設定時の画面確認用デモ保存
@@ -228,6 +247,7 @@ const TYPE_INFO={
 let selectedType='equipment';
 let currentDetailId=null;
 let currentAttachment=null;
+let pendingSubmission=null;
 let currentPreviewRecord=null;
 let mineRows=[];
 let adminRows=[];
@@ -417,32 +437,77 @@ $('pdfPreviewPrintBtn').onclick=()=>{if(currentPreviewRecord)printApplication(cu
 $('pdfPreviewModal').addEventListener('click',e=>{if(e.target===$('pdfPreviewModal'))closeA4Preview()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('pdfPreviewModal').classList.contains('hidden'))closeA4Preview()});
 
-$('requestForm').addEventListener('submit',async e=>{
-  e.preventDefault();
-  if(!e.currentTarget.reportValidity())return;
-  const submit=e.currentTarget.querySelector('button[type="submit"]');
-  const name=val('applicantName');
+function confirmationRowsFromPending(p){
+  const r={type:p.type,typeLabel:typeInfo(p.type).short,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,amount:amountOf(p.type,p.details),details:p.details,notes:p.notes||''};
+  const rows=[['申請種類',r.typeLabel],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['合計金額',r.amount?yen(r.amount):'￥0']];
+  const d=r.details||{};
+  if(r.type==='equipment'){
+    rows.push(['希望納期',d.desiredDate||'—'],['緊急度',d.urgency||'—'],['品目',(d.items||[]).map(x=>`${x.name||'—'} / ${x.store||'購入先未定'} / ${x.qty||0}個 × ${yen(x.price||0)}`).join('\n')||'—'],['購入理由・用途',d.purpose||'—']);
+  }else if(r.type==='expense'){
+    rows.push(['支払日',d.expenseDate||'—'],['経費区分',d.category||'—'],['支払先',d.payee||'—'],['用途・理由',d.purpose||'—']);
+  }else if(r.type==='transport'){
+    rows.push(['利用日',d.travelDate||'—'],['交通手段',d.transportMode||'—'],['区間',`${d.origin||'—'} → ${d.destination||'—'}`],['片道・往復',d.routeType||'—'],['利用目的',d.purpose||'—']);
+  }else if(r.type==='trip'){
+    rows.push(['申請区分',d.tripPhase||'—'],['出張先',d.destination||'—'],['期間',`${d.startDate||'—'} ～ ${d.endDate||'—'}`],['交通費',yen(d.transportCost||0)],['宿泊費',yen(d.lodgingCost||0)],['その他費用',yen(d.otherCost||0)],['出張目的',d.purpose||'—']);
+  }else if(r.type==='meal'){
+    rows.push(['実施日',d.mealDate||'—'],['店舗・会場',d.venue||'—'],['相手先・会社名',d.counterparty||'—'],['参加人数',d.participants?`${d.participants}名`:'—'],['目的',d.purpose||'—']);
+  }else{
+    rows.push(['申請タイトル',d.title||'—'],['希望日・実施日',d.date||'—'],['申請内容・目的',d.purpose||'—']);
+  }
+  if(p.notes)rows.push(['備考',p.notes]);
+  if(p.attachment?.name)rows.push(['添付ファイル',p.attachment.name]);
+  return rows;
+}
+function openSubmitConfirmation(){
   const details=buildDetails();
-  submit.disabled=true;submit.textContent='送信中...';
+  pendingSubmission={type:selectedType,applicantName:val('applicantName'),department:val('department'),requestDate:val('requestDate'),details,notes:val('notes'),attachment:currentAttachment?{...currentAttachment}:null};
+  const rows=confirmationRowsFromPending(pendingSubmission);
+  $('submitConfirmBody').innerHTML=rows.map(([k,v])=>`<div class="confirmItem ${['品目','購入理由・用途','用途・理由','利用目的','出張目的','目的','申請内容・目的','備考','添付ファイル'].includes(k)?'full':''}"><b>${esc(k)}</b><span class="${k==='合計金額'?'confirmAmount':''}">${esc(v??'—')}</span></div>`).join('');
+  $('submitConfirmModal').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+function closeSubmitConfirmation(){
+  $('submitConfirmModal').classList.add('hidden');
+  pendingSubmission=null;
+  document.body.style.overflow='';
+}
+async function finalizeSubmission(){
+  if(!pendingSubmission)return;
+  const p=pendingSubmission;
+  const finalBtn=$('submitConfirmFinalBtn');
+  const backBtn=$('submitConfirmBackBtn');
+  finalBtn.disabled=true;backBtn.disabled=true;finalBtn.textContent='送信中...';
   try{
     let rec;
     if(apiConfigured()){
-      const r=await api('create',{type:selectedType,applicantName:name,department:val('department'),requestDate:val('requestDate'),details,notes:val('notes'),attachment:currentAttachment});
+      const r=await api('create',{type:p.type,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,details:p.details,notes:p.notes,attachment:p.attachment});
       rec=r.application;
       mineRows=[rec,...mineRows.filter(x=>x.id!==rec.id)];
     }else{
       const rows=load();
-      rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:nextNo(selectedType),type:selectedType,typeLabel:typeInfo(selectedType).short,applicantName:name,department:val('department'),requestDate:val('requestDate'),status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(selectedType,details),summary:summarize({type:selectedType,details}),details,notes:val('notes'),attachment:currentAttachment?{name:currentAttachment.name,type:currentAttachment.type,data:currentAttachment.data}:null,history:[{at:nowText(),action:'申請',by:name,comment:''}]};
+      rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:nextNo(p.type),type:p.type,typeLabel:typeInfo(p.type).short,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(p.type,p.details),summary:summarize({type:p.type,details:p.details}),details:p.details,notes:p.notes,attachment:p.attachment,history:[{at:nowText(),action:'申請',by:p.applicantName,comment:''}]};
       rows.unshift(rec);save(rows);
     }
+    $('submitConfirmModal').classList.add('hidden');
+    document.body.style.overflow='';
+    pendingSubmission=null;
     toast(`申請しました：${rec.number}`);
-    $('historyName').value=name;
+    $('historyName').value=p.applicantName;
     await renderHistory();
     resetFormKeepIdentity();
     if(!$('managerDashboard').classList.contains('hidden'))await refreshAdmin();
   }catch(err){toast(err.message||String(err))}
-  finally{submit.disabled=false;submit.textContent='申請する'}
+  finally{finalBtn.disabled=false;backBtn.disabled=false;finalBtn.textContent='✓ この内容で申請する'}
+}
+$('requestForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  if(!e.currentTarget.reportValidity())return;
+  openSubmitConfirmation();
 });
+$('submitConfirmBackBtn').onclick=closeSubmitConfirmation;
+$('submitConfirmFinalBtn').onclick=finalizeSubmission;
+$('submitConfirmModal').addEventListener('click',e=>{if(e.target===$('submitConfirmModal'))closeSubmitConfirmation()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('submitConfirmModal').classList.contains('hidden'))closeSubmitConfirmation()});
 $('printDraftBtn').onclick=()=>{const r=buildDraftRecord();if(r)openA4Preview(r)};
 function resetFormKeepIdentity(){const n=val('applicantName'),dep=val('department');$('requestForm').reset();$('applicantName').value=n;$('department').value=dep;$('requestDate').value=today();$('attachmentName').textContent='未選択';$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';currentAttachment=null;renderFields()}
 
