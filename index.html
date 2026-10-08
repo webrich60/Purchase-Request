@@ -7,7 +7,7 @@
 <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="bingbot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>NEKKO 申請 v2.1.3</title>
+<title>NEKKO 申請 v2.1.5</title>
 <style>
 :root{
   --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
@@ -169,7 +169,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
     </section>
   </main>
 
-  <div class="footer">NEKKO 申請 v2.1.4 / Google スプレッドシート連携対応</div>
+  <div class="footer">NEKKO 申請 v2.1.5 / Google スプレッドシート連携対応</div>
 </div>
 
 <div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
@@ -590,7 +590,7 @@ async function adminLogin(){
     if(apiConfigured())await api('adminLogin',{email,password});
     else {
       // GAS URL未設定時だけ、画面確認用の簡易ログイン。
-      if(email!=='nekko.222local@gmail.com'||await sha256(password)!=='e01da5e174c5091b32e166cf0737ee0fb7f521ad424b75eeb8a23725c5eeb1bb')throw new Error('メールアドレスまたはパスワードが違います。');
+      if(email!=='nekko.local222@gmail.com'||await sha256(password)!=='e01da5e174c5091b32e166cf0737ee0fb7f521ad424b75eeb8a23725c5eeb1bb')throw new Error('メールアドレスまたはパスワードが違います。');
     }
     adminCredentials={email,password};
     await showAdminDashboard();
