@@ -7,7 +7,7 @@
 <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="bingbot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>NEKKO 申請 v2.1.9</title>
+<title>NEKKO 申請 v2.2.0</title>
 <style>
 :root{
   --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
@@ -76,6 +76,11 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 
 @media(max-width:800px){html{font-size:17px}.app{padding:9px 9px 90px}.top{padding:9px 10px;border-radius:0 0 16px 16px}.logoMark{width:30px;height:30px;font-size:18px}.logoWord{font-size:19px}.headrow{flex-direction:column;align-items:stretch}.brandWrap{width:100%}.brandLogo{font-size:21px}.brandTitle{font-size:23px}.brandText small{font-size:11px;max-width:68vw}.mode{width:100%}.mode button{flex:1}.hero{margin:10px 0}.typeGrid{grid-template-columns:1fr 1fr}.grid2,.grid3,.filters,.detailGrid,.historyGate{grid-template-columns:1fr}.itemRow{grid-template-columns:1fr 1fr}.itemRow .wide{grid-column:1/-1}.summaryGrid{grid-template-columns:1fr 1fr}.toolbar .btn{flex:1 1 145px}.appCard .topline{flex-direction:column}.overlay{padding:0}.modal{border-radius:20px 20px 0 0;padding:15px}.modalActions{position:sticky;bottom:-15px;background:#fff;padding:12px 0 15px}.modalActions .btn{flex:1}.detail.full{grid-column:auto}.filters>*{width:100%}.moneyInputWrap{min-height:54px}.moneyPrefix{min-width:50px;font-size:20px}.moneyInputWrap .moneyInput{min-height:52px;font-size:19px}.stepper{grid-template-columns:58px minmax(90px,1fr) 58px;min-height:56px}.stepperBtn,.stepperInput{min-height:56px}.stepperBtn{font-size:29px}.stepperInput{font-size:20px}}
 @media(max-width:470px){.typeGrid{grid-template-columns:1fr}.itemRow{grid-template-columns:1fr}.itemRow .wide{grid-column:auto}.summaryGrid{grid-template-columns:1fr 1fr}.brandLogo{padding:5px 8px 5px 6px}.logoMark{width:28px;height:28px;font-size:17px}.logoWord{font-size:17px}.brandTitle{font-size:21px}.brandText small{max-width:56vw}.typeCard{min-height:92px}.card{padding:14px}}
+
+/* v2.2.0 再申請・立替精算・最大10件添付 */
+.settlementSwitch{margin:10px 0 14px;border:1.5px solid #9eb3a6;background:linear-gradient(135deg,#f6faf7,#eef5f0);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.settlementSwitch.active{border:2px solid #8a6b2e;background:#fff8e8}.settlementSwitch strong{font-size:15px}.settlementSwitch p{margin:3px 0 0;color:#607069;font-size:12px;font-weight:700}.settlementSwitch .btn{min-height:42px}.settlementTag{display:inline-flex;align-items:center;border-radius:999px;background:#8b6a28;color:#fff;padding:4px 9px;font-size:11px;font-weight:950;margin-left:6px}.badge.advance{background:#f3e1ad;color:#6d4b05;margin-left:5px}.reapplyBanner{border:2px solid #d79a3d;background:#fff3dd;border-radius:14px;padding:12px 14px;margin:10px 0 14px;color:#66420a;font-weight:850}.reapplyBanner b{display:block;font-size:16px;margin-bottom:3px}.reapplyBanner.hidden{display:none}.attachToolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.attachCount{font-size:12px;font-weight:900;color:#4f6259}.attachList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.attachItem{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:9px;align-items:center;border:1px solid #c7d4ce;background:#fff;border-radius:12px;padding:8px}.attachThumb{width:54px;height:54px;border-radius:9px;background:#eef3f0;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:22px}.attachThumb img{width:100%;height:100%;object-fit:cover}.attachName{font-weight:850;overflow-wrap:anywhere;font-size:12px}.attachMeta{color:#65756e;font-size:11px;font-weight:700}.attachRemove{border:1px solid #dbb2ad;background:#fff3f2;color:#8d2d25;border-radius:9px;padding:7px 9px;font-weight:900;cursor:pointer}.attachExisting{font-size:10px;display:inline-flex;background:#eaf1ed;color:#46584f;border-radius:999px;padding:2px 6px;margin-top:3px}.detailAttachments{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.detailAttachment{border:1px solid #d0dad5;border-radius:11px;padding:9px;background:#fafcfb}.detailAttachment img{max-width:100%;max-height:220px;display:block;margin:7px auto 0;border-radius:8px}.reapplyBtn{background:#c17a0b!important;color:#fff!important}.typeGrid.locked .typeCard:not(.active){opacity:.45;cursor:not-allowed}.typeGrid.locked .typeCard.active{cursor:default}
+@media(max-width:640px){.attachList,.detailAttachments{grid-template-columns:1fr}.settlementSwitch{align-items:stretch}.settlementSwitch .btn{width:100%}}
+.connectionRow{display:flex;align-items:stretch;gap:8px}.connectionRow .notice{flex:1;margin:10px 0}.testModeBtn{align-self:center;border:1px solid #b9b1a0;background:#f7f5ef;color:#5a5548;border-radius:9px;padding:6px 9px;font-size:11px;font-weight:900;cursor:pointer;white-space:nowrap}.testModeBtn.active{background:#f2c84b;border-color:#9a7710;color:#332600;box-shadow:0 0 0 2px rgba(242,200,75,.22)}.testModeNotice{border:1.5px solid #d7a826;background:#fff8db;color:#6b5100;border-radius:11px;padding:8px 10px;margin:-2px 0 10px;font-size:12px;font-weight:850}.badge.test{background:#f6d96c;color:#594100;margin-left:5px}.appCard.testCard{outline:2px dashed #d3ae34;outline-offset:-2px}.testMark{font-weight:950;color:#806000} @media(max-width:640px){.connectionRow{align-items:center}.testModeBtn{padding:5px 7px;font-size:10px}}
 </style>
 </head>
 <body>
@@ -92,7 +97,8 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 
   <main id="applicantView">
     <section class="hero"><h1>社内申請</h1><p>申請の種類を選び、必要事項を入力してください。スマホ・パソコン共通画面です。</p></section>
-    <div id="connectionNotice" class="notice info"><span class="connectionDot"></span><b>スプレッドシート接続：</b><span id="connectionText">確認中...</span></div>
+    <div class="connectionRow"><div id="connectionNotice" class="notice info"><span class="connectionDot"></span><b>スプレッドシート接続：</b><span id="connectionText">確認中...</span></div><button id="testModeBtn" class="testModeBtn" type="button" aria-pressed="false">テストモード</button></div>
+    <div id="testModeNotice" class="testModeNotice hidden">TEST中：正式な綴り番号は発行・消費しません。申請、差戻し、再申請、承認・却下の動作確認用です。</div>
 
     <section class="card">
       <h2>1. 申請種類を選択</h2>
@@ -108,6 +114,11 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 
     <form id="requestForm" class="card">
       <h2 id="formTitle">備品・消耗品購入申請</h2>
+      <div id="reapplyBanner" class="reapplyBanner hidden"><b>差戻し申請を再申請中です</b><span id="reapplyBannerText">管理者コメントを確認し、必要箇所を修正して再申請してください。</span></div>
+      <div id="settlementSwitch" class="settlementSwitch">
+        <div><strong>自分で立て替えて支払った場合</strong><p>備品・交通費・会食などを個人で支払った場合は「立替精算」に切り替えられます。</p></div>
+        <button id="settlementToggleBtn" class="btn secondary" type="button">立替精算に変更</button>
+      </div>
       <div class="sectionTitle">申請者情報</div>
       <div class="grid2">
         <div class="field"><label>申請者名 <span class="req">必須</span></label><input id="applicantName" required autocomplete="name"></div>
@@ -119,7 +130,13 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
       <div id="dynamicFields"></div>
 
       <div class="sectionTitle">添付・備考</div>
-      <div class="field attachment"><label>画像・資料添付</label><input id="attachment" type="file" accept="image/*,.pdf"><div class="small" id="attachmentName">未選択</div><img id="attachmentPreview" class="previewImg" alt="添付プレビュー"></div>
+      <div class="field attachment">
+        <label>画像・資料添付 <span class="small">最大10件</span></label>
+        <input id="attachmentPicker" type="file" accept="image/*,.pdf" multiple hidden>
+        <div class="attachToolbar"><button id="addAttachmentBtn" class="btn secondary" type="button">＋ 添付を追加</button><span id="attachmentCount" class="attachCount">0 / 10件</span></div>
+        <div class="small" style="margin-top:6px">画像は送信しやすい容量へ自動圧縮します。PDFは1件800KB以下を目安にしてください。</div>
+        <div id="attachmentList" class="attachList"></div>
+      </div>
       <div class="field"><label>備考</label><textarea id="notes" placeholder="補足があれば入力してください"></textarea></div>
       <div class="toolbar">
         <button class="btn primary" style="flex:1" type="submit">申請内容を確認する</button>
@@ -169,7 +186,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
     </section>
   </main>
 
-  <div class="footer">NEKKO 申請 v2.1.9 / Google スプレッドシート連携対応</div>
+  <div class="footer">NEKKO 申請 v2.2.0 / Google スプレッドシート連携対応</div>
 </div>
 
 <div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
@@ -187,7 +204,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
         <button id="closeDetailBtn" class="btn gray" type="button">閉じる</button>
       </div>
     </div>
-    <div id="applicantDetailActions" class="modalActions hidden"><button id="closeApplicantDetailBtn" class="btn gray" type="button">閉じる</button></div>
+    <div id="applicantDetailActions" class="modalActions hidden"><button id="reapplyDetailBtn" class="btn orange hidden" type="button">↻ 修正して再申請</button><button id="closeApplicantDetailBtn" class="btn gray" type="button">閉じる</button></div>
   </div>
 </div>
 
@@ -232,7 +249,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 <script>
 (() => {
 'use strict';
-const VERSION='2.1.9-new-gas-url';
+const VERSION='2.2.1-testmode';
 // GASをウェブアプリとしてデプロイ後、/exec で終わるURLをここへ貼り付けてください。
 const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbxo6sFfZjsVrNkOowb0PmVTpyDjfUQlvNNdqiZtO4vKnL2g-finHI1pVXQkApKi9fzrCA/exec';
 const STORE_KEY='nekko_internal_requests_2.0.2-ui'; // GAS未設定時の画面確認用デモ保存
@@ -246,12 +263,16 @@ const TYPE_INFO={
 };
 let selectedType='equipment';
 let currentDetailId=null;
-let currentAttachment=null;
+let currentAttachments=[];
+let advanceMode=false;
+let resubmitId=null;
+let resubmitOriginalType=null;
 let pendingSubmission=null;
 let currentPreviewRecord=null;
 let mineRows=[];
 let adminRows=[];
 let adminCredentials={email:'',password:''};
+let testMode=false;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
@@ -285,6 +306,13 @@ async function checkConnection(){
   catch(e){box.classList.remove('online');box.classList.add('offline');txt.textContent='接続エラー：'+e.message;}
 }
 function typeInfo(t){return TYPE_INFO[t]||TYPE_INFO.other}
+function displayNumber(r){return r?.testMode?'TEST（綴り番号なし）':(r?.number||'綴り番号なし')}
+function updateTestModeUI(){
+  const btn=$('testModeBtn'),note=$('testModeNotice');if(!btn||!note)return;
+  btn.classList.toggle('active',testMode);btn.setAttribute('aria-pressed',testMode?'true':'false');btn.textContent=testMode?'TEST中':'テストモード';
+  note.classList.toggle('hidden',!testMode);
+}
+$('testModeBtn').onclick=()=>{if(resubmitId){toast('再申請中は元の申請モードを引き継ぐため切り替えできません。');return}testMode=!testMode;updateTestModeUI();toast(testMode?'テストモードをONにしました。綴り番号は発行されません。':'テストモードをOFFにしました。')};
 function statusClass(s){return s==='承認'?'approved':s==='差戻し'?'returned':s==='却下'?'rejected':s==='削除済'?'deleted':'pending'}
 function statusBadge(s){return `<span class="badge ${statusClass(s)}">${esc(s||'申請中')}</span>`}
 async function sha256(str){if(!crypto?.subtle)throw new Error('このブラウザでは簡易ログインを利用できません。');const b=new TextEncoder().encode(str);const h=await crypto.subtle.digest('SHA-256',b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('')}
@@ -292,6 +320,7 @@ async function sha256(str){if(!crypto?.subtle)throw new Error('このブラウ�
 function renderFields(){
   $('formTitle').textContent=typeInfo(selectedType).label;
   document.querySelectorAll('.typeCard').forEach(b=>b.classList.toggle('active',b.dataset.type===selectedType));
+  $('typeGrid').classList.toggle('locked',!!resubmitId);
   const d=$('dynamicFields');
   if(selectedType==='equipment'){ d.innerHTML=`
     <div class="sectionTitle">購入内容</div>
@@ -325,6 +354,7 @@ function renderFields(){
     <div class="field"><label>申請内容・目的 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
   initMoneyInputs(d);
   initParticipantStepper();
+  updateSettlementUI();
 }
 function addItem(){
   const wrap=$('items');const row=document.createElement('div');row.className='itemRow';row.innerHTML=`<div class="field wide"><label>品名・型番 <span class="req">必須</span></label><input class="itemName" required></div><div class="field"><label>購入先</label><input class="itemStore"></div><div class="field"><label>数量</label><input class="itemQty" type="number" min="1" value="1"></div><div class="field"><label>単価</label><div class="moneyInputWrap"><span class="moneyPrefix">￥</span><input class="itemPrice moneyInput" type="text" inputmode="numeric" autocomplete="off" value="0"></div></div><div class="itemAmount">￥0</div><button class="removeBtn" type="button">削除</button>`;
@@ -332,22 +362,24 @@ function addItem(){
 }
 function calcEquipment(){let total=0;document.querySelectorAll('.itemRow').forEach(r=>{const q=Number(r.querySelector('.itemQty')?.value||0),p=parseMoney(r.querySelector('.itemPrice')?.value||0),a=q*p;total+=a;const el=r.querySelector('.itemAmount');if(el)el.textContent=yen(a)});if($('equipmentTotal'))$('equipmentTotal').textContent=yen(total);return total}
 function val(id){return $(id)?.value?.trim?.()??''}
+function settlementModeValue(){return selectedType==='expense'?'advance':(advanceMode?'advance':'normal')}
+function withSettlement(obj){return {...obj,settlementMode:settlementModeValue()}}
 function buildDetails(){
-  if(selectedType==='equipment'){const items=[...document.querySelectorAll('.itemRow')].map(r=>({name:r.querySelector('.itemName').value.trim(),store:r.querySelector('.itemStore').value.trim(),qty:Number(r.querySelector('.itemQty').value||1),price:parseMoney(r.querySelector('.itemPrice').value||0)})).filter(x=>x.name);return {desiredDate:val('desiredDate'),urgency:val('urgency'),items,total:calcEquipment(),purpose:val('purpose')}}
-  if(selectedType==='expense')return {expenseDate:val('expenseDate'),category:val('expenseCategory'),payee:val('payee'),amount:parseMoney(val('amount')),purpose:val('purpose')};
-  if(selectedType==='transport')return {travelDate:val('travelDate'),transportMode:val('transportMode'),origin:val('origin'),destination:val('destination'),routeType:val('routeType'),amount:parseMoney(val('amount')),purpose:val('purpose')};
-  if(selectedType==='trip')return {tripPhase:val('tripPhase'),destination:val('destination'),startDate:val('startDate'),endDate:val('endDate'),transportCost:parseMoney(val('transportCost')),lodgingCost:parseMoney(val('lodgingCost')),otherCost:parseMoney(val('otherCost')),purpose:val('purpose')};
-  if(selectedType==='meal')return {mealDate:val('mealDate'),venue:val('venue'),counterparty:val('counterparty'),participants:Number(val('participants')||0),amount:parseMoney(val('amount')),purpose:val('purpose')};
-  return {title:val('otherTitle'),date:val('otherDate'),amount:parseMoney(val('amount')),purpose:val('purpose')};
+  if(selectedType==='equipment'){const items=[...document.querySelectorAll('.itemRow')].map(r=>({name:r.querySelector('.itemName').value.trim(),store:r.querySelector('.itemStore').value.trim(),qty:Number(r.querySelector('.itemQty').value||1),price:parseMoney(r.querySelector('.itemPrice').value||0)})).filter(x=>x.name);return withSettlement({desiredDate:val('desiredDate'),urgency:val('urgency'),items,total:calcEquipment(),purpose:val('purpose')})}
+  if(selectedType==='expense')return withSettlement({expenseDate:val('expenseDate'),category:val('expenseCategory'),payee:val('payee'),amount:parseMoney(val('amount')),purpose:val('purpose')});
+  if(selectedType==='transport')return withSettlement({travelDate:val('travelDate'),transportMode:val('transportMode'),origin:val('origin'),destination:val('destination'),routeType:val('routeType'),amount:parseMoney(val('amount')),purpose:val('purpose')});
+  if(selectedType==='trip')return withSettlement({tripPhase:val('tripPhase'),destination:val('destination'),startDate:val('startDate'),endDate:val('endDate'),transportCost:parseMoney(val('transportCost')),lodgingCost:parseMoney(val('lodgingCost')),otherCost:parseMoney(val('otherCost')),purpose:val('purpose')});
+  if(selectedType==='meal')return withSettlement({mealDate:val('mealDate'),venue:val('venue'),counterparty:val('counterparty'),participants:Number(val('participants')||0),amount:parseMoney(val('amount')),purpose:val('purpose')});
+  return withSettlement({title:val('otherTitle'),date:val('otherDate'),amount:parseMoney(val('amount')),purpose:val('purpose')});
 }
 function amountOf(type,d){if(type==='equipment')return Number(d.total||0);if(type==='trip')return Number(d.transportCost||0)+Number(d.lodgingCost||0)+Number(d.otherCost||0);return Number(d.amount||0)}
 function nextNo(type){const y=new Date().getFullYear();const prefix=typeInfo(type).prefix+'-'+y+'-';const nums=load().filter(x=>x.type===type&&String(x.number).startsWith(prefix)).map(x=>Number(String(x.number).slice(prefix.length))||0);return prefix+String(Math.max(0,...nums)+1).padStart(4,'0')}
-function summarize(r){const d=r.details||{};if(r.type==='equipment')return (d.items||[]).map(x=>x.name).join('、')||'備品申請';if(r.type==='expense')return `${d.payee||''} / ${d.category||''}`;if(r.type==='transport')return `${d.origin||''} → ${d.destination||''}`;if(r.type==='trip')return `${d.tripPhase||''} / ${d.destination||''}`;if(r.type==='meal')return `${d.counterparty||''} / ${d.venue||''}`;return d.title||'その他申請'}
+function summarize(r){const d=r.details||{};let base;if(r.type==='equipment')base=(d.items||[]).map(x=>x.name).join('、')||'備品申請';else if(r.type==='expense')base=`${d.payee||''} / ${d.category||''}`;else if(r.type==='transport')base=`${d.origin||''} → ${d.destination||''}`;else if(r.type==='trip')base=`${d.tripPhase||''} / ${d.destination||''}`;else if(r.type==='meal')base=`${d.counterparty||''} / ${d.venue||''}`;else base=d.title||'その他申請';return d.settlementMode==='advance'&&!String(base).startsWith('【立替精算】')?`【立替精算】${base}`:base}
 
 function buildDraftRecord(){
   // プレビューは未記入でも開ける。申請送信時だけ通常の必須チェックを行う。
   const details=buildDetails();
-  return {id:'paper-draft',number:'管理者記入',type:selectedType,typeLabel:typeInfo(selectedType).short,applicantName:val('applicantName'),department:val('department'),requestDate:val('requestDate'),status:'紙申請',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(selectedType,details),summary:summarize({type:selectedType,details}),details,notes:val('notes'),attachment:currentAttachment?{name:currentAttachment.name,type:currentAttachment.type,data:currentAttachment.data}:null};
+  return {id:'paper-draft',number:testMode?'':'管理者記入',testMode,type:selectedType,typeLabel:typeInfo(selectedType).short,applicantName:val('applicantName'),department:val('department'),requestDate:val('requestDate'),status:'紙申請',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(selectedType,details),summary:summarize({type:selectedType,details}),details,notes:val('notes'),attachments:currentAttachments.map(a=>({...a})),attachment:currentAttachments[0]?{...currentAttachments[0]}:null};
 }
 function isBlankPrintable(v){
   const t=String(v??'').trim();
@@ -368,11 +400,13 @@ function a4Amount(r){
 function buildA4Document(r,withControls){
   if(!r)return '';
   const info=typeInfo(r.type), rows=printableDetailRows(r);
-  const attachName=r.attachment?.name?esc(r.attachment.name):'';
-  const attachImage=(r.attachment?.type||'').startsWith('image/')&&r.attachment?.data?`<div class="attachmentImage"><div class="cap">添付画像</div><img src="${r.attachment.data}" alt="添付画像"></div>`:'';
+  const attachments=Array.isArray(r.attachments)&&r.attachments.length?r.attachments:(r.attachment?[r.attachment]:[]);
+  const attachName=attachments.length?attachments.map((a,i)=>`${i+1}. ${esc(a.name||'添付ファイル')}`).join('<br>'):'';
+  const firstImage=attachments.find(a=>(a.type||'').startsWith('image/')&&a.data);
+  const attachImage=firstImage?`<div class="attachmentImage"><div class="cap">添付画像（先頭の画像）</div><img src="${firstImage.data}" alt="添付画像"></div>`:'';
   const statusText=r.status==='紙申請'?'':(r.status||'');
   const controls=withControls?`<div class="controls"><button class="print" onclick="window.print()">PDF保存・印刷</button><button class="close" onclick="window.close()">閉じる</button><span>印刷画面で「PDFに保存」またはプリンターを選択してください。</span></div>`:'';
-  const noText=(r.number && r.number!=='管理者記入')?esc(r.number):'管理者記入';
+  const noText=r.testMode?'<span class="testMark">TEST（綴り番号なし）</span>':((r.number && r.number!=='管理者記入')?esc(r.number):'管理者記入');
   const applicant=esc(r.applicantName||'');
   const dept=esc(r.department||'');
   const reqDate=esc(r.requestDate||'');
@@ -392,7 +426,7 @@ function buildA4Document(r,withControls){
   </style></head><body>${controls}
   <main class="sheet"><div class="doc">
     <div class="brandLine"><div class="brand">NEKKO</div><div class="docType">申請書</div></div>
-    <div class="title">${esc(info.label)}</div>
+    <div class="title">${r.testMode?'【TEST】 ':''}${esc(info.label)}${r.details?.settlementMode==='advance'?'（立替精算）':''}</div>
     <table class="topTable">
       <tr><th>綴り番号</th><td>${noText}</td><th>処理状況</th><td>${statusText?esc(statusText):'<span class="blankCell">&nbsp;</span>'}</td></tr>
       <tr><th>申請者</th><td>${applicant||'<span class="blankCell">&nbsp;</span>'}</td><th>店舗・部署</th><td>${dept||'<span class="blankCell">&nbsp;</span>'}</td></tr>
@@ -407,13 +441,13 @@ function buildA4Document(r,withControls){
     <table class="formTable"><tr><th>コメント</th><td class="managerCell">${r.managerComment?printableValue(r.managerComment):'<span class="blankCell">&nbsp;</span>'}</td></tr></table>
     <div class="approvalTitle">承認欄</div>
     <div class="approval"><div><b>申請者</b><div class="value">${applicant}</div></div><div><b>確認・差戻し</b><div class="value">${r.status==='差戻し'?'差戻し':r.status==='却下'?'却下':''}</div></div><div><b>承認</b><div class="value">${r.status==='承認'?'承認済':''}</div></div></div>
-    ${attachImage}<div class="foot">出力日時：${esc(nowText())} / NEKKO 社内申請 v2.0.6</div>
+    ${attachImage}<div class="foot">出力日時：${esc(nowText())} / NEKKO 社内申請 v2.2.1</div>
   </div></main></body></html>`;
 }
 function openA4Preview(r){
   if(!r)return;
   currentPreviewRecord=r;
-  $('pdfPreviewTitle').textContent=`A4申請書プレビュー　${r.number||'管理者記入'} / ${r.typeLabel||typeInfo(r.type).short}`;
+  $('pdfPreviewTitle').textContent=`A4申請書プレビュー　${r.testMode?'TEST（綴り番号なし）':(r.number||'管理者記入')} / ${r.typeLabel||typeInfo(r.type).short}`;
   $('pdfPreviewFrame').srcdoc=buildA4Document(r,false);
   $('pdfPreviewModal').classList.remove('hidden');
 }
@@ -439,7 +473,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('pdfPreviewModal
 
 function confirmationRowsFromPending(p){
   const r={type:p.type,typeLabel:typeInfo(p.type).short,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,amount:amountOf(p.type,p.details),details:p.details,notes:p.notes||''};
-  const rows=[['申請種類',r.typeLabel],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['合計金額',r.amount?yen(r.amount):'￥0']];
+  const rows=[['モード',p.testMode?'テストモード（綴り番号なし）':'正式申請'],['申請種類',r.typeLabel],['支払区分',p.details?.settlementMode==='advance'?'立替精算':'通常申請'],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['合計金額',r.amount?yen(r.amount):'￥0']];
   const d=r.details||{};
   if(r.type==='equipment'){
     rows.push(['希望納期',d.desiredDate||'—'],['緊急度',d.urgency||'—'],['品目',(d.items||[]).map(x=>`${x.name||'—'} / ${x.store||'購入先未定'} / ${x.qty||0}個 × ${yen(x.price||0)}`).join('\n')||'—'],['購入理由・用途',d.purpose||'—']);
@@ -455,14 +489,17 @@ function confirmationRowsFromPending(p){
     rows.push(['申請タイトル',d.title||'—'],['希望日・実施日',d.date||'—'],['申請内容・目的',d.purpose||'—']);
   }
   if(p.notes)rows.push(['備考',p.notes]);
-  if(p.attachment?.name)rows.push(['添付ファイル',p.attachment.name]);
+  if(Array.isArray(p.attachments)&&p.attachments.length)rows.push(['添付ファイル',p.attachments.map((a,i)=>`${i+1}. ${a.name}`).join('\n')]);
   return rows;
 }
 function openSubmitConfirmation(){
   const details=buildDetails();
-  pendingSubmission={type:selectedType,applicantName:val('applicantName'),department:val('department'),requestDate:val('requestDate'),details,notes:val('notes'),attachment:currentAttachment?{...currentAttachment}:null};
+  pendingSubmission={id:resubmitId,testMode,type:selectedType,applicantName:val('applicantName'),department:val('department'),requestDate:val('requestDate'),details,notes:val('notes'),attachments:currentAttachments.map(a=>({...a})),isResubmit:!!resubmitId};
   const rows=confirmationRowsFromPending(pendingSubmission);
   $('submitConfirmBody').innerHTML=rows.map(([k,v])=>`<div class="confirmItem ${['品目','購入理由・用途','用途・理由','利用目的','出張目的','目的','申請内容・目的','備考','添付ファイル'].includes(k)?'full':''}"><b>${esc(k)}</b><span class="${k==='合計金額'?'confirmAmount':''}">${esc(v??'—')}</span></div>`).join('');
+  $('submitConfirmFinalBtn').textContent=pendingSubmission.isResubmit?(pendingSubmission.testMode?'✓ テスト再申請する':'✓ この内容で再申請する'):(pendingSubmission.testMode?'✓ テスト申請する':'✓ この内容で申請する');
+  $('submitConfirmTitle').textContent=pendingSubmission.testMode?(pendingSubmission.isResubmit?'テスト再申請の最終確認':'テスト申請の最終確認'):(pendingSubmission.isResubmit?'再申請内容の最終確認':'申請内容の最終確認');
+  $('submitConfirmModal').querySelector('.confirmQuestion small').textContent=pendingSubmission.testMode?'テストデータとして送信します。正式な綴り番号は発行されません。':(pendingSubmission.isResubmit?'間違いがなければ、下の「この内容で再申請する」を押してください。':'間違いがなければ、下の「この内容で申請する」を押してください。');
   $('submitConfirmModal').classList.remove('hidden');
   document.body.style.overflow='hidden';
 }
@@ -480,18 +517,25 @@ async function finalizeSubmission(){
   try{
     let rec;
     if(apiConfigured()){
-      const r=await api('create',{type:p.type,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,details:p.details,notes:p.notes,attachment:p.attachment});
+      const action=p.isResubmit?'resubmit':'create';
+      const r=await api(action,{id:p.id,testMode:p.testMode,type:p.type,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,details:p.details,notes:p.notes,attachments:p.attachments});
       rec=r.application;
       mineRows=[rec,...mineRows.filter(x=>x.id!==rec.id)];
     }else{
       const rows=load();
-      rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:nextNo(p.type),type:p.type,typeLabel:typeInfo(p.type).short,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(p.type,p.details),summary:summarize({type:p.type,details:p.details}),details:p.details,notes:p.notes,attachment:p.attachment,history:[{at:nowText(),action:'申請',by:p.applicantName,comment:''}]};
-      rows.unshift(rec);save(rows);
+      if(p.isResubmit){
+        rec=rows.find(x=>x.id===p.id);
+        if(!rec||rec.status!=='差戻し')throw new Error('再申請できる差戻し申請が見つかりません。');
+        rec.department=p.department;rec.requestDate=p.requestDate;rec.status='申請中';rec.managerComment='';rec.updatedAt=nowText();rec.amount=amountOf(p.type,p.details);rec.summary=summarize({type:p.type,details:p.details});rec.details=p.details;rec.notes=p.notes;rec.testMode=!!p.testMode;rec.attachments=p.attachments;rec.attachment=p.attachments?.[0]||null;rec.history=Array.isArray(rec.history)?rec.history:[];rec.history.push({at:nowText(),action:p.testMode?'テスト再申請':'再申請',by:p.applicantName,comment:''});save(rows);
+      }else{
+        rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:p.testMode?'':nextNo(p.type),testMode:!!p.testMode,type:p.type,typeLabel:typeInfo(p.type).short,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(p.type,p.details),summary:summarize({type:p.type,details:p.details}),details:p.details,notes:p.notes,attachments:p.attachments,attachment:p.attachments?.[0]||null,history:[{at:nowText(),action:p.testMode?'テスト申請':'申請',by:p.applicantName,comment:''}]};
+        rows.unshift(rec);save(rows);
+      }
     }
     $('submitConfirmModal').classList.add('hidden');
     document.body.style.overflow='';
     pendingSubmission=null;
-    toast(`申請しました：${rec.number}`);
+    toast(p.testMode?`${p.isResubmit?'テスト再申請':'テスト申請'}しました（綴り番号なし）`:`${p.isResubmit?'再申請しました':'申請しました'}：${rec.number}`);
     $('historyName').value=p.applicantName;
     await renderHistory();
     resetFormKeepIdentity();
@@ -509,9 +553,53 @@ $('submitConfirmFinalBtn').onclick=finalizeSubmission;
 $('submitConfirmModal').addEventListener('click',e=>{if(e.target===$('submitConfirmModal'))closeSubmitConfirmation()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('submitConfirmModal').classList.contains('hidden'))closeSubmitConfirmation()});
 $('printDraftBtn').onclick=()=>{const r=buildDraftRecord();if(r)openA4Preview(r)};
-function resetFormKeepIdentity(){const n=val('applicantName'),dep=val('department');$('requestForm').reset();$('applicantName').value=n;$('department').value=dep;$('requestDate').value=today();$('attachmentName').textContent='未選択';$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';currentAttachment=null;renderFields()}
+function updateSettlementUI(){
+  const box=$('settlementSwitch'),btn=$('settlementToggleBtn');
+  if(!box||!btn)return;
+  if(selectedType==='expense'){box.classList.add('active');box.querySelector('strong').textContent='経費精算（立替精算）';box.querySelector('p').textContent='この申請は、個人で立て替えた費用を精算する申請です。';btn.textContent='立替精算';btn.disabled=true;advanceMode=true;}
+  else{btn.disabled=false;box.classList.toggle('active',advanceMode);box.querySelector('strong').textContent=advanceMode?'立替精算として申請中':'自分で立て替えて支払った場合';box.querySelector('p').textContent=advanceMode?'この申請は通常申請ではなく、個人立替分の精算として提出されます。':'備品・交通費・会食などを個人で支払った場合は「立替精算」に切り替えられます。';btn.textContent=advanceMode?'通常申請に戻す':'立替精算に変更';}
+  $('formTitle').innerHTML=esc(typeInfo(selectedType).label)+(settlementModeValue()==='advance'?'<span class="settlementTag">立替精算</span>':'');
+}
+$('settlementToggleBtn').onclick=()=>{if(selectedType==='expense')return;advanceMode=!advanceMode;updateSettlementUI()};
 
-$('attachment').addEventListener('change',e=>{const f=e.target.files?.[0];currentAttachment=null;$('attachmentPreview').classList.remove('show');$('attachmentPreview').src='';$('attachmentName').textContent=f?`${f.name} / ${Math.round(f.size/1024)}KB`:'未選択';if(!f)return;if(f.size>800*1024){toast('添付は800KB以下にしてください。画像は小さめにすると保存が速くなります。');e.target.value='';$('attachmentName').textContent='未選択';return}const reader=new FileReader();reader.onload=()=>{currentAttachment={name:f.name,type:f.type,data:String(reader.result)};if(f.type.startsWith('image/')){$('attachmentPreview').src=String(reader.result);$('attachmentPreview').classList.add('show')}};reader.readAsDataURL(f)});
+function attachmentsOf(r){return Array.isArray(r?.attachments)&&r.attachments.length?r.attachments:(r?.attachment?[r.attachment]:[])}
+function renderAttachmentList(){
+  const list=$('attachmentList'),count=$('attachmentCount');if(!list||!count)return;count.textContent=`${currentAttachments.length} / 10件`;
+  list.innerHTML=currentAttachments.map((a,i)=>{const img=(a.type||'').startsWith('image/')&&a.data?`<img src="${a.data}" alt="">`:'📎';const meta=a.existing?'<span class="attachExisting">既存添付</span>':`${Math.round(Number(a.size||0)/1024)||''}${a.size?'KB':''}`;return `<div class="attachItem"><div class="attachThumb">${img}</div><div><div class="attachName">${esc(a.name||'添付ファイル')}</div><div class="attachMeta">${meta}</div></div><button class="attachRemove" type="button" data-index="${i}" aria-label="添付を削除">削除</button></div>`}).join('');
+  list.querySelectorAll('.attachRemove').forEach(b=>b.onclick=()=>{currentAttachments.splice(Number(b.dataset.index),1);renderAttachmentList()});
+  $('addAttachmentBtn').disabled=currentAttachments.length>=10;
+}
+async function imageFileToCompressedAttachment(file){
+  const original=await fileToDataUrl(file);
+  return await new Promise(resolve=>{const img=new Image();img.onload=()=>{let w=img.width,h=img.height;const max=1280;if(Math.max(w,h)>max){const scale=max/Math.max(w,h);w=Math.round(w*scale);h=Math.round(h*scale)}const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.drawImage(img,0,0,w,h);let q=.72,data=c.toDataURL('image/jpeg',q);while(data.length>620000&&q>.42){q-=.08;data=c.toDataURL('image/jpeg',q)}resolve({name:file.name.replace(/\.[^.]+$/,'')+'.jpg',type:'image/jpeg',data,size:Math.round(data.length*.75)});};img.onerror=()=>resolve({name:file.name,type:file.type,data:original,size:file.size});img.src=original});
+}
+function fileToDataUrl(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result));r.onerror=()=>reject(r.error||new Error('ファイルを読み込めませんでした。'));r.readAsDataURL(file)})}
+async function addAttachmentFiles(files){
+  for(const f of [...files]){
+    if(currentAttachments.length>=10){toast('添付は最大10件までです。');break}
+    try{let a;if((f.type||'').startsWith('image/'))a=await imageFileToCompressedAttachment(f);else{if(f.size>800*1024){toast(`${f.name} は800KBを超えているため追加できません。`);continue}a={name:f.name,type:f.type||'application/octet-stream',data:await fileToDataUrl(f),size:f.size};}currentAttachments.push(a);renderAttachmentList()}catch(e){toast(e.message||String(e))}
+  }
+  $('attachmentPicker').value='';
+}
+$('addAttachmentBtn').onclick=()=>$('attachmentPicker').click();
+$('attachmentPicker').addEventListener('change',e=>addAttachmentFiles(e.target.files||[]));
+
+function resetFormKeepIdentity(){const n=val('applicantName'),dep=val('department');$('requestForm').reset();$('applicantName').value=n;$('department').value=dep;$('requestDate').value=today();currentAttachments=[];advanceMode=false;resubmitId=null;resubmitOriginalType=null;testMode=false;updateTestModeUI();$('reapplyBanner').classList.add('hidden');renderAttachmentList();renderFields()}
+function setVal(id,v){const el=$(id);if(el){el.value=v??'';if(el.classList.contains('moneyInput'))formatMoneyInput(el)}}
+function loadRecordIntoForm(r){
+  resubmitId=r.id;resubmitOriginalType=r.type;selectedType=r.type;testMode=!!r.testMode;updateTestModeUI();advanceMode=(r.details||{}).settlementMode==='advance'||r.type==='expense';
+  $('applicantName').value=r.applicantName||'';$('department').value=r.department||'';$('requestDate').value=today();renderFields();const d=r.details||{};
+  if(r.type==='equipment'){setVal('desiredDate',d.desiredDate);setVal('urgency',d.urgency||'通常');const rows=[...document.querySelectorAll('.itemRow')];(d.items||[]).forEach((it,i)=>{if(i>=rows.length)addItem();const rr=[...document.querySelectorAll('.itemRow')][i];rr.querySelector('.itemName').value=it.name||'';rr.querySelector('.itemStore').value=it.store||'';rr.querySelector('.itemQty').value=it.qty||1;rr.querySelector('.itemPrice').value=Number(it.price||0).toLocaleString('ja-JP')});calcEquipment();setVal('purpose',d.purpose)}
+  else if(r.type==='expense'){setVal('expenseDate',d.expenseDate);setVal('expenseCategory',d.category);setVal('payee',d.payee);setVal('amount',d.amount);setVal('purpose',d.purpose)}
+  else if(r.type==='transport'){setVal('travelDate',d.travelDate);setVal('transportMode',d.transportMode);setVal('origin',d.origin);setVal('destination',d.destination);setVal('routeType',d.routeType);setVal('amount',d.amount);setVal('purpose',d.purpose)}
+  else if(r.type==='trip'){setVal('tripPhase',d.tripPhase);setVal('destination',d.destination);setVal('startDate',d.startDate);setVal('endDate',d.endDate);setVal('transportCost',d.transportCost);setVal('lodgingCost',d.lodgingCost);setVal('otherCost',d.otherCost);setVal('purpose',d.purpose)}
+  else if(r.type==='meal'){setVal('mealDate',d.mealDate);setVal('venue',d.venue);setVal('counterparty',d.counterparty);setVal('participants',d.participants||1);setVal('amount',d.amount);setVal('purpose',d.purpose)}
+  else{setVal('otherTitle',d.title);setVal('otherDate',d.date);setVal('amount',d.amount);setVal('purpose',d.purpose)}
+  setVal('notes',r.notes);currentAttachments=attachmentsOf(r).map(a=>({...a,existing:true,data:a.data||null}));renderAttachmentList();
+  $('reapplyBanner').classList.remove('hidden');$('reapplyBannerText').textContent=(r.managerComment?`差戻し理由：${r.managerComment}　`:'')+'必要箇所を修正し、確認画面から「この内容で再申請する」を押してください。';updateSettlementUI();
+  document.getElementById('requestForm').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function startResubmit(id){const r=findRecord(id);if(!r||r.status!=='差戻し'){toast('この申請は再申請できません。');return}closeDetail();switchMode('applicant');loadRecordIntoForm(r);toast(`${displayNumber(r)} を修正して再申請できます。`)}
 
 async function renderHistory(){
   const name=val('historyName');
@@ -529,24 +617,26 @@ async function renderHistory(){
 }
 $('historySearchBtn').onclick=()=>renderHistory();
 
-function cardHtml(r,isAdmin){return `<article class="appCard ${statusClass(r.status)}"><div class="topline"><div><div class="title">${esc(r.number)}　${esc(r.typeLabel)}</div><div class="meta">${esc(r.applicantName)} / ${esc(r.department)} / ${esc(r.createdAt)}</div><div class="meta">${esc(r.summary)}</div></div><div style="text-align:right">${statusBadge(r.status)}<div class="money">${r.amount?yen(r.amount):''}</div></div></div>${r.managerComment?`<div class="meta" style="margin-top:8px"><b>管理者コメント：</b>${esc(r.managerComment)}</div>`:''}<div class="toolbar" style="margin-bottom:0"><button class="btn secondary detailBtn" data-id="${esc(r.id)}" data-admin="${isAdmin?'1':'0'}" type="button">詳細を見る</button><button class="btn blue printBtn" data-id="${esc(r.id)}" type="button">A4申請書プレビュー</button></div></article>`}
-function bindCardButtons(isAdmin){const root=isAdmin?'#adminList':'#historyList';document.querySelectorAll(root+' .detailBtn').forEach(b=>b.onclick=()=>openDetail(b.dataset.id,isAdmin));document.querySelectorAll(root+' .printBtn').forEach(b=>b.onclick=()=>openA4Preview(findRecord(b.dataset.id)))}
+function cardHtml(r,isAdmin){const adv=(r.details||{}).settlementMode==='advance'?'<span class="badge advance">立替精算</span>':'';const test=r.testMode?'<span class="badge test">TEST</span>':'';const reapply=(!isAdmin&&r.status==='差戻し')?`<button class="btn orange reapplyBtn" data-id="${esc(r.id)}" type="button">↻ 修正して再申請</button>`:'';return `<article class="appCard ${statusClass(r.status)} ${r.testMode?'testCard':''}"><div class="topline"><div><div class="title">${esc(displayNumber(r))}　${esc(r.typeLabel)} ${test} ${adv}</div><div class="meta">${esc(r.applicantName)} / ${esc(r.department)} / ${esc(r.createdAt)}</div><div class="meta">${esc(r.summary)}</div></div><div style="text-align:right">${statusBadge(r.status)}<div class="money">${r.amount?yen(r.amount):''}</div></div></div>${r.managerComment?`<div class="meta" style="margin-top:8px"><b>管理者コメント：</b>${esc(r.managerComment)}</div>`:''}<div class="toolbar" style="margin-bottom:0"><button class="btn secondary detailBtn" data-id="${esc(r.id)}" data-admin="${isAdmin?'1':'0'}" type="button">詳細を見る</button><button class="btn blue printBtn" data-id="${esc(r.id)}" type="button">A4申請書プレビュー</button>${reapply}</div></article>`}
+function bindCardButtons(isAdmin){const root=isAdmin?'#adminList':'#historyList';document.querySelectorAll(root+' .detailBtn').forEach(b=>b.onclick=()=>openDetail(b.dataset.id,isAdmin));document.querySelectorAll(root+' .printBtn').forEach(b=>b.onclick=()=>openA4Preview(findRecord(b.dataset.id)));document.querySelectorAll(root+' .reapplyBtn').forEach(b=>b.onclick=()=>startResubmit(b.dataset.id))}
 
-function detailPairs(r){const d=r.details||{};let rows=[['綴り番号',r.number],['状態',r.status],['申請種類',r.typeLabel],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['申請日時',r.createdAt],['合計金額',r.amount?yen(r.amount):'—']];if(r.type==='equipment'){rows.push(['希望納期',d.desiredDate||'—'],['緊急度',d.urgency||'—'],['購入理由・用途',d.purpose||'—'],['品目',(d.items||[]).map(x=>`${x.name} / ${x.store||'購入先未定'} / ${x.qty}個 × ${yen(x.price)}`).join('\n')||'—'])}else if(r.type==='expense'){rows.push(['支払日',d.expenseDate||'—'],['経費区分',d.category||'—'],['支払先',d.payee||'—'],['用途・理由',d.purpose||'—'])}else if(r.type==='transport'){rows.push(['利用日',d.travelDate||'—'],['交通手段',d.transportMode||'—'],['区間',`${d.origin||'—'} → ${d.destination||'—'}`],['片道・往復',d.routeType||'—'],['利用目的',d.purpose||'—'])}else if(r.type==='trip'){rows.push(['申請区分',d.tripPhase||'—'],['出張先',d.destination||'—'],['期間',`${d.startDate||'—'} ～ ${d.endDate||'—'}`],['交通費',yen(d.transportCost||0)],['宿泊費',yen(d.lodgingCost||0)],['その他費用',yen(d.otherCost||0)],['出張目的',d.purpose||'—'])}else if(r.type==='meal'){rows.push(['実施日',d.mealDate||'—'],['店舗・会場',d.venue||'—'],['相手先・会社名',d.counterparty||'—'],['参加人数',d.participants?`${d.participants}名`:'—'],['目的',d.purpose||'—'])}else rows.push(['申請タイトル',d.title||'—'],['希望日・実施日',d.date||'—'],['申請内容・目的',d.purpose||'—']);if(r.notes)rows.push(['備考',r.notes]);if(r.managerComment)rows.push(['管理者コメント',r.managerComment]);if(Array.isArray(r.history)&&r.history.length)rows.push(['処理履歴',r.history.map(h=>`${h.at||''}　${h.action||''}　${h.by||''}${h.comment?' / '+h.comment:''}`).join('\n')]);return rows}
+function detailPairs(r){const d=r.details||{};let rows=[['モード',r.testMode?'テストモード':'正式申請'],['綴り番号',r.testMode?'TEST（綴り番号なし）':r.number],['状態',r.status],['申請種類',r.typeLabel],['支払区分',d.settlementMode==='advance'?'立替精算':'通常申請'],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['申請日時',r.createdAt],['合計金額',r.amount?yen(r.amount):'—']];if(r.type==='equipment'){rows.push(['希望納期',d.desiredDate||'—'],['緊急度',d.urgency||'—'],['購入理由・用途',d.purpose||'—'],['品目',(d.items||[]).map(x=>`${x.name} / ${x.store||'購入先未定'} / ${x.qty}個 × ${yen(x.price)}`).join('\n')||'—'])}else if(r.type==='expense'){rows.push(['支払日',d.expenseDate||'—'],['経費区分',d.category||'—'],['支払先',d.payee||'—'],['用途・理由',d.purpose||'—'])}else if(r.type==='transport'){rows.push(['利用日',d.travelDate||'—'],['交通手段',d.transportMode||'—'],['区間',`${d.origin||'—'} → ${d.destination||'—'}`],['片道・往復',d.routeType||'—'],['利用目的',d.purpose||'—'])}else if(r.type==='trip'){rows.push(['申請区分',d.tripPhase||'—'],['出張先',d.destination||'—'],['期間',`${d.startDate||'—'} ～ ${d.endDate||'—'}`],['交通費',yen(d.transportCost||0)],['宿泊費',yen(d.lodgingCost||0)],['その他費用',yen(d.otherCost||0)],['出張目的',d.purpose||'—'])}else if(r.type==='meal'){rows.push(['実施日',d.mealDate||'—'],['店舗・会場',d.venue||'—'],['相手先・会社名',d.counterparty||'—'],['参加人数',d.participants?`${d.participants}名`:'—'],['目的',d.purpose||'—'])}else rows.push(['申請タイトル',d.title||'—'],['希望日・実施日',d.date||'—'],['申請内容・目的',d.purpose||'—']);if(r.notes)rows.push(['備考',r.notes]);if(r.managerComment)rows.push(['管理者コメント',r.managerComment]);if(Array.isArray(r.history)&&r.history.length)rows.push(['処理履歴',r.history.map(h=>`${h.at||''}　${h.action||''}　${h.by||''}${h.comment?' / '+h.comment:''}`).join('\n')]);return rows}
 function openDetail(id,isAdmin){
   const r=findRecord(id);if(!r)return;
   currentDetailId=id;
-  $('detailTitle').textContent=`${r.number}　${r.typeLabel}`;
-  const attachmentHtml=r.attachment?(r.attachment.data?`<div class="sectionTitle">添付</div><div class="detail"><b>${esc(r.attachment.name)}</b>${r.attachment.type?.startsWith('image/')?`<img src="${r.attachment.data}" style="max-width:100%;max-height:320px;border-radius:10px;margin-top:8px">`:'<div class="small">添付ファイルあり</div>'}</div>`:`<div class="sectionTitle">添付</div><div class="detail"><b>${esc(r.attachment.name||'添付ファイル')}</b><div style="margin-top:8px"><a class="btn secondary" href="${esc(r.attachment.url||'#')}" target="_blank" rel="noopener">添付ファイルを開く</a></div></div>`):'';
+  $('detailTitle').textContent=`${displayNumber(r)}　${r.typeLabel}`;
+  const ats=attachmentsOf(r);
+  const attachmentHtml=ats.length?`<div class="sectionTitle">添付（${ats.length}件）</div><div class="detailAttachments">${ats.map(a=>`<div class="detailAttachment"><b>${esc(a.name||'添付ファイル')}</b>${a.data&&String(a.type||'').startsWith('image/')?`<img src="${a.data}" alt="">`:a.url?`<div style="margin-top:8px"><a class="btn secondary" href="${esc(a.url)}" target="_blank" rel="noopener">添付ファイルを開く</a></div>`:'<div class="small">添付ファイルあり</div>'}</div>`).join('')}</div>`:'';
   $('detailBody').innerHTML=`<div class="detailGrid">${detailPairs(r).map(([k,v])=>`<div class="detail ${String(v).includes('\n')||String(v).length>80?'full':''}"><b>${esc(k)}</b><div class="statusComment">${esc(v)}</div></div>`).join('')}</div>${attachmentHtml}`;
   $('detailModal').classList.remove('hidden');
   $('managerDecisionBox').classList.toggle('hidden',!isAdmin);
   $('applicantDetailActions').classList.toggle('hidden',isAdmin);
+  $('reapplyDetailBtn').classList.toggle('hidden',isAdmin||r.status!=='差戻し');
   $('managerComment').value=r.managerComment||'';
 }
 function closeDetail(){$('detailModal').classList.add('hidden');currentDetailId=null}
 $('closeDetailBtn').onclick=closeDetail;$('closeApplicantDetailBtn').onclick=closeDetail;$('detailModal').addEventListener('click',e=>{if(e.target===$('detailModal'))closeDetail()});
-$('printDetailBtn').onclick=()=>{if(!currentDetailId)return;openA4Preview(findRecord(currentDetailId))};
+$('printDetailBtn').onclick=()=>{if(!currentDetailId)return;openA4Preview(findRecord(currentDetailId))};$('reapplyDetailBtn').onclick=()=>{if(currentDetailId)startResubmit(currentDetailId)};
 async function decide(status){
   if(!currentDetailId)return;
   try{
@@ -556,9 +646,9 @@ async function decide(status){
       const updated=r.application;
       adminRows=adminRows.map(x=>x.id===updated.id?updated:x);
       mineRows=mineRows.map(x=>x.id===updated.id?updated:x);
-      closeDetail();await refreshAdmin();toast(`${updated.number} を「${status}」にしました。`);
+      closeDetail();await refreshAdmin();toast(`${displayNumber(updated)} を「${status}」にしました。`);
     }else{
-      const rows=load();const rec=rows.find(x=>x.id===currentDetailId);if(!rec)return;rec.status=status;rec.managerComment=val('managerComment');rec.updatedAt=nowText();rec.history=Array.isArray(rec.history)?rec.history:[];rec.history.push({at:nowText(),action:status,by:'管理者',comment:rec.managerComment});save(rows);closeDetail();renderAdmin();toast(`${rec.number} を「${status}」にしました。`);
+      const rows=load();const rec=rows.find(x=>x.id===currentDetailId);if(!rec)return;rec.status=status;rec.managerComment=val('managerComment');rec.updatedAt=nowText();rec.history=Array.isArray(rec.history)?rec.history:[];rec.history.push({at:nowText(),action:status,by:'管理者',comment:rec.managerComment});save(rows);closeDetail();renderAdmin();toast(`${displayNumber(rec)} を「${status}」にしました。`);
     }
   }catch(err){toast(err.message||String(err))}
 }
@@ -572,7 +662,7 @@ function renderAdmin(){
   $('countReturned').textContent=rows.filter(r=>r.status==='差戻し').length;
   $('countRejected').textContent=rows.filter(r=>r.status==='却下').length;
   const q=val('adminSearch').toLowerCase(),st=val('adminStatus'),ty=val('adminType'),dep=val('adminDepartment');
-  const filtered=rows.filter(r=>{const hay=[r.number,r.applicantName,r.department,r.typeLabel,r.summary,JSON.stringify(r.details||{})].join(' ').toLowerCase();return(!q||hay.includes(q))&&(!st||r.status===st)&&(!ty||r.type===ty)&&(!dep||r.department===dep)});
+  const filtered=rows.filter(r=>{const hay=[r.number,r.testMode?'TEST テスト':'',r.applicantName,r.department,r.typeLabel,r.summary,JSON.stringify(r.details||{})].join(' ').toLowerCase();return(!q||hay.includes(q))&&(!st||r.status===st)&&(!ty||r.type===ty)&&(!dep||r.department===dep)});
   $('adminList').innerHTML=filtered.length?filtered.map(r=>cardHtml(r,true)).join(''):'<div class="card empty">条件に一致する申請はありません。</div>';
   bindCardButtons(true);
 }
@@ -603,9 +693,9 @@ $('adminLoginBtn').onclick=()=>adminLogin();$('adminPassword').addEventListener(
 
 function switchMode(mode){const admin=mode==='manager';$('modeApplicant').classList.toggle('active',!admin);$('modeManager').classList.toggle('active',admin);$('applicantView').classList.toggle('hidden',admin);$('managerView').classList.toggle('hidden',!admin)}
 $('modeApplicant').onclick=()=>switchMode('applicant');$('modeManager').onclick=()=>switchMode('manager');
-document.querySelectorAll('.typeCard').forEach(b=>b.onclick=()=>{selectedType=b.dataset.type;renderFields()});
+document.querySelectorAll('.typeCard').forEach(b=>b.onclick=()=>{if(resubmitId){if(b.dataset.type!==resubmitOriginalType)toast('再申請では申請種類は変更できません。');return}selectedType=b.dataset.type;advanceMode=(selectedType==='expense');renderFields()});
 
-$('requestDate').value=today();renderFields();checkConnection();
+$('requestDate').value=today();updateTestModeUI();renderFields();renderAttachmentList();checkConnection();
 })();
 </script>
 </body>
