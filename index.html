@@ -7,7 +7,7 @@
 <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="bingbot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>NEKKO 申請 v2.3.5</title>
+<title>NEKKO 申請 v2.3.7</title>
 <style>
 :root{
   --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
@@ -53,7 +53,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 .brandWrap{gap:12px}.brandLogo{display:flex;align-items:center;gap:8px;border:2px solid #718667;border-radius:13px;padding:6px 10px 6px 7px;background:#0c0f0d;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 2px 10px rgba(0,0,0,.18)}
 .logoMark{display:grid;place-items:center;width:33px;height:33px;border-radius:9px;background:var(--green);color:#fff;font-size:20px;font-weight:1000;line-height:1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
 .logoWord{color:#fff;font-size:22px;font-weight:1000;letter-spacing:.10em;line-height:1}
-.brandTitle{font-size:27px;font-weight:1000}.brandText small{color:#cbd5ce;letter-spacing:.02em}
+.brandTitle{font-size:27px;font-weight:1000}.siteVersion{display:inline-block;vertical-align:baseline;background:transparent;color:#bcc9bf;border:0;border-radius:0;padding:0;margin-left:5px;font-size:12px;font-weight:650;line-height:1.2;letter-spacing:0;white-space:nowrap}.brandText small{color:#cbd5ce;letter-spacing:.02em}
 .mode{background:#131815;border:1px solid #5f7058;border-radius:13px;padding:4px}.mode button{color:#dfe7e1;border:1px solid transparent}.mode button.active{background:var(--green);border-color:#7f9575;box-shadow:0 3px 10px rgba(0,0,0,.24)}
 .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#f7faf8 0,#eef4ef 100%);border:1px solid #a9b9ae;border-left:6px solid var(--green);border-radius:18px;padding:17px 18px;box-shadow:0 5px 18px rgba(31,54,44,.06)}
 .hero::after{content:"";position:absolute;right:-28px;top:-42px;width:125px;height:125px;border:22px solid rgba(85,107,77,.08);border-radius:50%}.hero h1{font-size:22px;letter-spacing:.03em}.hero p{color:#526258}
@@ -113,7 +113,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 <div class="app">
   <header class="top">
     <div class="headrow">
-      <div class="brandWrap"><div class="brandLogo"><span class="logoMark">N</span><span class="logoWord">NEKKO</span></div><div class="brandText"><div class="brandTitle">申請</div><small>備品・経費・交通費・出張・接待会食・その他</small></div></div>
+      <div class="brandWrap"><div class="brandLogo"><span class="logoMark">N</span><span class="logoWord">NEKKO</span></div><div class="brandText"><div class="brandTitle">申請 <span class="siteVersion" aria-label="画面バージョン">v2.3.7</span></div><small>備品・経費・交通費・出張・接待会食・その他</small></div></div>
       <div class="mode" aria-label="表示モード">
         <button id="modeApplicant" class="active" type="button">申請者画面</button>
         <button id="modeManager" type="button">管理者画面</button>
@@ -212,7 +212,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
     </section>
   </main>
 
-  <div class="footer">NEKKO 申請 v2.3.5 / Google スプレッドシート連携対応</div>
+  <div class="footer">NEKKO 申請（画面）v2.3.7 / Google スプレッドシート連携対応</div>
 </div>
 
 <div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
@@ -275,7 +275,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 <script>
 (() => {
 'use strict';
-const VERSION='2.3.5-partial-equipment-12h-test-serial';
+const VERSION='2.3.7-partial-equipment-12h-test-serial-ui-version-small';
 // GASをウェブアプリとしてデプロイ後、/exec で終わるURLをここへ貼り付けてください。
 const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbxo6sFfZjsVrNkOowb0PmVTpyDjfUQlvNNdqiZtO4vKnL2g-finHI1pVXQkApKi9fzrCA/exec';
 const STORE_KEY='nekko_internal_requests_2.0.2-ui'; // GAS未設定時の画面確認用デモ保存
