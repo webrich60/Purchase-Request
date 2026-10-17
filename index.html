@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
@@ -7,7 +7,7 @@
 <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="bingbot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>NEKKO 申請 v2.2.6</title>
+<title>NEKKO 申請 v2.3.5</title>
 <style>
 :root{
   --green:#556b4d;--green-dark:#3f5238;--green-soft:#eef3ee;--ink:#18231f;--muted:#63716b;
@@ -81,6 +81,32 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 .settlementSwitch{margin:10px 0 14px;border:1.5px solid #9eb3a6;background:linear-gradient(135deg,#f6faf7,#eef5f0);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.settlementSwitch.active{border:2px solid #8a6b2e;background:#fff8e8}.settlementSwitch strong{font-size:15px}.settlementSwitch p{margin:3px 0 0;color:#607069;font-size:12px;font-weight:700}.settlementSwitch .btn{min-height:42px}.settlementTag{display:inline-flex;align-items:center;border-radius:999px;background:#8b6a28;color:#fff;padding:4px 9px;font-size:11px;font-weight:950;margin-left:6px}.badge.advance{background:#f3e1ad;color:#6d4b05;margin-left:5px}.reapplyBanner{border:2px solid #d79a3d;background:#fff3dd;border-radius:14px;padding:12px 14px;margin:10px 0 14px;color:#66420a;font-weight:850}.reapplyBanner b{display:block;font-size:16px;margin-bottom:3px}.reapplyBanner.hidden{display:none}.attachToolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.attachCount{font-size:12px;font-weight:900;color:#4f6259}.attachList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.attachItem{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:9px;align-items:center;border:1px solid #c7d4ce;background:#fff;border-radius:12px;padding:8px}.attachThumb{width:54px;height:54px;border-radius:9px;background:#eef3f0;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:22px}.attachThumb img{width:100%;height:100%;object-fit:cover}.attachName{font-weight:850;overflow-wrap:anywhere;font-size:12px}.attachMeta{color:#65756e;font-size:11px;font-weight:700}.attachRemove{border:1px solid #dbb2ad;background:#fff3f2;color:#8d2d25;border-radius:9px;padding:7px 9px;font-weight:900;cursor:pointer}.attachExisting{font-size:10px;display:inline-flex;background:#eaf1ed;color:#46584f;border-radius:999px;padding:2px 6px;margin-top:3px}.detailAttachments{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.detailAttachment{border:1px solid #d0dad5;border-radius:11px;padding:9px;background:#fafcfb}.detailAttachment img{max-width:100%;max-height:220px;display:block;margin:7px auto 0;border-radius:8px}.reapplyBtn{background:#c17a0b!important;color:#fff!important}.typeGrid.locked .typeCard:not(.active){opacity:.45;cursor:not-allowed}.typeGrid.locked .typeCard.active{cursor:default}
 @media(max-width:640px){.attachList,.detailAttachments{grid-template-columns:1fr}.settlementSwitch{align-items:stretch}.settlementSwitch .btn{width:100%}}
 .connectionRow{display:flex;align-items:stretch;gap:8px}.connectionRow .notice{flex:1;margin:10px 0}.testModeBtn{align-self:center;border:1px solid #b9b1a0;background:#f7f5ef;color:#5a5548;border-radius:9px;padding:6px 9px;font-size:11px;font-weight:900;cursor:pointer;white-space:nowrap}.testModeBtn.active{background:#f2c84b;border-color:#9a7710;color:#332600;box-shadow:0 0 0 2px rgba(242,200,75,.22)}.testModeNotice{border:1.5px solid #d7a826;background:#fff8db;color:#6b5100;border-radius:11px;padding:8px 10px;margin:-2px 0 10px;font-size:12px;font-weight:850}.badge.test{background:#f6d96c;color:#594100;margin-left:5px}.appCard.testCard{outline:2px dashed #d3ae34;outline-offset:-2px}.testMark{font-weight:950;color:#806000} @media(max-width:640px){.connectionRow{align-items:center}.testModeBtn{padding:5px 7px;font-size:10px}}
+/* v2.3.0 item decisions: only equipment uses the new workflow */
+.appCard.partial{border-color:#9284bc;background:#f4f1ff}
+.badge.partial{background:#482780;color:#fff;border:2px solid #8467bb;font-size:13px;padding:7px 12px}
+.equipMini{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.equipMini span{background:#fff;border:1.5px solid #a3aab1;border-radius:9px;padding:4px 7px;font-size:12px;font-weight:900;color:#24332b}
+.itemRow.lockedItem{border:2px solid #9ca7ac;background:#eff3f5}
+.itemDecisionMark{grid-column:1/-1;font-size:13px;font-weight:900;color:#27364c;padding:2px 4px}
+.itemDecisionMark:not(.hidden){display:block}
+.itemDecisionPanel{border:3px solid #425e78;border-radius:14px;background:#f4f8fc;padding:13px;margin:14px 0}
+.itemDecisionPanel h3{margin:0 0 6px;font-size:19px}
+.itemDecisionItem{border:2px solid #9db0c0;background:#fff;padding:13px;border-radius:12px;margin:10px 0}
+.itemDecisionItem .field{margin:9px 0 0}
+.itemDecisionItem select{border:2px solid #45677a;font-weight:950}
+.itemDecisionItem textarea{min-height:68px}
+.itemDecisionItem.locked{background:#f1f4f2;border-color:#a9b5ac}
+.equipAmounts{font-weight:900;font-size:15px;background:#e7f1f8;border:2px solid #85a8c2;border-radius:10px;padding:10px}
+@media(max-width:640px){.itemDecisionPanel{padding:10px}.itemDecisionItem{padding:10px}.itemDecisionItem select{font-size:17px}}
+/* v2.3.5: optional bulk operation; never overrides a completed item. */
+.itemBulkArea{border:2px solid #8395a6;border-radius:12px;background:#fff;padding:12px;margin:12px 0}
+.itemBulkArea>strong{display:block;color:#213448;font-size:16px;margin-bottom:5px}
+.itemBulkArea .field{margin:9px 0}
+.itemBulkArea textarea{min-height:70px}
+.itemBulkButtons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.itemBulkButtons .btn{min-height:50px;white-space:normal;padding:9px;font-size:14px}
+@media(max-width:640px){.itemBulkButtons{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -98,7 +124,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
   <main id="applicantView">
     <section class="hero"><h1>社内申請</h1><p>申請の種類を選び、必要事項を入力してください。スマホ・パソコン共通画面です。</p></section>
     <div class="connectionRow"><div id="connectionNotice" class="notice info"><span class="connectionDot"></span><b>スプレッドシート接続：</b><span id="connectionText">確認中...</span></div><button id="testModeBtn" class="testModeBtn" type="button" aria-pressed="false">テストモード</button></div>
-    <div id="testModeNotice" class="testModeNotice hidden">TEST中：正式な綴り番号は発行・消費しません。申請、差戻し、再申請、承認・却下の動作確認用です。</div>
+    <div id="testModeNotice" class="testModeNotice hidden">TEST中：TEST-0001形式の専用番号を発行し、正式な綴り番号は発行・消費しません。申請・差戻し・再申請・承認・却下の動作確認用です。</div>
 
     <section class="card">
       <h2>1. 申請種類を選択</h2>
@@ -177,7 +203,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
         <h2>申請検索・絞り込み</h2>
         <div class="filters">
           <input id="adminSearch" placeholder="氏名・綴り番号・部署・申請内容で検索">
-          <select id="adminStatus"><option value="">すべての状態</option><option>申請中</option><option>承認</option><option>差戻し</option><option>却下</option></select>
+          <select id="adminStatus"><option value="">すべての状態</option><option>申請中</option><option>一部承認</option><option>一部決裁</option><option>承認</option><option>差戻し</option><option>却下</option></select>
           <select id="adminType"><option value="">すべての申請</option><option value="equipment">備品・消耗品</option><option value="expense">経費精算</option><option value="transport">交通費</option><option value="trip">出張申請・精算</option><option value="meal">接待・会食費</option><option value="other">その他</option></select>
           <select id="adminDepartment"><option value="">すべての部署</option><option>KOTKA</option><option>BAKERU</option><option>本部・管理</option><option>その他</option></select>
         </div>
@@ -186,7 +212,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
     </section>
   </main>
 
-  <div class="footer">NEKKO 申請 v2.2.6 / Google スプレッドシート連携対応</div>
+  <div class="footer">NEKKO 申請 v2.3.5 / Google スプレッドシート連携対応</div>
 </div>
 
 <div id="detailModal" class="overlay hidden" role="dialog" aria-modal="true">
@@ -249,7 +275,7 @@ body{background:linear-gradient(180deg,#eef2ef 0,#f7f8f7 220px,#f3f6f4 100%)}
 <script>
 (() => {
 'use strict';
-const VERSION='2.2.6-admin-session-12h';
+const VERSION='2.3.5-partial-equipment-12h-test-serial';
 // GASをウェブアプリとしてデプロイ後、/exec で終わるURLをここへ貼り付けてください。
 const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbxo6sFfZjsVrNkOowb0PmVTpyDjfUQlvNNdqiZtO4vKnL2g-finHI1pVXQkApKi9fzrCA/exec';
 const STORE_KEY='nekko_internal_requests_2.0.2-ui'; // GAS未設定時の画面確認用デモ保存
@@ -304,20 +330,35 @@ async function checkConnection(){
   const box=$('connectionNotice'),txt=$('connectionText');
   if(!apiConfigured()){box.classList.remove('online');box.classList.add('offline');txt.textContent='未設定（現在はこの端末だけのデモ保存）。GASデプロイ後にURLを設定してください。';return}
   txt.textContent='接続確認中...';
-  try{const r=await api('health');box.classList.remove('offline');box.classList.add('online');txt.textContent='接続済み / GAS接続済み / スマホ・PC共通保存';}
+  try{const r=await api('health');const v=String(r.version||'不明');const safe=supportsTestSerialApi(v);box.classList.toggle('offline',!safe);box.classList.toggle('online',safe);txt.textContent=safe?('接続済み / GAS '+v+' / スマホ・PC共通保存'):('GAS '+v+'：テスト番号対応の公開版v2.3.1以降に更新してください');}
   catch(e){box.classList.remove('online');box.classList.add('offline');txt.textContent='接続エラー：'+e.message;}
 }
+/** GASが旧版のままの場合は正式番号を消費する危険があるので、テスト送信を禁止する。 */
+function supportsTestSerialApi(v){
+  const m=String(v||'').match(/^v?(\d+)\.(\d+)\.(\d+)/);
+  if(!m)return false;
+  const [a,b,c]=m.slice(1).map(Number);
+  return a>2||(a===2&&(b>3||(b===3&&c>=1)));
+}
 function typeInfo(t){return TYPE_INFO[t]||TYPE_INFO.other}
-function displayNumber(r){return r?.testMode?'TEST（綴り番号なし）':(r?.number||'綴り番号なし')}
+function displayNumber(r){if(!r?.testMode)return r?.number||'綴り番号なし';const n=String(r.number||'').trim();return /^TEST[-_]?\d+$/i.test(n)?n:(n?'TEST（旧記録：'+n+'）':'TEST（申請前／旧記録）')}
 function updateTestModeUI(){
   const btn=$('testModeBtn'),note=$('testModeNotice');if(!btn||!note)return;
   btn.classList.toggle('active',testMode);btn.setAttribute('aria-pressed',testMode?'true':'false');btn.textContent=testMode?'TEST中':'テストモード';
   note.classList.toggle('hidden',!testMode);
 }
-$('testModeBtn').onclick=()=>{if(resubmitId){toast('再申請中は元の申請モードを引き継ぐため切り替えできません。');return}testMode=!testMode;updateTestModeUI();toast(testMode?'テストモードをONにしました。綴り番号は発行されません。':'テストモードをOFFにしました。')};
-function statusClass(s){return s==='承認'?'approved':s==='差戻し'?'returned':s==='却下'?'rejected':s==='削除済'?'deleted':'pending'}
+$('testModeBtn').onclick=()=>{if(resubmitId){toast('再申請中は元の申請モードを引き継ぐため切り替えできません。');return}testMode=!testMode;updateTestModeUI();toast(testMode?'テストモードON：TEST専用番号を使用します。':'テストモードをOFFにしました。')};
+function statusClass(s){return s==='承認'?'approved':s==='差戻し'?'returned':s==='却下'?'rejected':s==='削除済'?'deleted':(s==='一部承認'||s==='一部決裁')?'partial':'pending'}
 function statusBadge(s){return `<span class="badge ${statusClass(s)}">${esc(s||'申請中')}</span>`}
 async function sha256(str){if(!crypto?.subtle)throw new Error('このブラウザでは簡易ログインを利用できません。');const b=new TextEncoder().encode(str);const h=await crypto.subtle.digest('SHA-256',b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+
+
+function equipmentItems(r){return r?.type==='equipment'&&Array.isArray(r.details?.items)?r.details.items:[]}
+function itemStatus(x,r){return ['申請中','承認','差戻し','却下'].includes(x?.decisionStatus)?x.decisionStatus:(['承認','差戻し','却下'].includes(r?.status)?r.status:'申請中')}
+function canResubmitRecord(r){return r?.type==='equipment'?equipmentItems(r).some(x=>itemStatus(x,r)==='差戻し'):r?.status==='差戻し'}
+function approvedAmountOf(r){return equipmentItems(r).filter(x=>itemStatus(x,r)==='承認').reduce((s,x)=>s+Number(x.qty||1)*Number(x.price||0),0)}
+function overallEquipStatus(items){const all=items.map(x=>x.decisionStatus||'申請中');if(!all.length||all.every(s=>s==='申請中'))return '申請中';if(all.every(s=>s==='承認'))return '承認';if(all.every(s=>s==='差戻し'))return '差戻し';if(all.every(s=>s==='却下'))return '却下';return all.some(s=>s==='承認')?'一部承認':'一部決裁'}
+function equipSummaryHtml(r){if(r?.type!=='equipment')return '';const items=equipmentItems(r);if(!items.length)return '';const counts={};items.forEach(x=>{const st=itemStatus(x,r);counts[st]=(counts[st]||0)+1});return `<div class="equipMini">${Object.entries(counts).map(([s,n])=>`<span>${esc(s)} ${n}件</span>`).join('')}<span>承認金額 ${yen(approvedAmountOf(r))}</span></div>`}
 
 function renderFields(){
   $('formTitle').textContent=typeInfo(selectedType).label;
@@ -331,7 +372,7 @@ function renderFields(){
     <div class="totalBox"><span>合計金額</span><strong id="equipmentTotal">￥0</strong></div>
     <div class="field"><label>購入理由・用途 <span class="req">必須</span></label><textarea id="purpose" required></textarea></div>`;
     addItem();
-    $('addItemBtn').onclick=addItem;
+    $('addItemBtn').onclick=()=>addItem();
   } else if(selectedType==='expense') d.innerHTML=`
     <div class="sectionTitle">経費内容</div><div class="grid2"><div class="field"><label>支払日 <span class="req">必須</span></label><input id="expenseDate" type="date" required></div><div class="field"><label>経費区分</label><select id="expenseCategory"><option>店舗用品</option><option>消耗品</option><option>広告宣伝</option><option>通信費</option><option>雑費</option><option>その他</option></select></div></div>
     <div class="grid2"><div class="field"><label>支払先 <span class="req">必須</span></label><input id="payee" required></div><div class="field"><label>金額 <span class="req">必須</span></label>${moneyMarkup('amount',{required:true})}</div></div>
@@ -359,7 +400,7 @@ function renderFields(){
   updateSettlementUI();
 }
 function addItem(){
-  const wrap=$('items');const row=document.createElement('div');row.className='itemRow';row.innerHTML=`<div class="field wide"><label>品名・型番 <span class="req">必須</span></label><input class="itemName" required></div><div class="field"><label>購入先</label><input class="itemStore"></div><div class="field"><label>数量</label><input class="itemQty" type="number" min="1" value="1"></div><div class="field"><label>単価</label><div class="moneyInputWrap"><span class="moneyPrefix">￥</span><input class="itemPrice moneyInput" type="text" inputmode="numeric" autocomplete="off" value="0"></div></div><div class="itemAmount">￥0</div><button class="removeBtn" type="button">削除</button>`;
+  const wrap=$('items');const row=document.createElement('div');row.className='itemRow';row.innerHTML=`<div class="field wide"><label>品名・型番 <span class="req">必須</span></label><input class="itemName" required></div><div class="field"><label>購入先</label><input class="itemStore"></div><div class="field"><label>数量</label><input class="itemQty" type="number" min="1" value="1"></div><div class="field"><label>単価</label><div class="moneyInputWrap"><span class="moneyPrefix">￥</span><input class="itemPrice moneyInput" type="text" inputmode="numeric" autocomplete="off" value="0"></div></div><div class="itemAmount">￥0</div><div class="itemDecisionMark hidden"></div><button class="removeBtn" type="button">削除</button>`;
   initMoneyInputs(row);row.querySelector('.removeBtn').onclick=()=>{row.remove();calcEquipment()};row.querySelectorAll('input').forEach(i=>i.addEventListener('input',calcEquipment));wrap.appendChild(row);calcEquipment();
 }
 function calcEquipment(){let total=0;document.querySelectorAll('.itemRow').forEach(r=>{const q=Number(r.querySelector('.itemQty')?.value||0),p=parseMoney(r.querySelector('.itemPrice')?.value||0),a=q*p;total+=a;const el=r.querySelector('.itemAmount');if(el)el.textContent=yen(a)});if($('equipmentTotal'))$('equipmentTotal').textContent=yen(total);return total}
@@ -367,7 +408,7 @@ function val(id){return $(id)?.value?.trim?.()??''}
 function settlementModeValue(){return selectedType==='expense'?'advance':(advanceMode?'advance':'normal')}
 function withSettlement(obj){return {...obj,settlementMode:settlementModeValue()}}
 function buildDetails(){
-  if(selectedType==='equipment'){const items=[...document.querySelectorAll('.itemRow')].map(r=>({name:r.querySelector('.itemName').value.trim(),store:r.querySelector('.itemStore').value.trim(),qty:Number(r.querySelector('.itemQty').value||1),price:parseMoney(r.querySelector('.itemPrice').value||0)})).filter(x=>x.name);return withSettlement({desiredDate:val('desiredDate'),urgency:val('urgency'),items,total:calcEquipment(),purpose:val('purpose')})}
+  if(selectedType==='equipment'){const items=[...document.querySelectorAll('.itemRow')].map((r,i)=>({id:r.dataset.itemId||'item-'+(i+1),name:r.querySelector('.itemName').value.trim(),store:r.querySelector('.itemStore').value.trim(),qty:Number(r.querySelector('.itemQty').value||1),price:parseMoney(r.querySelector('.itemPrice').value||0)})).filter(x=>x.name);return withSettlement({desiredDate:val('desiredDate'),urgency:val('urgency'),items,total:calcEquipment(),purpose:val('purpose')})}
   if(selectedType==='expense')return withSettlement({expenseDate:val('expenseDate'),category:val('expenseCategory'),payee:val('payee'),amount:parseMoney(val('amount')),purpose:val('purpose')});
   if(selectedType==='transport')return withSettlement({travelDate:val('travelDate'),transportMode:val('transportMode'),origin:val('origin'),destination:val('destination'),routeType:val('routeType'),amount:parseMoney(val('amount')),purpose:val('purpose')});
   if(selectedType==='trip')return withSettlement({tripPhase:val('tripPhase'),destination:val('destination'),startDate:val('startDate'),endDate:val('endDate'),transportCost:parseMoney(val('transportCost')),lodgingCost:parseMoney(val('lodgingCost')),otherCost:parseMoney(val('otherCost')),purpose:val('purpose')});
@@ -375,6 +416,7 @@ function buildDetails(){
   return withSettlement({title:val('otherTitle'),date:val('otherDate'),amount:parseMoney(val('amount')),purpose:val('purpose')});
 }
 function amountOf(type,d){if(type==='equipment')return Number(d.total||0);if(type==='trip')return Number(d.transportCost||0)+Number(d.lodgingCost||0)+Number(d.otherCost||0);return Number(d.amount||0)}
+function nextTestNo(){const nums=load().map(x=>String(x.number||'').match(/^TEST[-_]?(\d+)$/i)).filter(Boolean).map(x=>Number(x[1]));return 'TEST-'+String(Math.max(0,...nums)+1).padStart(4,'0')}
 function nextNo(type){const y=new Date().getFullYear();const prefix=typeInfo(type).prefix+'-'+y+'-';const nums=load().filter(x=>x.type===type&&String(x.number).startsWith(prefix)).map(x=>Number(String(x.number).slice(prefix.length))||0);return prefix+String(Math.max(0,...nums)+1).padStart(4,'0')}
 function summarize(r){const d=r.details||{};let base;if(r.type==='equipment')base=(d.items||[]).map(x=>x.name).join('、')||'備品申請';else if(r.type==='expense')base=`${d.payee||''} / ${d.category||''}`;else if(r.type==='transport')base=`${d.origin||''} → ${d.destination||''}`;else if(r.type==='trip')base=`${d.tripPhase||''} / ${d.destination||''}`;else if(r.type==='meal')base=`${d.counterparty||''} / ${d.venue||''}`;else base=d.title||'その他申請';return d.settlementMode==='advance'&&!String(base).startsWith('【立替精算】')?`【立替精算】${base}`:base}
 
@@ -408,7 +450,7 @@ function buildA4Document(r,withControls){
   const attachImage=firstImage?`<div class="attachmentImage"><div class="cap">添付画像（先頭の画像）</div><img src="${firstImage.data}" alt="添付画像"></div>`:'';
   const statusText=r.status==='紙申請'?'':(r.status||'');
   const controls=withControls?`<div class="controls"><button class="print" onclick="window.print()">PDF保存・印刷</button><button class="close" onclick="window.close()">閉じる</button><span>印刷画面で「PDFに保存」またはプリンターを選択してください。</span></div>`:'';
-  const noText=r.testMode?'<span class="testMark">TEST（綴り番号なし）</span>':((r.number && r.number!=='管理者記入')?esc(r.number):'管理者記入');
+  const noText=r.testMode?'<span class="testMark">'+esc(displayNumber(r))+'</span>':((r.number && r.number!=='管理者記入')?esc(r.number):'管理者記入');
   const applicant=esc(r.applicantName||'');
   const dept=esc(r.department||'');
   const reqDate=esc(r.requestDate||'');
@@ -449,7 +491,7 @@ function buildA4Document(r,withControls){
 function openA4Preview(r){
   if(!r)return;
   currentPreviewRecord=r;
-  $('pdfPreviewTitle').textContent=`A4申請書プレビュー　${r.testMode?'TEST（綴り番号なし）':(r.number||'管理者記入')} / ${r.typeLabel||typeInfo(r.type).short}`;
+  $('pdfPreviewTitle').textContent=`A4申請書プレビュー　${r.testMode?displayNumber(r):(r.number||'管理者記入')} / ${r.typeLabel||typeInfo(r.type).short}`;
   $('pdfPreviewFrame').srcdoc=buildA4Document(r,false);
   $('pdfPreviewModal').classList.remove('hidden');
 }
@@ -475,7 +517,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('pdfPreviewModal
 
 function confirmationRowsFromPending(p){
   const r={type:p.type,typeLabel:typeInfo(p.type).short,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,amount:amountOf(p.type,p.details),details:p.details,notes:p.notes||''};
-  const rows=[['モード',p.testMode?'テストモード（綴り番号なし）':'正式申請'],['申請種類',r.typeLabel],['支払区分',p.details?.settlementMode==='advance'?'立替精算':'通常申請'],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['合計金額',r.amount?yen(r.amount):'￥0']];
+  const rows=[['モード',p.testMode?'テストモード（TEST専用番号）':'正式申請'],['申請種類',r.typeLabel],['支払区分',p.details?.settlementMode==='advance'?'立替精算':'通常申請'],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['合計金額',r.amount?yen(r.amount):'￥0']];
   const d=r.details||{};
   if(r.type==='equipment'){
     rows.push(['希望納期',d.desiredDate||'—'],['緊急度',d.urgency||'—'],['品目',(d.items||[]).map(x=>`${x.name||'—'} / ${x.store||'購入先未定'} / ${x.qty||0}個 × ${yen(x.price||0)}`).join('\n')||'—'],['購入理由・用途',d.purpose||'—']);
@@ -501,7 +543,7 @@ function openSubmitConfirmation(){
   $('submitConfirmBody').innerHTML=rows.map(([k,v])=>`<div class="confirmItem ${['品目','購入理由・用途','用途・理由','利用目的','出張目的','目的','申請内容・目的','備考','添付ファイル'].includes(k)?'full':''}"><b>${esc(k)}</b><span class="${k==='合計金額'?'confirmAmount':''}">${esc(v??'—')}</span></div>`).join('');
   $('submitConfirmFinalBtn').textContent=pendingSubmission.isResubmit?(pendingSubmission.testMode?'✓ テスト再申請する':'✓ この内容で再申請する'):(pendingSubmission.testMode?'✓ テスト申請する':'✓ この内容で申請する');
   $('submitConfirmTitle').textContent=pendingSubmission.testMode?(pendingSubmission.isResubmit?'テスト再申請の最終確認':'テスト申請の最終確認'):(pendingSubmission.isResubmit?'再申請内容の最終確認':'申請内容の最終確認');
-  $('submitConfirmModal').querySelector('.confirmQuestion small').textContent=pendingSubmission.testMode?'テストデータとして送信します。正式な綴り番号は発行されません。':(pendingSubmission.isResubmit?'間違いがなければ、下の「この内容で再申請する」を押してください。':'間違いがなければ、下の「この内容で申請する」を押してください。');
+  $('submitConfirmModal').querySelector('.confirmQuestion small').textContent=pendingSubmission.testMode?'送信後にTEST専用番号が発行されます。正式な綴り番号は発行・消費しません。':(pendingSubmission.isResubmit?'間違いがなければ、下の「この内容で再申請する」を押してください。':'間違いがなければ、下の「この内容で申請する」を押してください。');
   $('submitConfirmModal').classList.remove('hidden');
   document.body.style.overflow='hidden';
 }
@@ -519,25 +561,38 @@ async function finalizeSubmission(){
   try{
     let rec;
     if(apiConfigured()){
+      if(p.testMode){
+        const health=await api('health');
+        if(!supportsTestSerialApi(health.version))throw new Error('GASの公開版がテスト専用採番に未対応です（現在：'+String(health.version||'不明')+'）。GASをv2.3.1以降で既存デプロイに更新してください。正式番号を守るため送信を中止しました。');
+      }
       const action=p.isResubmit?'resubmit':'create';
       const r=await api(action,{id:p.id,testMode:p.testMode,type:p.type,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,details:p.details,notes:p.notes,attachments:p.attachments});
       rec=r.application;
       mineRows=[rec,...mineRows.filter(x=>x.id!==rec.id)];
     }else{
       const rows=load();
+      if(!p.isResubmit&&p.type==='equipment')p.details.items.forEach(x=>{x.decisionStatus='申請中';x.decisionComment='';});
       if(p.isResubmit){
         rec=rows.find(x=>x.id===p.id);
-        if(!rec||rec.status!=='差戻し')throw new Error('再申請できる差戻し申請が見つかりません。');
-        rec.department=p.department;rec.requestDate=p.requestDate;rec.status='申請中';rec.managerComment='';rec.updatedAt=nowText();rec.amount=amountOf(p.type,p.details);rec.summary=summarize({type:p.type,details:p.details});rec.details=p.details;rec.notes=p.notes;rec.testMode=!!p.testMode;rec.attachments=p.attachments;rec.attachment=p.attachments?.[0]||null;rec.history=Array.isArray(rec.history)?rec.history:[];rec.history.push({at:nowText(),action:p.testMode?'テスト再申請':'再申請',by:p.applicantName,comment:''});save(rows);
+        if(!rec||!canResubmitRecord(rec))throw new Error('再申請できる差戻し品目が見つかりません。');
+        if(rec.type==='equipment'){
+          const originals=equipmentItems(rec);
+          if(originals.length!==p.details.items.length)throw new Error('再申請時に品目の追加・削除はできません。');
+          p.details.items.forEach((x,i)=>{const old=originals[i],st=itemStatus(old,rec);
+            if(st==='差戻し'){x.decisionStatus='申請中';x.decisionComment='';}
+            else {if(x.name!==old.name||x.store!==old.store||Number(x.qty)!==Number(old.qty)||Number(x.price)!==Number(old.price))throw new Error('承認済み等の品目は変更できません。');p.details.items[i]=old;}
+          });
+        }
+        rec.department=p.department;rec.requestDate=p.requestDate;rec.status=rec.type==='equipment'?overallEquipStatus(p.details.items):'申請中';rec.managerComment='';rec.updatedAt=nowText();rec.amount=amountOf(p.type,p.details);rec.summary=summarize({type:p.type,details:p.details});rec.details=p.details;rec.notes=p.notes;rec.testMode=!!p.testMode;rec.attachments=p.attachments;rec.attachment=p.attachments?.[0]||null;rec.history=Array.isArray(rec.history)?rec.history:[];rec.history.push({at:nowText(),action:p.testMode?'テスト再申請':'再申請',by:p.applicantName,comment:''});save(rows);
       }else{
-        rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:p.testMode?'':nextNo(p.type),testMode:!!p.testMode,type:p.type,typeLabel:typeInfo(p.type).short,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(p.type,p.details),summary:summarize({type:p.type,details:p.details}),details:p.details,notes:p.notes,attachments:p.attachments,attachment:p.attachments?.[0]||null,history:[{at:nowText(),action:p.testMode?'テスト申請':'申請',by:p.applicantName,comment:''}]};
+        rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),number:p.testMode?nextTestNo():nextNo(p.type),testMode:!!p.testMode,type:p.type,typeLabel:typeInfo(p.type).short,applicantName:p.applicantName,department:p.department,requestDate:p.requestDate,status:'申請中',managerComment:'',createdAt:nowText(),updatedAt:nowText(),amount:amountOf(p.type,p.details),summary:summarize({type:p.type,details:p.details}),details:p.details,notes:p.notes,attachments:p.attachments,attachment:p.attachments?.[0]||null,history:[{at:nowText(),action:p.testMode?'テスト申請':'申請',by:p.applicantName,comment:''}]};
         rows.unshift(rec);save(rows);
       }
     }
     $('submitConfirmModal').classList.add('hidden');
     document.body.style.overflow='';
     pendingSubmission=null;
-    toast(p.testMode?`${p.isResubmit?'テスト再申請':'テスト申請'}しました（綴り番号なし）`:`${p.isResubmit?'再申請しました':'申請しました'}：${rec.number}`);
+    toast(p.testMode?`${p.isResubmit?'テスト再申請':'テスト申請'}しました：${displayNumber(rec)}`:`${p.isResubmit?'再申請しました':'申請しました'}：${rec.number}`);
     $('historyName').value=p.applicantName;
     await renderHistory();
     resetFormKeepIdentity();
@@ -597,11 +652,25 @@ function loadRecordIntoForm(r){
   else if(r.type==='trip'){setVal('tripPhase',d.tripPhase);setVal('destination',d.destination);setVal('startDate',d.startDate);setVal('endDate',d.endDate);setVal('transportCost',d.transportCost);setVal('lodgingCost',d.lodgingCost);setVal('otherCost',d.otherCost);setVal('purpose',d.purpose)}
   else if(r.type==='meal'){setVal('mealDate',d.mealDate);setVal('venue',d.venue);setVal('counterparty',d.counterparty);setVal('participants',d.participants||1);setVal('amount',d.amount);setVal('purpose',d.purpose)}
   else{setVal('otherTitle',d.title);setVal('otherDate',d.date);setVal('amount',d.amount);setVal('purpose',d.purpose)}
+  if(r.type==='equipment'){
+    const currentItems=equipmentItems(r);
+    const rows=[...document.querySelectorAll('.itemRow')];
+    rows.forEach((row,i)=>{
+      const it=currentItems[i]||{};const st=itemStatus(it,r),locked=st!=='差戻し';
+      row.dataset.itemId='item-'+(i+1);
+      row.classList.toggle('lockedItem',locked);
+      row.querySelectorAll('input').forEach(input=>{input.readOnly=locked;});
+      row.querySelector('.removeBtn').disabled=true;
+      const mark=row.querySelector('.itemDecisionMark');mark.classList.remove('hidden');
+      mark.textContent=locked?'🔒 '+st+'（変更できません）': '🔄 差戻し：'+(it.decisionComment||r.managerComment||'修正して再申請してください');
+    });
+    $('addItemBtn').disabled=true;
+  }
   setVal('notes',r.notes);currentAttachments=attachmentsOf(r).map(a=>({...a,existing:true,data:a.data||null}));renderAttachmentList();
   $('reapplyBanner').classList.remove('hidden');$('reapplyBannerText').textContent=(r.managerComment?`差戻し理由：${r.managerComment}　`:'')+'必要箇所を修正し、確認画面から「この内容で再申請する」を押してください。';updateSettlementUI();
   document.getElementById('requestForm').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function startResubmit(id){const r=findRecord(id);if(!r||r.status!=='差戻し'){toast('この申請は再申請できません。');return}closeDetail();switchMode('applicant');loadRecordIntoForm(r);toast(`${displayNumber(r)} を修正して再申請できます。`)}
+function startResubmit(id){const r=findRecord(id);if(!r||!canResubmitRecord(r)){toast('差戻し品目がないため再申請できません。');return}closeDetail();switchMode('applicant');loadRecordIntoForm(r);toast(`${displayNumber(r)} を修正して再申請できます。`)}
 
 async function renderHistory(){
   const name=val('historyName');
@@ -619,21 +688,112 @@ async function renderHistory(){
 }
 $('historySearchBtn').onclick=()=>renderHistory();
 
-function cardHtml(r,isAdmin){const adv=(r.details||{}).settlementMode==='advance'?'<span class="badge advance">立替精算</span>':'';const test=r.testMode?'<span class="badge test">TEST</span>':'';const reapply=(!isAdmin&&r.status==='差戻し')?`<button class="btn orange reapplyBtn" data-id="${esc(r.id)}" type="button">↻ 修正して再申請</button>`:'';return `<article class="appCard ${statusClass(r.status)} ${r.testMode?'testCard':''}"><div class="topline"><div><div class="title">${esc(displayNumber(r))}　${esc(r.typeLabel)} ${test} ${adv}</div><div class="meta">${esc(r.applicantName)} / ${esc(r.department)} / ${esc(r.createdAt)}</div><div class="meta">${esc(r.summary)}</div></div><div style="text-align:right">${statusBadge(r.status)}<div class="money">${r.amount?yen(r.amount):''}</div></div></div>${r.managerComment?`<div class="meta" style="margin-top:8px"><b>管理者コメント：</b>${esc(r.managerComment)}</div>`:''}<div class="toolbar" style="margin-bottom:0"><button class="btn secondary detailBtn" data-id="${esc(r.id)}" data-admin="${isAdmin?'1':'0'}" type="button">詳細を見る</button><button class="btn blue printBtn" data-id="${esc(r.id)}" type="button">A4申請書プレビュー</button>${reapply}</div></article>`}
+function cardHtml(r,isAdmin){const adv=(r.details||{}).settlementMode==='advance'?'<span class="badge advance">立替精算</span>':'';const test=r.testMode?'<span class="badge test">TEST</span>':'';const reapply=(!isAdmin&&canResubmitRecord(r))?`<button class="btn orange reapplyBtn" data-id="${esc(r.id)}" type="button">↻ 修正して再申請</button>`:'';return `<article class="appCard ${statusClass(r.status)} ${r.testMode?'testCard':''}"><div class="topline"><div><div class="title">${esc(displayNumber(r))}　${esc(r.typeLabel)} ${test} ${adv}</div><div class="meta">${esc(r.applicantName)} / ${esc(r.department)} / ${esc(r.createdAt)}</div><div class="meta">${esc(r.summary)}</div>${equipSummaryHtml(r)}</div><div style="text-align:right">${statusBadge(r.status)}<div class="money">${r.amount?yen(r.amount):''}</div></div></div>${r.managerComment?`<div class="meta" style="margin-top:8px"><b>管理者コメント：</b>${esc(r.managerComment)}</div>`:''}<div class="toolbar" style="margin-bottom:0"><button class="btn secondary detailBtn" data-id="${esc(r.id)}" data-admin="${isAdmin?'1':'0'}" type="button">詳細を見る</button><button class="btn blue printBtn" data-id="${esc(r.id)}" type="button">A4申請書プレビュー</button>${reapply}</div></article>`}
 function bindCardButtons(isAdmin){const root=isAdmin?'#adminList':'#historyList';document.querySelectorAll(root+' .detailBtn').forEach(b=>b.onclick=()=>openDetail(b.dataset.id,isAdmin));document.querySelectorAll(root+' .printBtn').forEach(b=>b.onclick=()=>openA4Preview(findRecord(b.dataset.id)));document.querySelectorAll(root+' .reapplyBtn').forEach(b=>b.onclick=()=>startResubmit(b.dataset.id))}
 
-function detailPairs(r){const d=r.details||{};let rows=[['モード',r.testMode?'テストモード':'正式申請'],['綴り番号',r.testMode?'TEST（綴り番号なし）':r.number],['状態',r.status],['申請種類',r.typeLabel],['支払区分',d.settlementMode==='advance'?'立替精算':'通常申請'],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['申請日時',r.createdAt],['合計金額',r.amount?yen(r.amount):'—']];if(r.type==='equipment'){rows.push(['希望納期',d.desiredDate||'—'],['緊急度',d.urgency||'—'],['購入理由・用途',d.purpose||'—'],['品目',(d.items||[]).map(x=>`${x.name} / ${x.store||'購入先未定'} / ${x.qty}個 × ${yen(x.price)}`).join('\n')||'—'])}else if(r.type==='expense'){rows.push(['支払日',d.expenseDate||'—'],['経費区分',d.category||'—'],['支払先',d.payee||'—'],['用途・理由',d.purpose||'—'])}else if(r.type==='transport'){rows.push(['利用日',d.travelDate||'—'],['交通手段',d.transportMode||'—'],['区間',`${d.origin||'—'} → ${d.destination||'—'}`],['片道・往復',d.routeType||'—'],['利用目的',d.purpose||'—'])}else if(r.type==='trip'){rows.push(['申請区分',d.tripPhase||'—'],['出張先',d.destination||'—'],['期間',`${d.startDate||'—'} ～ ${d.endDate||'—'}`],['交通費',yen(d.transportCost||0)],['宿泊費',yen(d.lodgingCost||0)],['その他費用',yen(d.otherCost||0)],['出張目的',d.purpose||'—'])}else if(r.type==='meal'){rows.push(['実施日',d.mealDate||'—'],['店舗・会場',d.venue||'—'],['相手先・会社名',d.counterparty||'—'],['参加人数',d.participants?`${d.participants}名`:'—'],['目的',d.purpose||'—'])}else rows.push(['申請タイトル',d.title||'—'],['希望日・実施日',d.date||'—'],['申請内容・目的',d.purpose||'—']);if(r.notes)rows.push(['備考',r.notes]);if(r.managerComment)rows.push(['管理者コメント',r.managerComment]);if(Array.isArray(r.history)&&r.history.length)rows.push(['処理履歴',r.history.map(h=>`${h.at||''}　${h.action||''}　${h.by||''}${h.comment?' / '+h.comment:''}`).join('\n')]);return rows}
+function detailPairs(r){const d=r.details||{};let rows=[['モード',r.testMode?'テストモード':'正式申請'],[r.testMode?'テスト番号':'綴り番号',r.testMode?displayNumber(r):r.number],['状態',r.status],['申請種類',r.typeLabel],['支払区分',d.settlementMode==='advance'?'立替精算':'通常申請'],['申請者',r.applicantName],['店舗・部署',r.department],['申請日',r.requestDate],['申請日時',r.createdAt],['合計金額',r.amount?yen(r.amount):'—']];if(r.type==='equipment'){rows.push(['希望納期',d.desiredDate||'—'],['緊急度',d.urgency||'—'],['購入理由・用途',d.purpose||'—'],['品目',(d.items||[]).map(x=>`${x.name} / ${x.store||'購入先未定'} / ${x.qty}個 × ${yen(x.price)} / 【${itemStatus(x,r)}】${x.decisionComment?' 理由：'+x.decisionComment:''}`).join('\n')||'—'])}else if(r.type==='expense'){rows.push(['支払日',d.expenseDate||'—'],['経費区分',d.category||'—'],['支払先',d.payee||'—'],['用途・理由',d.purpose||'—'])}else if(r.type==='transport'){rows.push(['利用日',d.travelDate||'—'],['交通手段',d.transportMode||'—'],['区間',`${d.origin||'—'} → ${d.destination||'—'}`],['片道・往復',d.routeType||'—'],['利用目的',d.purpose||'—'])}else if(r.type==='trip'){rows.push(['申請区分',d.tripPhase||'—'],['出張先',d.destination||'—'],['期間',`${d.startDate||'—'} ～ ${d.endDate||'—'}`],['交通費',yen(d.transportCost||0)],['宿泊費',yen(d.lodgingCost||0)],['その他費用',yen(d.otherCost||0)],['出張目的',d.purpose||'—'])}else if(r.type==='meal'){rows.push(['実施日',d.mealDate||'—'],['店舗・会場',d.venue||'—'],['相手先・会社名',d.counterparty||'—'],['参加人数',d.participants?`${d.participants}名`:'—'],['目的',d.purpose||'—'])}else rows.push(['申請タイトル',d.title||'—'],['希望日・実施日',d.date||'—'],['申請内容・目的',d.purpose||'—']);if(r.type==='equipment')rows.push(['承認済み金額',yen(approvedAmountOf(r))]);if(r.notes)rows.push(['備考',r.notes]);if(r.managerComment)rows.push(['管理者コメント',r.managerComment]);if(Array.isArray(r.history)&&r.history.length)rows.push(['処理履歴',r.history.map(h=>`${h.at||''}　${h.action||''}　${h.by||''}${h.comment?' / '+h.comment:''}`).join('\n')]);return rows}
+
+function renderItemDecisionPanel(r){
+  const items=equipmentItems(r),approved=approvedAmountOf(r);
+  return `<section id="itemDecisionPanel" class="itemDecisionPanel"><h3>品目別の承認・差戻し・却下</h3>
+  <p class="meta">各品目を選択して一括保存します。処理済みの品目は変更できません。</p>
+  <div class="equipAmounts">申請総額：${yen(r.amount)}　／　承認済み：${yen(approved)}</div>
+  ${items.some(x=>itemStatus(x,r)==='申請中')?`<div class="itemBulkArea">
+    <strong>未処理の品目をまとめて処理する</strong>
+    <p class="meta">品目ごとの個別選択もできます。下の一括ボタンは選択を変更するだけで、まだ確定しません。</p>
+    <div class="field"><label for="bulkItemComment">一括差戻し・却下の共通理由</label><textarea id="bulkItemComment" placeholder="差戻し・却下する場合は理由を入力してください"></textarea></div>
+    <div class="itemBulkButtons">
+      <button class="btn green" id="bulkApproveBtn" type="button">全未処理品目を承認</button>
+      <button class="btn orange" id="bulkReturnBtn" type="button">全未処理品目を差戻し</button>
+      <button class="btn red" id="bulkRejectBtn" type="button">全未処理品目を却下</button>
+    </div>
+  </div>`:''}
+  ${items.map((x,i)=>{const st=itemStatus(x,r),locked=st!=='申請中';return `<div class="itemDecisionItem ${locked?'locked':''}" data-index="${i}" data-item-id="${esc('item-'+(i+1))}">
+    <strong>${i+1}. ${esc(x.name)}</strong> <span>${esc(x.qty)}個 × ${yen(x.price)} = ${yen(Number(x.qty)*Number(x.price))}</span>
+    ${locked?`<div class="meta">🔒 ${esc(st)}　${x.decisionComment?'理由：'+esc(x.decisionComment):''}</div>`:
+    `<div class="field"><label>この品目の処理</label><select class="itemDecisionSelect"><option value="申請中">申請中（保留）</option><option value="承認">🟩 承認</option><option value="差戻し">🟧 差戻し</option><option value="却下">🟥 却下</option></select></div>
+    <div class="field"><label>コメント（差戻し・却下は必須）</label><textarea class="itemDecisionComment" placeholder="理由・修正依頼など"></textarea></div>`}
+  </div>`}).join('')}
+  <div id="itemDecisionError" class="notice offline hidden" role="alert" aria-live="assertive"></div>
+  <div class="toolbar">${items.some(x=>itemStatus(x,r)==='申請中')?'<button id="saveItemDecisionsBtn" class="btn primary" type="button">品目別の決裁を保存する</button>':'<span class="meta">この申請の品目はすべて決裁済みです。</span>'}<button id="closeItemDecisionBtn" class="btn gray" type="button">閉じる</button></div></section>`;
+}
+function bulkSelectPendingItems(status){
+  const panel=$('itemDecisionPanel');if(!panel)return;
+  if(!['承認','差戻し','却下'].includes(status))return;
+  const common=$('bulkItemComment')?.value?.trim()||'';
+  if((status==='差戻し'||status==='却下')&&!common){
+    toast('差戻し・却下の理由を先に入力してください。');$('bulkItemComment')?.focus();return;
+  }
+  let count=0;
+  panel.querySelectorAll('.itemDecisionItem').forEach(div=>{
+    const select=div.querySelector('.itemDecisionSelect');if(!select)return;
+    select.value=status;
+    const textarea=div.querySelector('.itemDecisionComment');
+    if(textarea&&common)textarea.value=common;
+    count++;
+  });
+  toast(`${count}件を「${status}」に選択しました。下の「品目別の決裁を保存する」で確定してください。`);
+  $('saveItemDecisionsBtn')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+async function saveItemDecisions(){
+  const r=findRecord(currentDetailId);if(!r)return;
+  const btn=$('saveItemDecisionsBtn');if(!btn||btn.disabled)return;
+  const decisions=[];
+  for(const div of document.querySelectorAll('#itemDecisionPanel .itemDecisionItem')){
+    const select=div.querySelector('.itemDecisionSelect');if(!select)continue;
+    if(select.value==='申請中')continue;
+    const comment=div.querySelector('.itemDecisionComment').value.trim();
+    if((select.value==='差戻し'||select.value==='却下')&&!comment){toast('差戻し・却下理由を入力してください。');div.querySelector('textarea').focus();return;}
+    decisions.push({id:div.dataset.itemId,status:select.value,comment});
+  }
+  if(!decisions.length){toast('処理する品目を1件以上選択してください。');return;}
+  btn.disabled=true;btn.textContent='保存中...';
+  try{
+    let updated;
+    if(apiConfigured()){
+      if(!adminCredentials.sessionToken)throw new Error('管理者として再ログインしてください。');
+      const response=await api('updateItemDecisions',{id:r.id,sessionToken:adminCredentials.sessionToken,
+        managerName:adminCredentials.email,decisions});updated=response.application;
+    }else{
+      const local=load();updated=local.find(x=>x.id===r.id);
+      for(const dec of decisions){const item=equipmentItems(updated).find(x=>x.id===dec.id||('item-'+(equipmentItems(updated).indexOf(x)+1))===dec.id);
+        if(!item||item.decisionStatus&&item.decisionStatus!=='申請中')throw new Error('決裁済み品目は変更できません。');
+        item.decisionStatus=dec.status;item.decisionComment=dec.comment;item.decidedBy='管理者';item.decidedAt=nowText();
+        updated.history.push({at:nowText(),action:'品目別'+dec.status,by:'管理者',itemName:item.name,comment:dec.comment});
+      }
+      updated.status=overallEquipStatus(equipmentItems(updated));updated.managerComment=decisions.map(x=>x.status).join(' / ');updated.approvedAmount=approvedAmountOf(updated);
+      save(local);
+    }
+    adminRows=adminRows.map(x=>x.id===updated.id?updated:x);
+    mineRows=mineRows.map(x=>x.id===updated.id?updated:x);
+    closeDetail();await refreshAdmin();toast('品目別の決裁を保存しました。');
+  }catch(err){
+    if(isAdminAuthError(err))clearAdminSession();
+    const detail=String(err.message||err);
+    if($('itemDecisionError')){$('itemDecisionError').textContent='保存できませんでした：'+detail;$('itemDecisionError').classList.remove('hidden');}
+    toast(detail);
+  }
+  finally{if(btn){btn.disabled=false;btn.textContent='品目別の決裁を保存する';}}
+}
+
 function openDetail(id,isAdmin){
   const r=findRecord(id);if(!r)return;
   currentDetailId=id;
   $('detailTitle').textContent=`${displayNumber(r)}　${r.typeLabel}`;
   const ats=attachmentsOf(r);
   const attachmentHtml=ats.length?`<div class="sectionTitle">添付（${ats.length}件）</div><div class="detailAttachments">${ats.map(a=>`<div class="detailAttachment"><b>${esc(a.name||'添付ファイル')}</b>${a.data&&String(a.type||'').startsWith('image/')?`<img src="${a.data}" alt="">`:a.url?`<div style="margin-top:8px"><a class="btn secondary" href="${esc(a.url)}" target="_blank" rel="noopener">添付ファイルを開く</a></div>`:'<div class="small">添付ファイルあり</div>'}</div>`).join('')}</div>`:'';
-  $('detailBody').innerHTML=`<div class="detailGrid">${detailPairs(r).map(([k,v])=>`<div class="detail ${String(v).includes('\n')||String(v).length>80?'full':''}"><b>${esc(k)}</b><div class="statusComment">${esc(v)}</div></div>`).join('')}</div>${attachmentHtml}`;
+  $('detailBody').innerHTML=`<div class="detailGrid">${detailPairs(r).map(([k,v])=>`<div class="detail ${String(v).includes('\n')||String(v).length>80?'full':''}"><b>${esc(k)}</b><div class="statusComment">${esc(v)}</div></div>`).join('')}</div>${attachmentHtml}${isAdmin&&r.type==='equipment'?renderItemDecisionPanel(r):''}`;
   $('detailModal').classList.remove('hidden');
-  $('managerDecisionBox').classList.toggle('hidden',!isAdmin);
+  $('managerDecisionBox').classList.toggle('hidden',!isAdmin||r.type==='equipment');
+  if(isAdmin&&r.type==='equipment'){
+    if($('saveItemDecisionsBtn'))$('saveItemDecisionsBtn').onclick=saveItemDecisions;
+    if($('bulkApproveBtn'))$('bulkApproveBtn').onclick=()=>bulkSelectPendingItems('承認');
+    if($('bulkReturnBtn'))$('bulkReturnBtn').onclick=()=>bulkSelectPendingItems('差戻し');
+    if($('bulkRejectBtn'))$('bulkRejectBtn').onclick=()=>bulkSelectPendingItems('却下');
+    $('closeItemDecisionBtn').onclick=closeDetail;
+  }
   $('applicantDetailActions').classList.toggle('hidden',isAdmin);
-  $('reapplyDetailBtn').classList.toggle('hidden',isAdmin||r.status!=='差戻し');
+  $('reapplyDetailBtn').classList.toggle('hidden',isAdmin||!canResubmitRecord(r));
   $('managerComment').value=r.managerComment||'';
 }
 function closeDetail(){$('detailModal').classList.add('hidden');currentDetailId=null}
@@ -663,12 +823,12 @@ $('approveBtn').onclick=()=>decide('承認');$('returnBtn').onclick=()=>decide('
 function renderAdmin(){
   if($('managerDashboard').classList.contains('hidden'))return;
   const rows=apiConfigured()?adminRows:load();
-  $('countPending').textContent=rows.filter(r=>r.status==='申請中').length;
+  $('countPending').textContent=rows.filter(r=>r.status==='申請中'||equipmentItems(r).some(x=>itemStatus(x,r)==='申請中')).length;
   $('countApproved').textContent=rows.filter(r=>r.status==='承認').length;
-  $('countReturned').textContent=rows.filter(r=>r.status==='差戻し').length;
+  $('countReturned').textContent=rows.filter(r=>r.status==='差戻し'||equipmentItems(r).some(x=>itemStatus(x,r)==='差戻し')).length;
   $('countRejected').textContent=rows.filter(r=>r.status==='却下').length;
   const q=val('adminSearch').toLowerCase(),st=val('adminStatus'),ty=val('adminType'),dep=val('adminDepartment');
-  const filtered=rows.filter(r=>{const hay=[r.number,r.testMode?'TEST テスト':'',r.applicantName,r.department,r.typeLabel,r.summary,JSON.stringify(r.details||{})].join(' ').toLowerCase();return(!q||hay.includes(q))&&(!st||r.status===st)&&(!ty||r.type===ty)&&(!dep||r.department===dep)});
+  const filtered=rows.filter(r=>{const hay=[r.number,r.testMode?'TEST テスト':'',r.applicantName,r.department,r.typeLabel,r.summary,JSON.stringify(r.details||{})].join(' ').toLowerCase();return(!q||hay.includes(q))&&(!st||r.status===st||(st==='差戻し'&&equipmentItems(r).some(x=>itemStatus(x,r)==='差戻し'))||(st==='申請中'&&equipmentItems(r).some(x=>itemStatus(x,r)==='申請中')))&&(!ty||r.type===ty)&&(!dep||r.department===dep)});
   $('adminList').innerHTML=filtered.length?filtered.map(r=>cardHtml(r,true)).join(''):'<div class="card empty">条件に一致する申請はありません。</div>';
   bindCardButtons(true);
 }
